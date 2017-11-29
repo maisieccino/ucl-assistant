@@ -6,7 +6,9 @@
     "lint": "eslint src --ext .js --ext .jsx --cache --ignore-path .gitignore",
     "lint:force": "eslint src --ext .js --ext .jsx --ignore-path .gitignore",
     "lint:staged": "lint-staged",
-    "format": "prettier --write --trailing-comma all {api,components,constants,flow-typed,navigation,screens}/**/*.{js,jsx}"
+    "format":
+      "prettier --write --trailing-comma all {api,components,constants,flow-typed,navigation,screens}/**/*.{js,jsx}",
+    "precommit": "yarn run lint:staged"
   },
   "jest": {
     "preset": "jest-expo"
@@ -15,7 +17,8 @@
     "@expo/samples": "2.1.1",
     "expo": "^23.0.0",
     "react": "16.0.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-23.0.0.tar.gz",
+    "react-native":
+      "https://github.com/expo/react-native/archive/sdk-23.0.0.tar.gz",
     "react-navigation": "^1.0.0-beta.19"
   },
   "devDependencies": {
@@ -32,10 +35,7 @@
     "prettier": "^1.8.2"
   },
   "lint-staged": {
-    "*.{js,jsx}": [
-      "prettier --write --trailing-comma all",
-      "git add"
-    ]
+    "*.{js,jsx}": ["prettier --write --trailing-comma all", "git add"]
   },
   "name": "ucl-assistant",
   "version": "0.1.0",
