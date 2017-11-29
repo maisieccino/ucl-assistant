@@ -1,0 +1,44 @@
+{
+  "main": "node_modules/expo/AppEntry.js",
+  "private": true,
+  "scripts": {
+    "test": "node ./node_modules/jest/bin/jest.js --watch",
+    "lint": "eslint src --ext .js --ext .jsx --cache --ignore-path .gitignore",
+    "lint:force": "eslint src --ext .js --ext .jsx --ignore-path .gitignore",
+    "lint:staged": "lint-staged",
+    "format": "prettier --write --trailing-comma all {api,components,constants,flow-typed,navigation,screens}/**/*.{js,jsx}"
+  },
+  "jest": {
+    "preset": "jest-expo"
+  },
+  "dependencies": {
+    "@expo/samples": "2.1.1",
+    "expo": "^23.0.0",
+    "react": "16.0.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-23.0.0.tar.gz",
+    "react-navigation": "^1.0.0-beta.19"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.0.2",
+    "eslint": "4.9.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "2.7.0",
+    "eslint-plugin-jsx-a11y": "6.0.2",
+    "eslint-plugin-react": "7.4.0",
+    "husky": "^0.14.3",
+    "jest-expo": "^23.0.0",
+    "lint-staged": "^5.0.0",
+    "prettier": "^1.8.2"
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "prettier --write --trailing-comma all",
+      "git add"
+    ]
+  },
+  "name": "ucl-assistant",
+  "version": "0.1.0",
+  "description": "An app to manage your UCL life",
+  "author": "Matt Bell"
+}
