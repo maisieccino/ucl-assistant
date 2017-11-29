@@ -3,8 +3,10 @@
   "private": true,
   "scripts": {
     "test": "node ./node_modules/jest/bin/jest.js --watch",
-    "lint": "eslint src --ext .js --ext .jsx --cache --ignore-path .gitignore",
-    "lint:force": "eslint src --ext .js --ext .jsx --ignore-path .gitignore",
+    "lint":
+      "eslint . --ext .js --ext .jsx --cache --ignore-path .gitignore --ignore-path .eslintignore",
+    "lint:force":
+      "eslint . --ext .js --ext .jsx --ignore-path .gitignore --ignore-path .eslintignore",
     "lint:staged": "lint-staged",
     "format":
       "prettier --write --trailing-comma all {api,components,constants,flow-typed,navigation,screens}/**/*.{js,jsx}",
@@ -15,7 +17,9 @@
   },
   "dependencies": {
     "@expo/samples": "2.1.1",
+    "@expo/vector-icons": "^6.2.0",
     "expo": "^23.0.0",
+    "prop-types": "^15.6.0",
     "react": "16.0.0",
     "react-native":
       "https://github.com/expo/react-native/archive/sdk-23.0.0.tar.gz",
@@ -29,10 +33,12 @@
     "eslint-plugin-import": "2.7.0",
     "eslint-plugin-jsx-a11y": "6.0.2",
     "eslint-plugin-react": "7.4.0",
+    "eslint-plugin-react-native": "^3.2.0",
     "husky": "^0.14.3",
     "jest-expo": "^23.0.0",
     "lint-staged": "^5.0.0",
-    "prettier": "^1.8.2"
+    "prettier": "^1.8.2",
+    "react-test-renderer": "^16.2.0"
   },
   "lint-staged": {
     "*.{js,jsx}": ["prettier --write --trailing-comma all", "git add"]

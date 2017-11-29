@@ -9,7 +9,8 @@
  * Note: This is a fork of the fb-specific transform.js
  *
  */
-'use strict';
+
+
 
 /**
  * [Expo] This transformer was based on React Native's transformer with the
@@ -20,43 +21,47 @@
  *     if we hadn't forked the transformer at all
  */
 
-const babel = require('react-native/node_modules/babel-core');
-const crypto = require('crypto');
-const externalHelpersPlugin = require('react-native/node_modules/babel-plugin-external-helpers');
-const fs = require('fs');
-const generate = require('react-native/node_modules/babel-generator').default;
-const inlineRequiresPlugin = require('react-native/node_modules/babel-preset-fbjs/plugins/inline-requires');
-const makeHMRConfig = require('react-native/node_modules/babel-preset-react-native/configs/hmr');
-const path = require('path');
-const resolvePlugins = require('react-native/node_modules/babel-preset-react-native/lib/resolvePlugins');
+const babel = require("react-native/node_modules/babel-core");
+const crypto = require("crypto");
+const externalHelpersPlugin = require("react-native/node_modules/babel-plugin-external-helpers");
+const fs = require("fs");
+const generate = require("react-native/node_modules/babel-generator").default;
+const inlineRequiresPlugin = require("react-native/node_modules/babel-preset-fbjs/plugins/inline-requires");
+const makeHMRConfig = require("react-native/node_modules/babel-preset-react-native/configs/hmr");
+const path = require("path");
+const resolvePlugins = require("react-native/node_modules/babel-preset-react-native/lib/resolvePlugins");
 
 const {
   compactMapping,
-} = require('react-native/node_modules/metro-bundler/src/Bundler/source-map');
+} = require("react-native/node_modules/metro-bundler/src/Bundler/source-map");
 
 const cacheKeyParts = [
   fs.readFileSync(__filename),
-  require('react-native/node_modules/babel-plugin-external-helpers/package.json')
+  require("react-native/node_modules/babel-plugin-external-helpers/package.json")
     .version,
-  require('react-native/node_modules/babel-preset-fbjs/package.json').version,
-  require('react-native/node_modules/babel-preset-react-native/package.json')
+  require("react-native/node_modules/babel-preset-fbjs/package.json").version,
+  require("react-native/node_modules/babel-preset-react-native/package.json")
     .version,
 ];
 
 const EXPO_REACT_NATIVE_PATH = path.join(
   process.env.EXPO_UNIVERSE_DIR,
-  'react-native-lab',
-  'react-native'
+  "react-native-lab",
+  "react-native",
 );
 if (!fs.existsSync(EXPO_REACT_NATIVE_PATH)) {
   throw new Error(
-    `Expo copy of React Native could not be found. Are you sure it exists at: ${EXPO_REACT_NATIVE_PATH}?`
+    `Expo copy of React Native could not be found. Are you sure it exists at: ${
+      EXPO_REACT_NATIVE_PATH
+    }?`,
   );
 }
-const EXPO_REACT_PATH = path.join(EXPO_REACT_NATIVE_PATH, 'node_modules/react');
+const EXPO_REACT_PATH = path.join(EXPO_REACT_NATIVE_PATH, "node_modules/react");
 if (!fs.existsSync(EXPO_REACT_PATH)) {
   throw new Error(
-    `React Native's "react" peer could not be found. Are you sure it exists at: ${EXPO_REACT_PATH}?`
+    `React Native's "react" peer could not be found. Are you sure it exists at: ${
+      EXPO_REACT_PATH
+    }?`,
   );
 }
 
@@ -80,21 +85,21 @@ const getBabelRC = (function() {
     // this location.
     let projectBabelRCPath;
     if (projectRoot) {
-      projectBabelRCPath = path.resolve(projectRoot, '.babelrc');
+      projectBabelRCPath = path.resolve(projectRoot, ".babelrc");
     }
 
     // If a .babelrc file doesn't exist in the project,
     // use the Babel config provided with react-native.
     if (!projectBabelRCPath || !fs.existsSync(projectBabelRCPath)) {
       babelRC = {
-        presets: [require('babel-preset-react-native')],
+        presets: [require("babel-preset-react-native")],
         plugins: [],
       };
 
       // Require the babel-preset's listed in the default babel config
       // $FlowFixMe: dynamic require can't be avoided
       babelRC.presets = babelRC.presets.map(preset =>
-        require('babel-preset-' + preset)
+        require(`babel-preset-${  preset}`),
       );
       babelRC.plugins = resolvePlugins(babelRC.plugins);
     } else {
@@ -130,9 +135,9 @@ function buildBabelConfig(filename, options) {
   // Add extra plugins
   const extraPlugins = [externalHelpersPlugin];
 
-  var inlineRequires = options.inlineRequires;
-  var blacklist =
-    typeof inlineRequires === 'object' ? inlineRequires.blacklist : null;
+  const inlineRequires = options.inlineRequires;
+  const blacklist =
+    typeof inlineRequires === "object" ? inlineRequires.blacklist : null;
   if (inlineRequires && !(blacklist && filename in blacklist)) {
     extraPlugins.push(inlineRequiresPlugin);
   }
@@ -148,10 +153,10 @@ function buildBabelConfig(filename, options) {
 }
 
 function transform({ filename, options, src }) {
-  options = options || { platform: '', projectRoot: '', inlineRequires: false };
+  options = options || { platform: "", projectRoot: "", inlineRequires: false };
 
   const OLD_BABEL_ENV = process.env.BABEL_ENV;
-  process.env.BABEL_ENV = options.dev ? 'development' : 'production';
+  process.env.BABEL_ENV = options.dev ? "development" : "production";
 
   try {
     const babelConfig = buildBabelConfig(filename, options);
@@ -164,7 +169,7 @@ function transform({ filename, options, src }) {
         filename,
         map: null,
       };
-    } else {
+    } 
       const result = generate(
         ast,
         {
@@ -175,7 +180,7 @@ function transform({ filename, options, src }) {
           sourceFileName: filename,
           sourceMaps: true,
         },
-        src
+        src,
       );
 
       return {
@@ -186,7 +191,7 @@ function transform({ filename, options, src }) {
           ? result.map
           : result.rawMappings.map(compactMapping),
       };
-    }
+    
   } catch (e) {
     console.error(e);
     throw e;
@@ -203,11 +208,11 @@ function buildModuleResolverPreset() {
   return {
     plugins: [
       [
-        require('babel-plugin-module-resolver').default,
+        require("babel-plugin-module-resolver").default,
         {
           alias: {
             react: EXPO_REACT_PATH,
-            'react-native': EXPO_REACT_NATIVE_PATH,
+            "react-native": EXPO_REACT_NATIVE_PATH,
           },
         },
       ],
@@ -216,9 +221,9 @@ function buildModuleResolverPreset() {
 }
 
 function getCacheKey() {
-  var key = crypto.createHash('md5');
+  const key = crypto.createHash("md5");
   cacheKeyParts.forEach(part => key.update(part));
-  return key.digest('hex');
+  return key.digest("hex");
 }
 
 module.exports = {

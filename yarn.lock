@@ -1803,6 +1803,10 @@ eslint-plugin-jsx-a11y@6.0.2:
     emoji-regex "^6.1.0"
     jsx-ast-utils "^1.4.0"
 
+eslint-plugin-react-native@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react-native/-/eslint-plugin-react-native-3.2.0.tgz#3ec47907858bd07275248bef2de3142ee5c1efb1"
+
 eslint-plugin-react@7.4.0:
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.4.0.tgz#300a95861b9729c087d362dd64abcc351a74364a"
@@ -4391,6 +4395,14 @@ react-test-renderer@16.0.0:
   dependencies:
     fbjs "^0.8.16"
     object-assign "^4.1.1"
+
+react-test-renderer@^16.2.0:
+  version "16.2.0"
+  resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-16.2.0.tgz#bddf259a6b8fcd8555f012afc8eacc238872a211"
+  dependencies:
+    fbjs "^0.8.16"
+    object-assign "^4.1.1"
+    prop-types "^15.6.0"
 
 react-timer-mixin@^0.13.2:
   version "0.13.3"
