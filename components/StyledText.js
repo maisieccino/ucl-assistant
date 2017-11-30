@@ -1,7 +1,7 @@
 import React from "react";
 import { Text } from "react-native";
 
-const MonoText = ({ style, ...rest }) => (
+export const MonoText = ({ style, ...rest }) => (
   <Text {...rest} style={[style, { fontFamily: "space-mono" }]} />
 );
 

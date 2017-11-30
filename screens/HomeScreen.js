@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
     color: "rgba(96,100,109, 1)",
     lineHeight: 24,
     textAlign: "center",
+    fontFamily: "apercu",
   },
   tabBarInfoContainer: {
     position: "absolute",
@@ -84,6 +85,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: "rgba(96,100,109, 1)",
     textAlign: "center",
+    fontFamily: "apercu",
   },
   navigationFilename: {
     marginTop: 5,
@@ -98,6 +100,7 @@ const styles = StyleSheet.create({
   helpLinkText: {
     fontSize: 14,
     color: "#2e78b7",
+    fontFamily: "apercu",
   },
 });
 
