@@ -1,26 +1,29 @@
 /* eslint react/prop-types: 0 */
 import React from "react";
-import { Platform } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import { TabNavigator, TabBarBottom } from "react-navigation";
 
 import Colors from "../constants/Colors";
 
-import HomeScreen from "../screens/HomeScreen";
-import LinksScreen from "../screens/LinksScreen";
-import SettingsScreen from "../screens/SettingsScreen";
 import TimetableScreen from "../screens/TimetableScreen";
+import StudySpacesScreen from "../screens/StudySpacesScreen";
+import PeopleScreen from "../screens/PeopleScreen";
+import RoomsScreen from "../screens/RoomsScreen";
+import SettingsScreen from "../screens/SettingsScreen";
 
 export default TabNavigator(
   {
-    Home: {
-      screen: HomeScreen,
-    },
     Timetable: {
       screen: TimetableScreen,
     },
-    Links: {
-      screen: LinksScreen,
+    StudySpaces: {
+      screen: StudySpacesScreen,
+    },
+    People: {
+      screen: PeopleScreen,
+    },
+    Rooms: {
+      screen: RoomsScreen,
     },
     Settings: {
       screen: SettingsScreen,
@@ -32,36 +35,29 @@ export default TabNavigator(
         const { routeName } = navigation.state;
         let iconName;
         switch (routeName) {
-          case "Home":
-            iconName =
-              Platform.OS === "ios"
-                ? `ios-information-circle${focused ? "" : "-outline"}`
-                : "md-information-circle";
+          case "Timetable":
+            iconName = "calendar";
             break;
-          case "Links":
-            iconName =
-              Platform.OS === "ios"
-                ? `ios-link${focused ? "" : "-outline"}`
-                : "md-link";
+          case "StudySpaces":
+            iconName = "book";
+            break;
+          case "People":
+            iconName = "users";
+            break;
+          case "Rooms":
+            iconName = "map-pin";
             break;
           case "Settings":
-            iconName =
-              Platform.OS === "ios"
-                ? `ios-options${focused ? "" : "-outline"}`
-                : "md-options";
+            iconName = "settings";
             break;
           default:
-            iconName =
-              Platform.OS === "ios"
-                ? `ios-information-circle${focused ? "" : "-outline"}`
-                : "md-information-circle";
+            iconName = "info";
         }
         return (
-          <Ionicons
+          <Feather
             name={iconName}
             size={28}
-            style={{ marginBottom: -3 }}
-            color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
+            color={focused ? Colors.pageBackground : Colors.textColor}
           />
         );
       },
@@ -70,5 +66,20 @@ export default TabNavigator(
     tabBarPosition: "bottom",
     animationEnabled: false,
     swipeEnabled: false,
+    tabBarOptions: {
+      activeTintColor: Colors.pageBackground,
+      activeBackgroundColor: Colors.accentColor,
+      inactiveTintColor: Colors.textColor,
+      tabStyle: {
+        paddingTop: 5,
+        paddingBottom: 5,
+      },
+      labelStyle: {
+        fontFamily: "apercu",
+      },
+      style: {
+        height: 60,
+      },
+    },
   },
 );

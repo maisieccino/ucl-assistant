@@ -34,6 +34,8 @@ class App extends Component {
         // to remove this if you are not using it in your app
         "space-mono": require("./assets/fonts/SpaceMono-Regular.ttf"),
         apercu: require("./assets/fonts/Apercu.otf"),
+        "apercu-bold": require("./assets/fonts/Apercu-Bold.otf"),
+        "apercu-light": require("./assets/fonts/Apercu-Light.otf"),
       }),
     ]);
 

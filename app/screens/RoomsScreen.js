@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { TitleText } from "../components/Typography";
+import { TitleText, SubtitleText } from "../components/Typography";
 import { Page } from "../components/Containers";
 
 class TimetableScreen extends Component {
@@ -10,7 +10,9 @@ class TimetableScreen extends Component {
   render() {
     return (
       <Page>
-        <TitleText>Settings</TitleText>
+        <TitleText>Rooms</TitleText>
+        <SubtitleText>Your Favourites</SubtitleText>
+        <SubtitleText>In Roberts Building</SubtitleText>
       </Page>
     );
   }
