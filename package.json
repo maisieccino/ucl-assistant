@@ -1,29 +1,12 @@
 {
-  "main": "node_modules/expo/AppEntry.js",
-  "private": true,
   "scripts": {
-    "test": "node ./node_modules/jest/bin/jest.js --watch",
-    "lint": "eslint . --ext .js --ext .jsx --cache --ignore-path .gitignore --ignore-path .eslintignore",
-    "lint:force": "eslint . --ext .js --ext .jsx --ignore-path .gitignore --ignore-path .eslintignore",
+    "lint": "eslint . --ext .js --ext .jsx --cache --ignore-path .eslintignore",
+    "lint:force": "eslint . --ext .js --ext .jsx --ignore-path .eslintignore",
     "lint:staged": "lint-staged",
-    "format": "prettier --write --trailing-comma all {api,components,constants,flow-typed,navigation,screens}/**/*.{js,jsx}",
-    "precommit": "yarn run lint:staged"
-  },
-  "jest": {
-    "preset": "jest-expo"
-  },
-  "dependencies": {
-    "@expo/samples": "2.1.1",
-    "@expo/vector-icons": "^6.2.0",
-    "emoji-cli": "^1.0.0",
-    "expo": "^23.0.0",
-    "gulp": "^3.9.1",
-    "nodemon": "^1.12.1",
-    "now": "^8.5.4",
-    "prop-types": "^15.6.0",
-    "react": "16.0.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-23.0.0.tar.gz",
-    "react-navigation": "^1.0.0-beta.19"
+    "format":
+      "prettier --write --trailing-comma all {app,server}/**/*.{js,jsx}",
+    "precommit": "yarn run lint:staged",
+    "postinstall": "cd app && yarn install --pure-lockfile"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.2",
@@ -35,16 +18,11 @@
     "eslint-plugin-react": "7.4.0",
     "eslint-plugin-react-native": "^3.2.0",
     "husky": "^0.14.3",
-    "jest-expo": "^23.0.0",
     "lint-staged": "^5.0.0",
-    "prettier": "^1.8.2",
-    "react-test-renderer": "^16.2.0"
+    "prettier": "^1.8.2"
   },
   "lint-staged": {
-    "*.{js,jsx}": [
-      "prettier --write --trailing-comma all",
-      "git add"
-    ]
+    "*.{js,jsx}": ["prettier --write --trailing-comma all", "git add"]
   },
   "name": "ucl-assistant",
   "version": "0.1.0",

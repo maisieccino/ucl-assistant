@@ -1,0 +1,37 @@
+{
+  "main": "node_modules/expo/AppEntry.js",
+  "private": true,
+  "scripts": {
+    "test": "jest --watch",
+    "storybook": "storybook start -p 7007"
+  },
+  "jest": {
+    "preset": "jest-expo"
+  },
+  "dependencies": {
+    "@expo/samples": "2.1.1",
+    "@expo/vector-icons": "^6.2.0",
+    "emoji-cli": "^1.0.0",
+    "expo": "^23.0.0",
+    "gulp": "^3.9.1",
+    "nodemon": "^1.12.1",
+    "now": "^8.5.4",
+    "prop-types": "^15.6.0",
+    "react": "16.0.0",
+    "react-native":
+      "https://github.com/expo/react-native/archive/sdk-23.0.0.tar.gz",
+    "react-navigation": "^1.0.0-beta.19"
+  },
+  "devDependencies": {
+    "jest-expo": "^23.0.0",
+    "react-test-renderer": "^16.2.0",
+    "@storybook/react-native": "^3.2.16",
+    "@storybook/addon-actions": "^3.2.16",
+    "@storybook/addon-links": "^3.2.16",
+    "react-dom": "16.0.0"
+  },
+  "name": "ucl-assistant-app",
+  "version": "0.1.0",
+  "description": "An app to manage your UCL life",
+  "author": "Matt Bell"
+}

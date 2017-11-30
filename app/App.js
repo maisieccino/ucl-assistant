@@ -1,9 +1,9 @@
-/* eslint react/jsx-filename-extension: 0 */
-import React from "react";
+import React, { Component } from "react";
 import { Platform, StatusBar, StyleSheet, View } from "react-native";
 import { AppLoading, Asset, Font } from "expo";
 import { Ionicons } from "@expo/vector-icons";
 import RootNavigation from "./navigation/RootNavigation";
+// import StorybookUI from "./storybook";
 
 const styles = StyleSheet.create({
   container: {
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class App extends React.Component {
+class App extends Component {
   state = {
     isLoadingComplete: false,
   };
@@ -66,3 +66,6 @@ export default class App extends React.Component {
     );
   }
 }
+
+// module.exports = __DEV__ ? StorybookUI : App;
+export default App;

@@ -10,8 +10,6 @@
  *
  */
 
-
-
 /**
  * [Expo] This transformer was based on React Native's transformer with the
  * following changes:
@@ -99,7 +97,7 @@ const getBabelRC = (function() {
       // Require the babel-preset's listed in the default babel config
       // $FlowFixMe: dynamic require can't be avoided
       babelRC.presets = babelRC.presets.map(preset =>
-        require(`babel-preset-${  preset}`),
+        require(`babel-preset-${preset}`),
       );
       babelRC.plugins = resolvePlugins(babelRC.plugins);
     } else {
@@ -169,29 +167,28 @@ function transform({ filename, options, src }) {
         filename,
         map: null,
       };
-    } 
-      const result = generate(
-        ast,
-        {
-          comments: false,
-          compact: false,
-          filename,
-          retainLines: !!options.retainLines,
-          sourceFileName: filename,
-          sourceMaps: true,
-        },
-        src,
-      );
-
-      return {
-        ast,
-        code: result.code,
+    }
+    const result = generate(
+      ast,
+      {
+        comments: false,
+        compact: false,
         filename,
-        map: options.generateSourceMaps
-          ? result.map
-          : result.rawMappings.map(compactMapping),
-      };
-    
+        retainLines: !!options.retainLines,
+        sourceFileName: filename,
+        sourceMaps: true,
+      },
+      src,
+    );
+
+    return {
+      ast,
+      code: result.code,
+      filename,
+      map: options.generateSourceMaps
+        ? result.map
+        : result.rawMappings.map(compactMapping),
+    };
   } catch (e) {
     console.error(e);
     throw e;

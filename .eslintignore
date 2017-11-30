@@ -1,1 +1,3 @@
-_universe/**
+app/_universe/**
+app/.expo
+**/*/node_modules

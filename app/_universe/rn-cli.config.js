@@ -2,10 +2,10 @@
  * @noflow
  */
 
-const fs = require('fs');
-const path = require('path');
-const blacklist = require('react-native/node_modules/metro-bundler/src/blacklist');
-const babelRegisterOnly = require('react-native/node_modules/metro-bundler/src/babelRegisterOnly');
+const fs = require("fs");
+const path = require("path");
+const blacklist = require("react-native/node_modules/metro-bundler/src/blacklist");
+const babelRegisterOnly = require("react-native/node_modules/metro-bundler/src/babelRegisterOnly");
 
 const registeredTransformModulePaths = new Set();
 
@@ -17,25 +17,22 @@ module.exports = {
     return [];
   },
   getTransformModulePath() {
-    const modulePath = path.join(
-      __dirname,
-      'transformer.js'
-    );
+    const modulePath = path.join(__dirname, "transformer.js");
     if (!registeredTransformModulePaths.has(modulePath)) {
       babelRegisterOnly([modulePath]);
       registeredTransformModulePaths.add(modulePath);
     }
     return modulePath;
   },
-  extraNodeModules: getNodeModulesForDirectory(path.resolve('.')),
+  extraNodeModules: getNodeModulesForDirectory(path.resolve(".")),
 };
 
 function getNodeModulesForDirectory(rootPath) {
-  const nodeModulePath = path.join(rootPath, 'node_modules');
+  const nodeModulePath = path.join(rootPath, "node_modules");
   const folders = fs.readdirSync(nodeModulePath);
   return folders.reduce((modules, folderName) => {
     const folderPath = path.join(nodeModulePath, folderName);
-    if (folderName.startsWith('@')) {
+    if (folderName.startsWith("@")) {
       const scopedModuleFolders = fs.readdirSync(folderPath);
       const scopedModules = scopedModuleFolders.reduce(
         (scopedModules, scopedFolderName) => {
@@ -44,7 +41,7 @@ function getNodeModulesForDirectory(rootPath) {
           ] = maybeResolveSymlink(path.join(folderPath, scopedFolderName));
           return scopedModules;
         },
-        {}
+        {},
       );
       return Object.assign({}, modules, scopedModules);
     }
@@ -57,7 +54,7 @@ function maybeResolveSymlink(maybeSymlinkPath) {
   if (fs.lstatSync(maybeSymlinkPath).isSymbolicLink()) {
     const resolved = path.resolve(
       path.dirname(maybeSymlinkPath),
-      fs.readlinkSync(maybeSymlinkPath)
+      fs.readlinkSync(maybeSymlinkPath),
     );
     return resolved;
   }

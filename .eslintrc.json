@@ -23,7 +23,8 @@
   "rules": {
     "global-require": "off",
     "react/no-typos": "off", // until https://github.com/yannickcr/eslint-plugin-react/issues/1389 fixed
-    "react/jsx-filename-extension": "off"
+    "react/jsx-filename-extension": "off",
+    "jsx-a11y/accessible-emoji": "off"
   },
   "overrides": [
     {
@@ -32,5 +33,12 @@
         "jest": true
       }
     }
-  ]
+  ],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".android.js", ".ios.js"]
+      }
+    }
+  }
 }
