@@ -2,7 +2,6 @@
 import React from "react";
 import { Feather } from "@expo/vector-icons";
 import { TabNavigator, TabBarBottom } from "react-navigation";
-
 import Colors from "../constants/Colors";
 
 import TimetableScreen from "../screens/TimetableScreen";
@@ -64,7 +63,7 @@ export default TabNavigator(
     }),
     tabBarComponent: TabBarBottom,
     tabBarPosition: "bottom",
-    animationEnabled: false,
+    animationEnabled: true,
     swipeEnabled: false,
     tabBarOptions: {
       activeTintColor: Colors.pageBackground,
@@ -79,6 +78,11 @@ export default TabNavigator(
       },
       style: {
         height: 60,
+      },
+      bottomNavigationOptions: {
+        labelColor: Colors.pageBackground,
+        backgroundColor: Colors.accentColor,
+        rippleColor: Colors.pageBackground,
       },
     },
   },

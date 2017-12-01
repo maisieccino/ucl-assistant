@@ -1,7 +1,7 @@
 /* eslint react/require-default-props: 0 */
 import React from "react";
 import PropTypes from "prop-types";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import Styles from "../styles/Containers";
 
 const propTypes = {
@@ -12,7 +12,9 @@ const defaultProps = {
 };
 
 export const Page = ({ children }) => (
-  <View style={Styles.page}>{children}</View>
+  <ScrollView>
+    <View style={Styles.page}>{children}</View>
+  </ScrollView>
 );
 Page.propTypes = propTypes;
 Page.defaultProps = defaultProps;

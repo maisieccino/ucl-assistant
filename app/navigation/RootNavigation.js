@@ -4,7 +4,6 @@ import { StackNavigator } from "react-navigation";
 
 import MainTabNavigator from "./MainTabNavigator";
 import registerForPushNotificationsAsync from "../api/registerForPushNotificationsAsync";
-import Colors from "../constants/Colors";
 
 const RootStackNavigator = StackNavigator(
   {

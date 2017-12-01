@@ -7,11 +7,14 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.pageBackground,
   },
+  app: {
+    backgroundColor: Colors.pageBackground,
+  },
   card: {
     padding: 10,
     backgroundColor: Colors.cardBackground,
     elevation: 3,
-    marginBottom: 10,
-    marginTop: 10,
+    marginBottom: 5,
+    marginTop: 5,
   },
 });
