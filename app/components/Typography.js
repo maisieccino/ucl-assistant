@@ -1,7 +1,7 @@
 /* eslint react/require-default-props: 0 */
 import React from "react";
 import PropTypes from "prop-types";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 import Style from "../styles/Typography";
 
 const propTypes = {
@@ -28,5 +28,20 @@ export const BodyText = ({ children }) => (
 );
 BodyText.propTypes = propTypes;
 BodyText.defaultTextProps = defaultProps;
+
+export const ButtonText = ({ children }) => (
+  <Text style={Style.buttonText}>{children}</Text>
+);
+ButtonText.propTypes = propTypes;
+ButtonText.defaultTextProps = defaultProps;
+
+export const CardTitleText = ({ children }) => (
+  <View>
+    <Text style={Style.cardTitle}>{children}</Text>
+    <View style={Style.cardTitleRect} />
+  </View>
+);
+CardTitleText.propTypes = propTypes;
+CardTitleText.defaultTextProps = defaultProps;
 
 export default {};
