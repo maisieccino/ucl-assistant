@@ -1,0 +1,17 @@
+{
+  "name": "ucl-assistant-server",
+  "version": "0.1.0",
+  "description": "Server to support the UCL Assistant app",
+  "main": "server.js",
+  "repository": "https://github.com/mbellgb/ucl-assistant",
+  "author": "Matthew Bell",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "koa": "^2.4.1",
+    "koa-bodyparser": "^4.2.0",
+    "koa-router": "^7.3.0",
+    "node-fetch": "^1.7.3"
+  }
+}

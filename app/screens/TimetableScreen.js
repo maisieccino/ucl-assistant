@@ -48,7 +48,7 @@ class TimetableScreen extends Component {
         <SubtitleText>Find A Timetable</SubtitleText>
         <CustomButton
           onPress={() => {
-            setTimeout(() => navigate("People"), 200);
+            setTimeout(() => navigate("Splash"), 200);
           }}
         >
           Test

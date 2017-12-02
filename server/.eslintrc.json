@@ -1,0 +1,11 @@
+{
+  "extends": ["airbnb", "prettier", "prettier/flowtype"],
+  "env": {
+    "react-native/react-native": true,
+    "node": true
+  },
+  "plugins": ["import", "node"],
+  "globals": {
+    "__DEV__": false
+  }
+}

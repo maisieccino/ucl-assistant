@@ -2,3 +2,6 @@ app/node_modules
 app/.expo
 app/assets/fonts/Apercu*
 node_modules
+**/node_modules
+**/*.env
+**/*.eslintcache

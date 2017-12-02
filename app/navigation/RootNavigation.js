@@ -3,12 +3,16 @@ import React, { Component } from "react";
 import { StackNavigator } from "react-navigation";
 
 import MainTabNavigator from "./MainTabNavigator";
+import SplashScreen from "../screens/SplashScreen";
 import registerForPushNotificationsAsync from "../api/registerForPushNotificationsAsync";
 
 const RootStackNavigator = StackNavigator(
   {
     Main: {
       screen: MainTabNavigator,
+    },
+    Splash: {
+      screen: SplashScreen,
     },
   },
   {

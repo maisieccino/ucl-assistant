@@ -2,10 +2,17 @@ import { StyleSheet } from "react-native";
 import Colors from "../constants/Colors";
 
 export default StyleSheet.create({
+  pageScrollContainer: {
+    flex: 1,
+    flexDirection: "column",
+    backgroundColor: Colors.pageBackground,
+  },
   page: {
     padding: 20,
+    flexGrow: 1,
+  },
+  spacer: {
     flex: 1,
-    backgroundColor: Colors.pageBackground,
   },
   app: {
     backgroundColor: Colors.pageBackground,

@@ -6,7 +6,7 @@ export default StyleSheet.create({
     alignSelf: "flex-start",
   },
   button: {
-    backgroundColor: Colors.accentColor,
+    backgroundColor: Colors.buttonBackground,
     padding: 8,
     borderRadius: 8,
     minWidth: 70,
