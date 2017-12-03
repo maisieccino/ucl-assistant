@@ -11,7 +11,12 @@
     "dotenv": "^4.0.0",
     "koa": "^2.4.1",
     "koa-bodyparser": "^4.2.0",
+    "koa-passport": "^4.0.1",
     "koa-router": "^7.3.0",
-    "node-fetch": "^1.7.3"
+    "koa-session": "^5.5.1",
+    "moment": "^2.19.3",
+    "node-fetch": "^1.7.3",
+    "passport-oauth2": "^1.4.0",
+    "randomstring": "^1.1.5"
   }
 }
