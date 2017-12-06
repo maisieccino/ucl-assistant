@@ -20,6 +20,16 @@ const logger = async (ctx, next) => {
   console.log(`${ctx.method} ${ctx.url} => ${ctx.status} "${ctx.message}"`);
 };
 
+const jsonFormatPretty = ctx =>
+  JSON.stringify(
+    {
+      content: ctx.body,
+      error: ctx.error || "",
+    },
+    "\n",
+    3,
+  );
+
 const jsonFormat = ctx =>
   JSON.stringify({
     content: ctx.body,
@@ -39,7 +49,8 @@ const jsonify = async (ctx, next) => {
     ctx.error = error.message;
     ctx.status = error.status || 500;
   }
-  ctx.body = jsonFormat(ctx);
+  // pretty-print if the pretty query variable is present
+  ctx.body = ctx.query.pretty ? jsonFormatPretty(ctx) : jsonFormat(ctx);
 };
 
 module.exports = {

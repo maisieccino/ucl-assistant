@@ -5,7 +5,21 @@ module.exports = app => {
   const router = new Router();
 
   router.get("/", async ctx => {
-    ctx.body = "hi";
+    ctx.query.pretty = true;
+    ctx.body = {
+      routes: {
+        "/session": "Returns the currently authenticated user's session",
+        "/connect/uclapi": "Authorise via the UCL API",
+        "/connect/uclapi/callback": "Callback from the UCL API",
+      },
+      tips: {
+        "pretty-print": "Add ?pretty=true to pretty print the json (as shown)",
+      },
+    };
+  });
+
+  router.get("/session", async ctx => {
+    ctx.body = ctx.session;
   });
 
   oauth(router);

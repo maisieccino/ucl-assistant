@@ -3,6 +3,12 @@
   "version": "0.1.0",
   "description": "Server to support the UCL Assistant app",
   "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": "9.x"
+  },
   "repository": "https://github.com/mbellgb/ucl-assistant",
   "author": "Matthew Bell",
   "license": "MIT",
@@ -11,12 +17,9 @@
     "dotenv": "^4.0.0",
     "koa": "^2.4.1",
     "koa-bodyparser": "^4.2.0",
-    "koa-passport": "^4.0.1",
     "koa-router": "^7.3.0",
     "koa-session": "^5.5.1",
     "moment": "^2.19.3",
-    "node-fetch": "^1.7.3",
-    "passport-oauth2": "^1.4.0",
-    "randomstring": "^1.1.5"
+    "node-fetch": "^1.7.3"
   }
 }
