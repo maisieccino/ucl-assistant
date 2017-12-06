@@ -37,7 +37,7 @@ const jsonify = async (ctx, next) => {
   } catch (error) {
     console.error(`Error: ${error.message}`);
     ctx.error = error.message;
-    ctx.status = error.status;
+    ctx.status = error.status || 500;
   }
   ctx.body = jsonFormat(ctx);
 };
