@@ -9,6 +9,7 @@ import StudySpacesScreen from "../screens/StudySpacesScreen";
 import PeopleScreen from "../screens/PeopleScreen";
 import RoomsScreen from "../screens/RoomsScreen";
 import SettingsScreen from "../screens/SettingsScreen";
+import StorybookScreen from "../screens/StorybookScreen";
 
 export default TabNavigator(
   {
@@ -27,6 +28,7 @@ export default TabNavigator(
     Settings: {
       screen: SettingsScreen,
     },
+    Storybook: __DEV__ ? { screen: StorybookScreen } : null,
   },
   {
     navigationOptions: ({ navigation }) => ({

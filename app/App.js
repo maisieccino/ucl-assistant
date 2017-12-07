@@ -57,9 +57,6 @@ class App extends Component {
         />
       );
     }
-    if (__DEV__) {
-      return <StorybookUI />;
-    }
     return (
       <View style={Styles.app}>
         {Platform.OS === "ios" && <StatusBar barStyle="default" />}
