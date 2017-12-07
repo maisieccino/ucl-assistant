@@ -16,6 +16,7 @@
     },
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "scheme": "UCLAssistant"
   }
 }

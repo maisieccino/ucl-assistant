@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Alert, AsyncStorage } from "react-native";
 import PropTypes from "prop-types";
 import { Feather } from "@expo/vector-icons";
 import { TitleText, SubtitleText, BodyText } from "../components/Typography";
@@ -23,8 +24,26 @@ class TimetableScreen extends Component {
     navigation: PropTypes.shape().isRequired,
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: {},
+    };
+  }
+
+  async componentDidMount() {
+    Alert.alert("hi!");
+    try {
+      const user = await AsyncStorage.getItem("@UCLAssistant:user");
+      this.state.user = JSON.parse(user);
+    } catch (err) {
+      this.state.user = {};
+    }
+  }
+
   render() {
     const { navigate } = this.props.navigation;
+    const { user } = this.state;
     return (
       <Page>
         <TitleText>Your Timetable</TitleText>
@@ -53,6 +72,7 @@ class TimetableScreen extends Component {
         >
           Test
         </CustomButton>
+        <BodyText>{JSON.stringify(user, "\n", 2)}</BodyText>
       </Page>
     );
   }

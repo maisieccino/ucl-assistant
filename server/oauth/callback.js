@@ -1,9 +1,6 @@
 const fetch = require("node-fetch");
-// module.exports.redirect = async ctx => {
-//   await ctx.login();
-//   console.log("helloooo");
-//   ctx.redirect(`UCLAssistant://login?user=${JSON.stringify(ctx.user)}`);
-// }
+const querystring = require("querystring");
+const session = require("koa-session");
 
 module.exports = async ctx => {
   if (!Object.keys(ctx.session).includes("state")) {
@@ -59,11 +56,25 @@ module.exports = async ctx => {
     }
 
     // add this to the session
-    ctx.session = {
-      ...(await res.json()),
-      ...ctx.session,
-    };
+    json = await res.json();
+    ctx.session.department = json.department;
+    ctx.session.email = json.email;
+    ctx.session.full_name = json.full_name;
+    ctx.session.given_name = json.given_name;
+    ctx.session.upi = json.upi;
+
     ctx.body = ctx.session;
+
+    const queryObj = {
+      ...json,
+      "set-cookie": ctx.request.get("Cookie"),
+    };
+    const query = querystring.stringify(queryObj);
+    ctx.redirect(
+      process.env.NODE_ENV === "production"
+        ? `UCLAssistant://+auth?${query}`
+        : `exp://localhost:19000/+auth?${query}`,
+    );
   } catch (error) {
     ctx.throw(error.message, 500);
   }

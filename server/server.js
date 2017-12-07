@@ -5,6 +5,7 @@ const { jsonify, logger, timer } = require("./middleware");
 const router = require("./router");
 
 require("dotenv").config();
+
 const app = new Koa();
 
 app.keys = [process.env.SECRET || "secret"];
