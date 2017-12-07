@@ -3,15 +3,19 @@ import Colors from "../constants/Colors";
 
 export default StyleSheet.create({
   buttonWrapper: {
-    alignSelf: "flex-start",
+    borderRadius: 8,
   },
   button: {
-    backgroundColor: Colors.buttonBackground,
     padding: 8,
+    paddingLeft: 16,
+    paddingRight: 16,
     borderRadius: 8,
     minWidth: 70,
     marginTop: 5,
     marginBottom: 5,
     elevation: 2,
+  },
+  disabled: {
+    backgroundColor: Colors.disabledButtonBackground,
   },
 });

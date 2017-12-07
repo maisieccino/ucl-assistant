@@ -5,7 +5,7 @@ import { AppLoading, Asset, Font } from "expo";
 import { Ionicons } from "@expo/vector-icons";
 import RootNavigation from "./navigation/RootNavigation";
 import Styles from "./styles/Containers";
-// import StorybookUI from "./storybook";
+import StorybookUI from "./storybook";
 
 class App extends Component {
   static propTypes = {
@@ -58,6 +58,9 @@ class App extends Component {
         />
       );
     }
+    if (__DEV__) {
+      return <StorybookUI />;
+    }
     return (
       <View style={Styles.app}>
         {Platform.OS === "ios" && <StatusBar barStyle="default" />}
@@ -68,5 +71,4 @@ class App extends Component {
   }
 }
 
-// module.exports = __DEV__ ? StorybookUI : App;
 export default App;
