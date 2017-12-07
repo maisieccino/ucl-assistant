@@ -10,10 +10,12 @@ export default StyleSheet.create({
     paddingLeft: 16,
     paddingRight: 16,
     borderRadius: 8,
-    minWidth: 70,
+    minWidth: 150,
+    minHeight: 55,
     marginTop: 5,
     marginBottom: 5,
     elevation: 2,
+    justifyContent: "center",
   },
   disabled: {
     backgroundColor: Colors.disabledButtonBackground,

@@ -6,5 +6,8 @@
   "plugins": ["import", "node"],
   "globals": {
     "__DEV__": false
+  },
+  "rules": {
+    "no-console": 0
   }
 }

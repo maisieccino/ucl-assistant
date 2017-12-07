@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "test": "jest --watch",
-    "storybook": "storybook start -p 7007"
+    "storybook": "storybook start -p 7007",
+    "prestorybook": "rnstl"
   },
   "jest": {
     "preset": "jest-expo"
@@ -18,7 +19,8 @@
     "now": "^8.5.4",
     "prop-types": "^15.6.0",
     "react": "16.0.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-23.0.0.tar.gz",
+    "react-native":
+      "https://github.com/expo/react-native/archive/sdk-23.0.0.tar.gz",
     "react-navigation": "^1.0.0-beta.19"
   },
   "devDependencies": {
@@ -28,10 +30,16 @@
     "@storybook/react-native": "^3.2.16",
     "jest-expo": "^23.0.0",
     "react-dom": "16.0.0",
+    "react-native-storybook-loader": "^1.6.0",
     "react-test-renderer": "^16.2.0"
   },
   "name": "ucl-assistant-app",
   "version": "0.1.0",
   "description": "An app to manage your UCL life",
-  "author": "Matt Bell"
+  "author": "Matt Bell",
+  "config": {
+    "react-native-storybook-loader": {
+      "pattern": "**/*-stories.js"
+    }
+  }
 }

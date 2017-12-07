@@ -3,9 +3,11 @@
     "lint": "eslint . --ext .js --ext .jsx --cache --ignore-path .eslintignore",
     "lint:force": "eslint . --ext .js --ext .jsx --ignore-path .eslintignore",
     "lint:staged": "lint-staged",
-    "format": "prettier --write --trailing-comma all {app,server}/**/*.{js,jsx}",
+    "format":
+      "prettier --write --trailing-comma all {app,server}/**/*.{js,jsx}",
     "precommit": "yarn run lint:staged",
-    "postinstall": "cd app && yarn install --pure-lockfile"
+    "postinstall":
+      "(cd app && yarn install --pure-lockfile) && (cd server && yarn install --pure-lockfile)"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.2",
@@ -22,13 +24,11 @@
     "prettier": "^1.8.2"
   },
   "lint-staged": {
-    "*.{js,jsx}": [
-      "prettier --write --trailing-comma all",
-      "git add"
-    ]
+    "*.{js,jsx}": ["prettier --write --trailing-comma all", "git add"]
   },
   "name": "ucl-assistant",
   "version": "0.1.0",
   "description": "An app to manage your UCL life",
-  "author": "Matt Bell"
+  "author": "Matt Bell",
+  "license": "MIT"
 }

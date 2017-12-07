@@ -39,9 +39,8 @@ class App extends Component {
     ]);
 
   handleLoadingError = error => {
-    // In this case, you might want to report the error to your error
-    // reporting service, for example Sentry
-    console.warn(error);
+    // TODO: Setup remote error logging
+    console.warn(error); // eslint-disable-line no-console
   };
 
   handleFinishLoading = () => {
