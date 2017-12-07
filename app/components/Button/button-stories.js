@@ -2,7 +2,7 @@ import React from "react";
 import { storiesOf } from "@storybook/react-native";
 import { action } from "@storybook/addon-actions";
 import { withKnobs, boolean, text } from "@storybook/addon-knobs";
-import Button from "../../components/Button";
+import Button from "./";
 import CenterView from "../CenterView";
 
 storiesOf("Button", module)

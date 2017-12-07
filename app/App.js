@@ -5,7 +5,6 @@ import { AppLoading, Asset, Font } from "expo";
 import { Ionicons } from "@expo/vector-icons";
 import RootNavigation from "./navigation/RootNavigation";
 import Styles from "./styles/Containers";
-import StorybookUI from "./storybook";
 
 class App extends Component {
   static propTypes = {
@@ -19,6 +18,10 @@ class App extends Component {
   state = {
     isLoadingComplete: false,
   };
+
+  componentWillMount() {
+    StatusBar.setHidden(false);
+  }
 
   loadResourcesAsync = async () =>
     Promise.all([

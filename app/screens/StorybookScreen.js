@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import { View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import Colors from "../constants/Colors";
 import StorybookUI from "../storybook";
+import Styles from "../styles/Containers";
 
 class StorybookScreen extends Component {
   static navigationOptions = {
@@ -17,7 +19,11 @@ class StorybookScreen extends Component {
   };
 
   render() {
-    return <StorybookUI />;
+    return (
+      <View style={[Styles.pageScrollContainer, Styles.mainTabPage]}>
+        <StorybookUI />
+      </View>
+    );
   }
 }
 

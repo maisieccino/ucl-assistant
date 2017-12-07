@@ -32,5 +32,6 @@ export default StyleSheet.create({
     elevation: 3,
     marginBottom: 5,
     marginTop: 5,
+    flexDirection: "column",
   },
 });

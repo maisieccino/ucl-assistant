@@ -64,6 +64,7 @@ export default TabNavigator(
       },
     }),
     tabBarComponent: TabBarBottom,
+    initialRouteName: __DEV__ ? "Storybook" : "Timetable",
     tabBarPosition: "bottom",
     animationEnabled: true,
     swipeEnabled: false,
