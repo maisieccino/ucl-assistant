@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Feather } from "@expo/vector-icons";
 import { TitleText, SubtitleText } from "../components/Typography";
-import { Page } from "../components/Containers";
+import { MainTabPage } from "../components/Containers";
 import Colors from "../constants/Colors";
 
 class TimetableScreen extends Component {
@@ -18,11 +18,11 @@ class TimetableScreen extends Component {
 
   render() {
     return (
-      <Page>
+      <MainTabPage>
         <TitleText>Rooms</TitleText>
         <SubtitleText>Your Favourites</SubtitleText>
         <SubtitleText>In Roberts Building</SubtitleText>
-      </Page>
+      </MainTabPage>
     );
   }
 }

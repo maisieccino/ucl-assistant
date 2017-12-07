@@ -7,15 +7,24 @@ export default StyleSheet.create({
     flexDirection: "column",
     backgroundColor: Colors.pageBackground,
   },
+  app: {
+    flex: 1,
+    backgroundColor: Colors.pageBackground,
+  },
+  statusBarUnderlay: {
+    height: 24,
+    backgroundColor: "rgb(255,255,255)",
+  },
   page: {
     padding: 20,
     flexGrow: 1,
+    backgroundColor: Colors.pageBackground,
+  },
+  mainTabPage: {
+    marginBottom: 60,
   },
   spacer: {
     flex: 1,
-  },
-  app: {
-    backgroundColor: Colors.pageBackground,
   },
   card: {
     padding: 10,

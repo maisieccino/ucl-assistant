@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { Alert, AsyncStorage } from "react-native";
+import { AsyncStorage } from "react-native";
 import PropTypes from "prop-types";
 import { Feather } from "@expo/vector-icons";
 import { TitleText, SubtitleText, BodyText } from "../components/Typography";
 import Card from "../components/Card";
-import { Page } from "../components/Containers";
+import { MainTabPage } from "../components/Containers";
 import CustomButton from "../components/Button";
 import Colors from "../constants/Colors";
 
@@ -32,7 +32,6 @@ class TimetableScreen extends Component {
   }
 
   async componentDidMount() {
-    Alert.alert("hi!");
     try {
       const user = await AsyncStorage.getItem("@UCLAssistant:user");
       this.state.user = JSON.parse(user);
@@ -45,7 +44,7 @@ class TimetableScreen extends Component {
     const { navigate } = this.props.navigation;
     const { user } = this.state;
     return (
-      <Page>
+      <MainTabPage>
         <TitleText>Your Timetable</TitleText>
         <SubtitleText>Today{"'"}s Timetable</SubtitleText>
         <Card title="COMP101P">
@@ -73,7 +72,7 @@ class TimetableScreen extends Component {
           Test
         </CustomButton>
         <BodyText>{JSON.stringify(user, "\n", 2)}</BodyText>
-      </Page>
+      </MainTabPage>
     );
   }
 }

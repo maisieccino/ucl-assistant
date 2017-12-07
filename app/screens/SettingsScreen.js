@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { TitleText } from "../components/Typography";
-import { Page } from "../components/Containers";
+import { MainTabPage } from "../components/Containers";
 
 class TimetableScreen extends Component {
   static navigationOptions = {
@@ -9,9 +9,9 @@ class TimetableScreen extends Component {
 
   render() {
     return (
-      <Page>
+      <MainTabPage>
         <TitleText>Settings</TitleText>
-      </Page>
+      </MainTabPage>
     );
   }
 }

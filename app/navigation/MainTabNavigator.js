@@ -67,7 +67,8 @@ export default TabNavigator(
     swipeEnabled: false,
     tabBarOptions: {
       activeTintColor: Colors.pageBackground,
-      activeBackgroundColor: Colors.accentColor,
+      activeBackgroundColor: "rgba(27,153,139,0.85)",
+      inactiveBackgroundColor: "rgba(206,208,217,0.85)",
       inactiveTintColor: Colors.textColor,
       tabStyle: {
         paddingTop: 5,
@@ -78,6 +79,11 @@ export default TabNavigator(
       },
       style: {
         height: 60,
+        backgroundColor: "rgba(255,255,255,0.6)",
+        position: "absolute",
+        left: 0,
+        right: 0,
+        bottom: 0,
       },
       bottomNavigationOptions: {
         labelColor: Colors.pageBackground,
