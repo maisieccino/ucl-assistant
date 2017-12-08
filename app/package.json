@@ -15,12 +15,12 @@
     "emoji-cli": "^1.0.0",
     "expo": "^23.0.0",
     "gulp": "^3.9.1",
+    "moment": "^2.19.3",
     "nodemon": "^1.12.1",
     "now": "^8.5.4",
     "prop-types": "^15.6.0",
     "react": "16.0.0",
-    "react-native":
-      "https://github.com/expo/react-native/archive/sdk-23.0.0.tar.gz",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-23.0.0.tar.gz",
     "react-navigation": "^1.0.0-beta.19"
   },
   "devDependencies": {
