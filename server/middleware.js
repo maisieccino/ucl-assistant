@@ -53,7 +53,16 @@ const jsonify = async (ctx, next) => {
   ctx.body = ctx.query.pretty ? jsonFormatPretty(ctx) : jsonFormat(ctx);
 };
 
+const authenticate = async (ctx, next) => {
+  if (ctx.session.isNew) {
+    ctx.throw("You need to be authenticated to access this endpoint", 401);
+  } else {
+    await next();
+  }
+};
+
 module.exports = {
+  authenticate,
   jsonify,
   logger,
   timer,

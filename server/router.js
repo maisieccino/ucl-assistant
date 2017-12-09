@@ -1,5 +1,6 @@
 const Router = require("koa-router");
 const oauth = require("./oauth");
+const { authenticate } = require("./middleware");
 
 module.exports = app => {
   const router = new Router();
@@ -23,6 +24,10 @@ module.exports = app => {
   });
 
   oauth(router);
+
+  router.get("/testauth", authenticate, async ctx => {
+    ctx.body = "Authenticated!";
+  });
 
   // route not found.
   router.get(/.*/, async ctx => {
