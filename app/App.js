@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/es/integration/react";
 import { Platform, StatusBar, View } from "react-native";
 import { AppLoading, Asset, Font } from "expo";
 import { Ionicons } from "@expo/vector-icons";
+import configureStore from "./configureStore";
 import RootNavigation from "./navigation/RootNavigation";
 import Styles from "./styles/Containers";
 
@@ -15,9 +18,13 @@ class App extends Component {
     skipLoadingScreen: false,
   };
 
-  state = {
-    isLoadingComplete: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoadingComplete: false,
+      store: configureStore(),
+    };
+  }
 
   componentWillMount() {
     StatusBar.setHidden(false);
@@ -60,12 +67,19 @@ class App extends Component {
         />
       );
     }
+    const { store, persistor } = this.state.store;
     return (
-      <View style={Styles.app}>
-        {Platform.OS === "ios" && <StatusBar barStyle="default" />}
-        {Platform.OS === "android" && <View style={Styles.statusBarUnderlay} />}
-        <RootNavigation />
-      </View>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <View style={Styles.app}>
+            {Platform.OS === "ios" && <StatusBar barStyle="default" />}
+            {Platform.OS === "android" && (
+              <View style={Styles.statusBarUnderlay} />
+            )}
+            <RootNavigation />
+          </View>
+        </PersistGate>
+      </Provider>
     );
   }
 }

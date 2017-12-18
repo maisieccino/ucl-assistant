@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { Alert, AsyncStorage } from "react-native";
+import { Alert } from "react-native";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Feather } from "@expo/vector-icons";
-import { AuthSession, Constants, SecureStore } from "expo";
+import { signIn } from "../actions/userActions";
 import { TitleText, BodyText } from "../components/Typography";
 import { PageNoScroll, Spacer } from "../components/Containers";
 import CustomButton from "../components/Button";
@@ -22,37 +23,43 @@ class SplashScreen extends Component {
 
   static propTypes = {
     navigation: PropTypes.shape().isRequired,
+    isSigningIn: PropTypes.bool,
+    error: PropTypes.string,
+    scopeNumber: PropTypes.number,
+    signIn: PropTypes.func,
   };
 
-  onSignInPress = async () => {
-    const result = await AuthSession.startAsync({
-      authUrl: "https://ucl-assistant-server.now.sh/connect/uclapi",
-      returnUrl: Constants.linkingUrl,
-    });
-    if (result.type === "success") {
-      // set-cookies is given in the form of `key=value[;key2=value[...]]`
-      // convert this to an object.
-      const cookies = result.params["set-cookie"]
-        .split(/\s*;\s*/)
-        .map(cookie => cookie.split(/\s*=\s*/));
-      const sessCookie = cookies.filter(
-        cookie => cookie[0] === "koa:sess",
-      )[0][1];
-      const sigCookie = cookies.filter(
-        cookie => cookie[0] === "koa:sess.sig",
-      )[0][1];
-      try {
-        await SecureStore.setItemAsync("cookie-sess", sessCookie);
-        await SecureStore.setItemAsync("cookie-sess-sig", sigCookie);
-        const user = { ...result.params };
-        delete user[cookies];
-        await AsyncStorage.setItem("@UCLAssistant:user", JSON.stringify(user));
+  static defaultProps = {
+    isSigningIn: false,
+    error: "",
+    scopeNumber: -1,
+    signIn: () => {},
+  };
+
+  static mapStateToProps = state => ({
+    isSigningIn: state.user.isSigningIn,
+    error: state.user.signInError,
+    scopeNumber: state.user.scopeNumber,
+  });
+
+  static mapDispatchToProps = dispatch => ({
+    signIn: () => dispatch(signIn()),
+  });
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.isSigningIn === true && nextProps.isSigningIn === false) {
+      // did we just sign in?
+      if (nextProps.scopeNumber >= 0) {
+        // yes.
         this.props.navigation.navigate("Timetable");
-      } catch (err) {
-        Alert.alert("Error saving user info", err.message);
+      } else if (nextProps.error.length < 1) {
+        // cancelled
+      } else {
+        // error
+        setTimeout(() => Alert.alert("Error Signing In", nextProps.error), 500);
       }
     }
-  };
+  }
 
   render() {
     return (
@@ -60,7 +67,10 @@ class SplashScreen extends Component {
         <TitleText>UCL Assistant</TitleText>
         <BodyText>One app to manage your life at UCL.</BodyText>
         <Spacer />
-        <CustomButton onPress={() => this.onSignInPress()}>
+        <CustomButton
+          onPress={() => this.props.signIn()}
+          loading={this.props.isSigningIn}
+        >
           Sign In With UCL
         </CustomButton>
       </PageNoScroll>
@@ -68,4 +78,7 @@ class SplashScreen extends Component {
   }
 }
 
-export default SplashScreen;
+export default connect(
+  SplashScreen.mapStateToProps,
+  SplashScreen.mapDispatchToProps,
+)(SplashScreen);

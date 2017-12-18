@@ -8,7 +8,7 @@ import { propTypes, defaultProps } from "./props";
 const Button = ({ onPress, styles, children, disabled }) => (
   <TouchableNativeFeedback
     background={TouchableNativeFeedback.SelectableBackground()}
-    onPress={e => onPress(e)}
+    onPress={e => setTimeout(onPress, 200, e)}
     useForeground
     style={Styles.buttonWrapper}
     disabled={disabled}
