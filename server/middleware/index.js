@@ -1,3 +1,5 @@
+const auth = require("./auth");
+
 /**
  * Middleware that records the response time of the request
  * @param  {Koa.ctx}   ctx Koa context
@@ -45,7 +47,7 @@ const jsonify = async (ctx, next) => {
   try {
     await next();
   } catch (error) {
-    console.error(`Error: ${error.message}`);
+    console.error(`Error: ${error.message}\n${error.stack}`);
     ctx.error = error.message;
     ctx.status = error.status || 500;
   }
@@ -53,17 +55,9 @@ const jsonify = async (ctx, next) => {
   ctx.body = ctx.query.pretty ? jsonFormatPretty(ctx) : jsonFormat(ctx);
 };
 
-const authenticate = async (ctx, next) => {
-  if (ctx.session.isNew) {
-    ctx.throw("You need to be authenticated to access this endpoint", 401);
-  } else {
-    await next();
-  }
-};
-
 module.exports = {
-  authenticate,
   jsonify,
   logger,
   timer,
+  auth,
 };

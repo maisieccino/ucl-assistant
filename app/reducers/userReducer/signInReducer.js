@@ -3,30 +3,21 @@ import {
   SIGN_IN_SUCCESS,
   SIGN_IN_FAILURE,
   SIGN_IN_CANCEL,
-} from "../constants/userConstants";
+} from "../../constants/userConstants";
 
 export const initialState = {
-  scopeNumber: -1,
-  email: "",
-  fullName: "",
-  givenName: "",
-  cn: "",
-  upi: "",
-  department: "",
-  cookieKoaSess: "",
-  cookieKoaSessSig: "",
   isSigningIn: false,
-  signInError: "",
+  error: "",
 };
 
 export default (state = initialState, action = null) => {
-  const { type, user, error } = action;
+  const { type, error } = action;
   switch (type) {
     case IS_SIGNING_IN: {
-      return { ...initialState, isSigningIn: true };
+      return { ...state, error: "", isSigningIn: true };
     }
     case SIGN_IN_SUCCESS: {
-      return { ...state, ...user, isSigningIn: false, signInError: "" };
+      return { ...state, isSigningIn: false, signInError: "" };
     }
     case SIGN_IN_FAILURE: {
       return { ...state, isSigningIn: false, error };

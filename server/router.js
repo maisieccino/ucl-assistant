@@ -1,6 +1,7 @@
 const Router = require("koa-router");
 const oauth = require("./oauth");
-const { authenticate } = require("./middleware");
+const { jwt } = require("./middleware/auth");
+const { getUserData } = require("./uclapi/user");
 
 module.exports = app => {
   const router = new Router();
@@ -19,14 +20,14 @@ module.exports = app => {
     };
   });
 
-  router.get("/session", async ctx => {
-    ctx.body = ctx.session;
-  });
-
   oauth(router);
 
-  router.get("/testauth", authenticate, async ctx => {
+  router.get("/testauth", jwt, async ctx => {
     ctx.body = "Authenticated!";
+  });
+
+  router.get("/user", jwt, async ctx => {
+    ctx.body = await getUserData(ctx.state.user.apiToken);
   });
 
   // route not found.

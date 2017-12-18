@@ -1,6 +1,6 @@
-const fetch = require("node-fetch");
 const querystring = require("querystring");
-const session = require("koa-session");
+const { genToken } = require("../middleware/auth");
+const { getToken, getUserData } = require("../uclapi/user");
 
 module.exports = async ctx => {
   if (!Object.keys(ctx.session).includes("state")) {
@@ -18,64 +18,37 @@ module.exports = async ctx => {
     ctx.throw("Request denied", 400);
   }
 
-  try {
-    // trade auth code for a token
-    const tokenURL = `https://uclapi.com/oauth/token?client_id=${
-      process.env.UCLAPI_CLIENT_ID
-    }&client_secret=${process.env.UCLAPI_CLIENT_SECRET}&code=${code}`;
-    let res = await fetch(tokenURL, {
-      headers: {
-        accept: "application/json",
-      },
-    });
-    let json = {};
-    try {
-      json = await res.json();
-    } catch (error) {
-      // set a json value if it can't be parsed
-      json = { body: await res.text() };
-    }
-    // fail gracefully if there was a problem.
-    if (!res.ok || !json.ok) {
-      throw new Error(json);
-    }
+  // trade auth code for a token
+  let json = await getToken(code);
 
-    // update session to include token.
-    ctx.session.token = json.token;
+  // update session to include token.
+  const apiToken = json.token;
 
-    // fetch user data.
-    const userDataURL = `https://uclapi.com/oauth/user/data?client_secret=${
-      process.env.UCLAPI_CLIENT_SECRET
-    }&token=${ctx.session.token}`;
-    res = await fetch(userDataURL, {
-      headers: { accept: "application/json" },
-    });
+  console.log("made it");
 
-    if (!res.ok) {
-      throw new Error(await res.text());
-    }
+  // fetch user data.
+  json = await getUserData(apiToken);
 
-    // add this to the session
-    json = await res.json();
-    ctx.session.department = json.department;
-    ctx.session.email = json.email;
-    ctx.session.full_name = json.full_name;
-    ctx.session.given_name = json.given_name;
-    ctx.session.upi = json.upi;
+  const user = {
+    department: json.department,
+    email: json.email,
+    full_name: json.full_name,
+    given_name: json.given_name,
+    upi: json.upi,
+    scopeNumber: json.scope_number,
+    apiToken,
+  };
 
-    ctx.body = ctx.session;
+  const jwt = genToken(user);
 
-    const queryObj = {
-      ...json,
-      "set-cookie": ctx.request.get("Cookie"),
-    };
-    const query = querystring.stringify(queryObj);
-    ctx.redirect(
-      process.env.NODE_ENV === "production"
-        ? `UCLAssistant://+auth?${query}`
-        : `exp://localhost:19000/+auth?${query}`,
-    );
-  } catch (error) {
-    ctx.throw(error.message, 500);
-  }
+  const queryObj = {
+    ...user,
+    token: jwt,
+  };
+  const query = querystring.stringify(queryObj);
+  ctx.redirect(
+    process.env.NODE_ENV === "production"
+      ? `UCLAssistant://+auth?${query}`
+      : `exp://localhost:19000/+auth?${query}`,
+  );
 };

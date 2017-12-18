@@ -26,22 +26,11 @@ export const signIn = () => async dispatch => {
     returnUrl: ExpoConstants.linkingUrl,
   });
   if (result.type === "success") {
-    // set-cookies is given in the form of `key=value[;key2=value[...]]`
-    // convert this to an object.
-    const cookies = result.params["set-cookie"]
-      .split(/\s*;\s*/)
-      .map(cookie => cookie.split(/\s*=\s*/));
-    const cookieKoaSess = cookies.filter(
-      cookie => cookie[0] === "koa:sess",
-    )[0][1];
-    const cookieKoaSessSig = cookies.filter(
-      cookie => cookie[0] === "koa:sess.sig",
-    )[0][1];
     try {
       const user = {
-        cookieKoaSess,
-        cookieKoaSessSig,
-        scopeNumber: parseInt(result.params.scope_number, 10),
+        token: result.params.token,
+        apiToken: result.params.apiToken,
+        scopeNumber: parseInt(result.params.scopeNumber, 10),
         email: result.params.email,
         fullName: result.params.full_name,
         givenName: result.params.given_name,

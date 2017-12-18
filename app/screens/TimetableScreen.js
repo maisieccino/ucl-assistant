@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Alert } from "react-native";
 import PropTypes from "prop-types";
 import { Feather } from "@expo/vector-icons";
 import { TitleText, SubtitleText, BodyText } from "../components/Typography";
 import TimetableCard from "../components/Card/TimetableCard";
 import { MainTabPage } from "../components/Containers";
 import Button from "../components/Button";
+import { API_URL } from "../constants/API";
 import Colors from "../constants/Colors";
 
 class TimetableScreen extends Component {
@@ -33,6 +35,22 @@ class TimetableScreen extends Component {
     user: state.user,
   });
 
+  async authenticate() {
+    const { token } = this.props.user;
+    if (!token) {
+      Alert.alert("Not signed in", "You're not signed in.");
+    }
+    const res = await fetch(`${API_URL}/user`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    Alert.alert(
+      `Response code: ${res.status}`,
+      `body: ${JSON.stringify(await res.json(), "\n", 2)}`,
+    );
+  }
+
   render() {
     const { navigate } = this.props.navigation;
     const { user } = this.props;
@@ -50,6 +68,7 @@ class TimetableScreen extends Component {
         <BodyText>You have no upcoming events.</BodyText>
         <SubtitleText>Find A Timetable</SubtitleText>
         <Button onPress={() => navigate("Splash")}>Test</Button>
+        <Button onPress={() => this.authenticate()}>Test Authentication</Button>
         <BodyText>{JSON.stringify(user, "\n", 3)}</BodyText>
       </MainTabPage>
     );

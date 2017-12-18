@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Alert } from "react-native";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { NavigationActions } from "react-navigation";
 import { Feather } from "@expo/vector-icons";
 import { signIn } from "../actions/userActions";
 import { TitleText, BodyText } from "../components/Typography";
@@ -37,8 +38,8 @@ class SplashScreen extends Component {
   };
 
   static mapStateToProps = state => ({
-    isSigningIn: state.user.isSigningIn,
-    error: state.user.signInError,
+    isSigningIn: state.user.signIn.isSigningIn,
+    error: state.user.signIn.error,
     scopeNumber: state.user.scopeNumber,
   });
 
@@ -50,8 +51,12 @@ class SplashScreen extends Component {
     if (this.props.isSigningIn === true && nextProps.isSigningIn === false) {
       // did we just sign in?
       if (nextProps.scopeNumber >= 0) {
-        // yes.
-        this.props.navigation.navigate("Timetable");
+        // yes, replace screen with home screen.
+        const resetAction = NavigationActions.reset({
+          index: 0,
+          actions: [NavigationActions.navigate({ routeName: "Timetable" })],
+        });
+        this.props.navigation.dispatch(resetAction);
       } else if (nextProps.error.length < 1) {
         // cancelled
       } else {
@@ -66,6 +71,7 @@ class SplashScreen extends Component {
       <PageNoScroll>
         <TitleText>UCL Assistant</TitleText>
         <BodyText>One app to manage your life at UCL.</BodyText>
+        <BodyText>{JSON.stringify(this.props, "\n", 2)}</BodyText>
         <Spacer />
         <CustomButton
           onPress={() => this.props.signIn()}
