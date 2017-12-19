@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Alert } from "react-native";
+import { Alert, TextInput } from "react-native";
 import PropTypes from "prop-types";
 import { Feather } from "@expo/vector-icons";
 import { TitleText, SubtitleText, BodyText } from "../components/Typography";
@@ -35,12 +35,19 @@ class TimetableScreen extends Component {
     user: state.user,
   });
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      endpoint: "/user",
+    };
+  }
+
   async authenticate() {
     const { token } = this.props.user;
     if (!token) {
       Alert.alert("Not signed in", "You're not signed in.");
     }
-    const res = await fetch(`${API_URL}/user`, {
+    const res = await fetch(`${API_URL}${this.state.endpoint}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -68,6 +75,10 @@ class TimetableScreen extends Component {
         <BodyText>You have no upcoming events.</BodyText>
         <SubtitleText>Find A Timetable</SubtitleText>
         <Button onPress={() => navigate("Splash")}>Test</Button>
+        <TextInput
+          onChangeText={endpoint => this.setState({ endpoint })}
+          value={this.state.endpoint}
+        />
         <Button onPress={() => this.authenticate()}>Test Authentication</Button>
         <BodyText>{JSON.stringify(user, "\n", 3)}</BodyText>
       </MainTabPage>

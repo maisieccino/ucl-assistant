@@ -54,7 +54,7 @@ class SplashScreen extends Component {
         // yes, replace screen with home screen.
         const resetAction = NavigationActions.reset({
           index: 0,
-          actions: [NavigationActions.navigate({ routeName: "Timetable" })],
+          actions: [NavigationActions.navigate({ routeName: "Main" })],
         });
         this.props.navigation.dispatch(resetAction);
       } else if (nextProps.error.length < 1) {

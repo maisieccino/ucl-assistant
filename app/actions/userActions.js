@@ -5,9 +5,19 @@ export const isSigningIn = () => ({
   type: constants.IS_SIGNING_IN,
 });
 
-export const signInSuccess = user => ({
+export const signInSuccess = result => ({
   type: constants.SIGN_IN_SUCCESS,
-  user,
+  user: {
+    token: result.params.token,
+    apiToken: result.params.apiToken,
+    scopeNumber: parseInt(result.params.scopeNumber, 10),
+    email: result.params.email,
+    fullName: result.params.full_name,
+    givenName: result.params.given_name,
+    cn: result.params.cn,
+    upi: result.params.upi,
+    department: result.params.department,
+  },
 });
 
 export const signInFailure = error => ({
@@ -25,27 +35,10 @@ export const signIn = () => async dispatch => {
     authUrl: "https://ucl-assistant-server.now.sh/connect/uclapi",
     returnUrl: ExpoConstants.linkingUrl,
   });
+  console.log(result);
   if (result.type === "success") {
-    try {
-      const user = {
-        token: result.params.token,
-        apiToken: result.params.apiToken,
-        scopeNumber: parseInt(result.params.scopeNumber, 10),
-        email: result.params.email,
-        fullName: result.params.full_name,
-        givenName: result.params.given_name,
-        cn: result.params.cn,
-        upi: result.params.upi,
-        department: result.params.department,
-      };
-      return dispatch(signInSuccess(user));
-    } catch (err) {
-      return dispatch(
-        signInFailure(typeof err === "string" ? err : err.message),
-      );
-    }
-  } else {
-    // login cancelled by user.
-    return dispatch(signInCancel());
+    return dispatch(signInSuccess(result));
   }
+  // login cancelled by user.
+  return dispatch(signInCancel());
 };

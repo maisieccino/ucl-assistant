@@ -47,8 +47,15 @@ const jsonify = async (ctx, next) => {
   try {
     await next();
   } catch (error) {
-    console.error(`Error: ${error.message}\n${error.stack}`);
-    ctx.error = error.message;
+    if (typeof error.message === "string") {
+      console.error(`Error: ${error.message}\n${error.stack}`);
+      ctx.error = error.message;
+    } else {
+      console.error(
+        `Error: ${JSON.stringify(error.message, "\n", 2)}\n${error.stack}`,
+      );
+      ctx.error = JSON.stringify(error.message, "\n", 2);
+    }
     ctx.status = error.status || 500;
   }
   // pretty-print if the pretty query variable is present
