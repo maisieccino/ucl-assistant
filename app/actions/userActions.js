@@ -35,7 +35,6 @@ export const signIn = () => async dispatch => {
     authUrl: "https://ucl-assistant-server.now.sh/connect/uclapi",
     returnUrl: ExpoConstants.linkingUrl,
   });
-  console.log(result);
   if (result.type === "success") {
     return dispatch(signInSuccess(result));
   }

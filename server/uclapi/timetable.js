@@ -1,10 +1,14 @@
+const moment = require("moment");
 const { PERSONAL_TIMETABLE_URL } = require("./constants");
 const JSONRequest = require("./JSONRequest");
 
-const getPersonalTimetable = async token => {
+const getPersonalTimetable = async (token, date = null) => {
+  const datePart = date
+    ? `&date_filter=${moment(date).format("YYYY-MM-DD")}`
+    : "";
   const url = `${PERSONAL_TIMETABLE_URL}?client_secret=${
     process.env.UCLAPI_CLIENT_SECRET
-  }&token=${token}`;
+  }&token=${token}${datePart}`;
   const res = await JSONRequest(url);
   let json = {};
   try {
