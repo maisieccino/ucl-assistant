@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "ucl-assistant",
+    "name": "UCL Assistant",
     "description": "No description",
     "slug": "ucl-assistant",
     "privacy": "public",
     "sdkVersion": "23.0.0",
-    "version": "1.0.0",
+    "version": "0.2.0",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
     "icon": "./assets/images/icon.png",
@@ -15,7 +15,11 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "me.mbell.uclassistant"
+    },
+    "android": {
+      "package": "me.mbell.uclassistant"
     },
     "scheme": "UCLAssistant"
   }

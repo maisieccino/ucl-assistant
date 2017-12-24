@@ -46,9 +46,5 @@ module.exports = async ctx => {
     token: jwt,
   };
   const query = querystring.stringify(queryObj);
-  ctx.redirect(
-    process.env.NODE_ENV === "production"
-      ? `UCLAssistant://+auth?${query}`
-      : `exp://localhost:19000/+auth?${query}`,
-  );
+  ctx.redirect(`${ctx.session.redirectURL}auth?${query}`);
 };

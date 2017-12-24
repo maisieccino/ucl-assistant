@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
-import { View } from "react-native";
+import { ViewPropTypes } from "react-native";
 
 export const propTypes = {
   onPress: PropTypes.func,
   loading: PropTypes.bool,
-  styles: View.propTypes.style,
+  styles: ViewPropTypes.style,
   children: PropTypes.node,
   disabled: PropTypes.bool,
 };

@@ -1,12 +1,12 @@
 /* eslint react/require-default-props: 0 */
 import React from "react";
 import PropTypes from "prop-types";
-import { ScrollView, View } from "react-native";
+import { ScrollView, View, ViewPropTypes } from "react-native";
 import Styles from "../styles/Containers";
 
 const propTypes = {
   children: PropTypes.node,
-  styles: View.propTypes.style,
+  styles: ViewPropTypes.style,
 };
 const defaultProps = {
   children: "",

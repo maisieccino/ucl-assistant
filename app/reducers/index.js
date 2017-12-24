@@ -1,3 +1,9 @@
-import user from "./userReducer";
+import user, { initialState as userState } from "./userReducer";
+import timetable, { initialState as timetableState } from "./timetableReducers";
 
-export default { user };
+export const initialState = {
+  user: userState,
+  timetable: timetableState,
+};
+
+export default { user, timetable };
