@@ -37,4 +37,10 @@ PageNoScroll.defaultProps = defaultProps;
 
 export const Spacer = () => <View style={Styles.spacer} />;
 
+export const Horizontal = ({ children }) => (
+  <View style={Styles.horizontal}>{children}</View>
+);
+Horizontal.propTypes = propTypes;
+Horizontal.defaultProps = defaultProps;
+
 export default {};

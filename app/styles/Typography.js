@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import Color from "../constants/Colors";
 
-const style = StyleSheet.create({
+export const style = StyleSheet.create({
   baseStyle: {
     fontFamily: "apercu",
     color: Color.textColor,

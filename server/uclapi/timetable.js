@@ -1,5 +1,5 @@
 const moment = require("moment");
-const { PERSONAL_TIMETABLE_URL } = require("./constants");
+const { MODULE_TIMETABLE_URL, PERSONAL_TIMETABLE_URL } = require("./constants");
 const JSONRequest = require("./JSONRequest");
 
 const getPersonalTimetable = async (token, date = null) => {
@@ -9,21 +9,17 @@ const getPersonalTimetable = async (token, date = null) => {
   const url = `${PERSONAL_TIMETABLE_URL}?client_secret=${
     process.env.UCLAPI_CLIENT_SECRET
   }&token=${token}${datePart}`;
-  const res = await JSONRequest(url);
-  let json = {};
-  try {
-    json = await res.json();
-  } catch (error) {
-    // set a json value if it can't be parsed
-    json = { body: await res.text() };
-  }
-  // fail gracefully if there was a problem.
-  if (!res.ok || !json.ok) {
-    throw new Error(JSON.stringify(json), "\n", 2);
-  }
-  return json;
+  return JSONRequest(url);
+};
+
+const getModuleTimetable = async (token, module) => {
+  const url = `${MODULE_TIMETABLE_URL}?client_secret=${
+    process.env.UCLAPI_CLIENT_SECRET
+  }&token=${token}&modules=${module}`;
+  return JSONRequest(url);
 };
 
 module.exports = {
+  getModuleTimetable,
   getPersonalTimetable,
 };

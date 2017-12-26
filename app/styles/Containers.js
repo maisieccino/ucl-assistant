@@ -34,4 +34,8 @@ export default StyleSheet.create({
     marginTop: 5,
     flexDirection: "column",
   },
+  horizontal: {
+    flexDirection: "row",
+    justifyContent: "center",
+  },
 });

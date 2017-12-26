@@ -5,4 +5,5 @@ module.exports = {
   USER_TOKEN_URL: `${API_URL}/oauth/token`,
   USER_DATA_URL: `${API_URL}/oauth/user/data`,
   PERSONAL_TIMETABLE_URL: `${TIMETABLE_BASE_URL}/personal`,
+  MODULE_TIMETABLE_URL: `${TIMETABLE_BASE_URL}/bymodule`,
 };

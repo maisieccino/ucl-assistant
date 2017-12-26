@@ -1,11 +1,22 @@
 const fetch = require("node-fetch");
 
-module.exports = (url, options = {}) =>
-  fetch(url, {
+module.exports = async (url, { headers = {}, ...options } = {}) => {
+  const res = await fetch(url, {
+    ...options,
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      ...options.headers,
+      ...headers,
     },
-    ...options,
   });
+  let json = {};
+  try {
+    json = await res.json();
+  } catch (_) {
+    json = { body: await res.text() };
+  }
+  if (!res.ok) {
+    throw new Error(JSON.stringify(json), "\n", 2);
+  }
+  return json;
+};

@@ -1,5 +1,5 @@
 // @flow
-import { Moment } from "moment";
+import moment, { Moment } from "moment";
 import { TIMETABLE_URL } from "../constants/API";
 import {
   TIMETABLE_FETCH_SUCCESS,
@@ -23,7 +23,7 @@ export const setIsFetchingTimetable = () => ({
 
 export const fetchTimetable = (
   token: String = null,
-  date: Moment = null,
+  date: Moment = moment(),
 ) => async (dispatch: Function) => {
   await dispatch(setIsFetchingTimetable());
   const datePart = date ? `?date=${date.format("YYYY-MM-DD")}` : "";

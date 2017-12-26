@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Alert, TextInput } from "react-native";
+import { Alert } from "react-native";
 import PropTypes from "prop-types";
 import { Feather } from "@expo/vector-icons";
+import moment from "moment";
 import { TitleText, SubtitleText, BodyText } from "../components/Typography";
 import TimetableCard from "../components/Card/TimetableCard";
-import { MainTabPage } from "../components/Containers";
+import { MainTabPage, Horizontal } from "../components/Containers";
 import Button from "../components/Button";
+import { TextInput } from "../components/Input";
 import { API_URL } from "../constants/API";
 import Colors from "../constants/Colors";
 
@@ -39,6 +41,7 @@ class TimetableScreen extends Component {
     super(props);
     this.state = {
       endpoint: "/user",
+      date: moment(),
     };
   }
 
@@ -61,10 +64,11 @@ class TimetableScreen extends Component {
   render() {
     const { navigate } = this.props.navigation;
     const { user } = this.props;
+    const dateString = this.state.date.format("dddd, Mo MMMM");
     return (
       <MainTabPage>
         <TitleText>Your Timetable</TitleText>
-        <SubtitleText>Today{"'"}s Timetable</SubtitleText>
+        <SubtitleText>{dateString}</SubtitleText>
         <TimetableCard
           moduleCode="COMP101P"
           startTime={new Date().toISOString()}
@@ -72,7 +76,10 @@ class TimetableScreen extends Component {
           location="TBA"
           lecturer="Unknown Lecturer"
         />
-        <BodyText>You have no upcoming events.</BodyText>
+        <Horizontal>
+          <Button>Yesterday</Button>
+          <Button>Tomorrow</Button>
+        </Horizontal>
         <SubtitleText>Find A Timetable</SubtitleText>
         <Button onPress={() => navigate("Splash")}>Test</Button>
         <TextInput
