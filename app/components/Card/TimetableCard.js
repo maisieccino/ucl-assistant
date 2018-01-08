@@ -6,6 +6,7 @@ import Card from "./";
 import { BodyText } from "../Typography";
 
 const TimetableCard = ({
+  moduleName,
   moduleCode,
   startTime,
   endTime,
@@ -16,6 +17,7 @@ const TimetableCard = ({
   const end = moment(endTime).format("HH:mma");
   return (
     <Card title={moduleCode}>
+      <BodyText>{moduleName}</BodyText>
       <BodyText>
         <Feather name="clock" /> {start} - {end}
       </BodyText>
@@ -30,6 +32,7 @@ const TimetableCard = ({
 };
 
 TimetableCard.propTypes = {
+  moduleName: PropTypes.string,
   moduleCode: PropTypes.string,
   startTime: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   endTime: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -38,6 +41,7 @@ TimetableCard.propTypes = {
 };
 
 TimetableCard.defaultProps = {
+  moduleName: "",
   moduleCode: "ABCD123D",
   startTime: moment().toISOString(),
   endTime: moment().toISOString(),
