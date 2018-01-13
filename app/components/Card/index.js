@@ -1,8 +1,22 @@
 import React, { Component } from "react";
-import { TouchableNativeFeedback, View } from "react-native";
+import {
+  Platform,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import PropTypes from "prop-types";
 import { BodyText, CardTitleText } from "../Typography";
 import Style from "../../styles/Containers";
+
+const Wrapper = ({ children, onPress }) =>
+  Platform.OS === "android" ? (
+    <TouchableNativeFeedback onPress={onPress}>
+      {children}
+    </TouchableNativeFeedback>
+  ) : (
+    <TouchableOpacity onPress={onPress}>{children}</TouchableOpacity>
+  );
 
 class Card extends Component {
   static propTypes = {
@@ -22,12 +36,12 @@ class Card extends Component {
       children = <BodyText>{children}</BodyText>;
     }
     return (
-      <TouchableNativeFeedback onPress={() => {}}>
+      <Wrapper onPress={() => {}}>
         <View style={Style.card}>
           {title && <CardTitleText>{title}</CardTitleText>}
           {children}
         </View>
-      </TouchableNativeFeedback>
+      </Wrapper>
     );
   }
 }

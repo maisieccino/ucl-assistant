@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, Platform } from "react-native";
 import { propTypes, defaultProps } from "./props";
 import ActiveButton from "./ActiveButton";
 import DisabledButton from "./DisabledButton";
@@ -12,8 +12,11 @@ class Button extends Component {
 
   render() {
     let { children } = this.props;
+    const buttonSize = Platform.OS === "android" ? 24 : 1;
     if (this.props.loading) {
-      children = <ActivityIndicator size={24} color={Colors.pageBackground} />;
+      children = (
+        <ActivityIndicator size={buttonSize} color={Colors.pageBackground} />
+      );
     }
     if (typeof children === "string") {
       children = <ButtonText>{children}</ButtonText>;
