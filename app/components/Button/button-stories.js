@@ -3,9 +3,10 @@ import { storiesOf } from "@storybook/react-native";
 import { action } from "@storybook/addon-actions";
 import { withKnobs, boolean, text } from "@storybook/addon-knobs";
 import Button from "./";
+import RoundButton from "./RoundButton";
 import CenterView from "../CenterView";
 
-storiesOf("Button", module)
+storiesOf("Button/Default", module)
   .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)
   .addDecorator(withKnobs)
   .add("with text", () => (
@@ -24,4 +25,22 @@ storiesOf("Button", module)
     <Button disabled onPress={action("clicked-disabled")}>
       Disabled Button
     </Button>
+  ));
+
+storiesOf("Button/Round", module)
+  .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)
+  .addDecorator(withKnobs)
+  .add("with icon", () => (
+    <RoundButton
+      onPress={action("clicked-round")}
+      disabled={boolean("Disabled", false)}
+      loading={boolean("Loading", false)}
+    />
+  ))
+  .add("with disabled prop", () => (
+    <RoundButton
+      onPress={action("clicked-round")}
+      loading={boolean("Loading", false)}
+      disabled
+    />
   ));

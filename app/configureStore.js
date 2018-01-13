@@ -16,7 +16,6 @@ const config = {
 const reducer = persistCombineReducers(config, app);
 
 export default () => {
-  // const store = createStoreWithMiddleware(reducer);
   const store = createStore(
     reducer,
     initialState,

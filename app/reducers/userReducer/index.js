@@ -1,4 +1,9 @@
-import { IS_SIGNING_IN, SIGN_IN_SUCCESS } from "../../constants/userConstants";
+import {
+  IS_SIGNING_IN,
+  SIGN_IN_SUCCESS,
+  SIGN_IN_CANCEL,
+  SIGN_IN_FAILURE,
+} from "../../constants/userConstants";
 import signIn, { initialState as signInState } from "./signInReducer";
 
 export const initialState = {
@@ -39,10 +44,12 @@ export default (state = initialState, action = null) => {
         ...user,
       };
     }
+    case SIGN_IN_CANCEL:
+    case SIGN_IN_FAILURE: {
+      return combineState(state, action);
+    }
     default: {
-      return {
-        ...combineState(state, action),
-      };
+      return state;
     }
   }
 };

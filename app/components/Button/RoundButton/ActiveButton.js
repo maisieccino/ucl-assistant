@@ -4,22 +4,27 @@ import {
   Platform,
   TouchableNativeFeedback,
   TouchableOpacity,
+  View,
 } from "react-native";
-import Colors from "../../constants/Colors";
-import Styles from "../../styles/Button";
-import { propTypes, defaultProps } from "./props";
+import Colors from "../../../constants/Colors";
+import Styles from "../../../styles/Button";
+import { propTypes, defaultProps } from "../props";
 
 const Wrapper = ({ children, onPress, disabled }) =>
   Platform.OS === "android" ? (
-    <TouchableNativeFeedback
-      background={TouchableNativeFeedback.Ripple(Colors.accentColorLight, true)}
-      onPress={e => setTimeout(onPress, 200, e)}
-      useForeground
-      style={Styles.buttonWrapper}
-      disabled={disabled}
-    >
-      {children}
-    </TouchableNativeFeedback>
+    <View style={Styles.roundButtonWrapper}>
+      <TouchableNativeFeedback
+        background={TouchableNativeFeedback.Ripple(
+          Colors.accentColorLight,
+          true,
+        )}
+        onPress={e => setTimeout(onPress, 200, e)}
+        useForeground
+        disabled={disabled}
+      >
+        {children}
+      </TouchableNativeFeedback>
+    </View>
   ) : (
     <TouchableOpacity
       style={{ backgroundColor: "transparent" }}
@@ -34,7 +39,7 @@ const Button = ({ onPress, styles, children, disabled }) => (
   <Wrapper onPress={onPress} disabled={disabled}>
     <LinearGradient
       colors={[Colors.accentColor, Colors.buttonBackground]}
-      style={[Styles.button, styles]}
+      style={[Styles.roundButton, styles]}
       start={[0, 1]}
       end={[1, 0]}
     >

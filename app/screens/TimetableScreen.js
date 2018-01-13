@@ -54,36 +54,20 @@ class TimetableScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      endpoint: "/useritem.start_time",
       date: moment(),
     };
-  }
-
-  async authenticate() {
-    const { token } = this.props.user;
-    if (!token) {
-      Alert.alert("Not signed in", "You're not signed in.");
-    }
-    const res = await fetch(`${API_URL}${this.state.endpoint}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    Alert.alert(
-      `Response code: ${res.status}`,
-      `body: ${JSON.stringify(await res.json(), "\n", 2)}`,
-    );
   }
 
   render() {
     const { navigate } = this.props.navigation;
     const { user, timetable } = this.props;
-    const { token } = user;
+    const { token, scopeNumber } = user;
     const dateString = this.state.date.format("dddd, Do MMMM");
     const dateISO = this.state.date.format("YYYY-MM-DD");
     const filteredTimetable = timetable[dateISO] || [];
     return (
       <MainTabPage>
+        {scopeNumber < 0 && <BodyText>You are not signed in.</BodyText>}
         <TitleText>Your Timetable</TitleText>
         <SubtitleText>{dateString}</SubtitleText>
         {filteredTimetable.map(item => (
@@ -120,12 +104,6 @@ class TimetableScreen extends Component {
         </Horizontal>
         <SubtitleText>Find A Timetable</SubtitleText>
         <Button onPress={() => navigate("Splash")}>Test</Button>
-        <TextInput
-          onChangeText={endpoint => this.setState({ endpoint })}
-          value={this.state.endpoint}
-        />
-        <Button onPress={() => this.authenticate()}>Test Authentication</Button>
-        <BodyText>{JSON.stringify(user, "\n", 3)}</BodyText>
       </MainTabPage>
     );
   }

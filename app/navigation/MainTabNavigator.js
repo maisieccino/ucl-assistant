@@ -9,7 +9,7 @@ import StudySpacesScreen from "../screens/StudySpacesScreen";
 import PeopleScreen from "../screens/PeopleScreen";
 import RoomsScreen from "../screens/RoomsScreen";
 import SettingsScreen from "../screens/SettingsScreen";
-// import StorybookScreen from "../screens/StorybookScreen";
+import StorybookScreen from "../screens/StorybookScreen";
 
 export default TabNavigator(
   {
@@ -28,7 +28,7 @@ export default TabNavigator(
     Settings: {
       screen: SettingsScreen,
     },
-    // Storybook: __DEV__ ? { screen: StorybookScreen } : null,
+    Storybook: __DEV__ ? { screen: StorybookScreen } : null,
   },
   {
     navigationOptions: ({ navigation }) => ({
@@ -64,7 +64,7 @@ export default TabNavigator(
       },
     }),
     tabBarComponent: TabBarBottom,
-    // initialRouteName: __DEV__ ? "Storybook" : "Timetable",
+    initialRouteName: __DEV__ ? "Storybook" : "Timetable",
     tabBarPosition: "bottom",
     animationEnabled: true,
     swipeEnabled: false,
