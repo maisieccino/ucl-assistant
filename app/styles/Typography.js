@@ -29,6 +29,12 @@ export const style = StyleSheet.create({
     fontSize: 20,
     textAlign: "center",
   },
+  centredText: {
+    textAlign: "center",
+    color: Color.lightTextColor,
+    marginTop: 5,
+    marginBottom: 5,
+  },
 });
 
 export default StyleSheet.create({
@@ -39,6 +45,7 @@ export default StyleSheet.create({
     style.subtitle,
   ]),
   bodyText: StyleSheet.flatten([style.baseStyle]),
+  centredText: StyleSheet.flatten([style.baseStyle, style.centredText]),
   buttonText: StyleSheet.flatten([style.baseStyle, style.buttonText]),
   cardTitle: StyleSheet.flatten([
     style.baseStyle,

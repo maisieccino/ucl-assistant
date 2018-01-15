@@ -1,11 +1,12 @@
 import React from "react";
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator, Image, View } from "react-native";
 import PropTypes from "prop-types";
 import { momentObj } from "react-moment-proptypes";
 import moment from "moment";
 import { generate } from "shortid";
 import TimetableCard from "../../components/Card/TimetableCard";
-import { BodyText } from "../../components/Typography";
+import { CentredText } from "../../components/Typography";
+import Styles from "../../styles/Containers";
 
 const TimetableComponent = ({ timetable, date, isLoading }) => {
   const dateISO = date.format("YYYY-MM-DD");
@@ -14,7 +15,7 @@ const TimetableComponent = ({ timetable, date, isLoading }) => {
   if (isLoading && filteredTimetable.length === 0) {
     return (
       <View>
-        <BodyText>Loading timetable</BodyText>
+        <CentredText>Loading timetable...</CentredText>
         <ActivityIndicator size="large" />
       </View>
     );
@@ -47,7 +48,17 @@ const TimetableComponent = ({ timetable, date, isLoading }) => {
       </View>
     );
   }
-  return <BodyText>Nothing scheduled on this day.</BodyText>;
+  return (
+    <View>
+      <CentredText>Nothing scheduled on this day.</CentredText>
+      <Image
+        source={require("../../assets/images/undraw_relaxation.png")}
+        resizeMethod="scale"
+        style={[Styles.image, { marginTop: 5, height: 200 }]}
+        resizeMode="contain"
+      />
+    </View>
+  );
 };
 
 TimetableComponent.propTypes = {

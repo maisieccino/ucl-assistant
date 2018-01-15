@@ -7,10 +7,11 @@ import { Feather } from "@expo/vector-icons";
 import moment from "moment";
 import { fetchTimetable } from "../../actions/timetableActions";
 import { TitleText, SubtitleText, BodyText } from "../../components/Typography";
-import { MainTabPage, Horizontal, Spacer } from "../../components/Containers";
-import Button, { RoundButton } from "../../components/Button";
+import { MainTabPage } from "../../components/Containers";
+import Button from "../../components/Button";
 import Colors from "../../constants/Colors";
 import TimetableComponent from "./TimetableComponent";
+import DateControls from "./DateControls";
 
 class TimetableScreen extends Component {
   static navigationOptions = {
@@ -65,6 +66,13 @@ class TimetableScreen extends Component {
     }
   }
 
+  async onDateChanged(newDate) {
+    await this.setState({
+      date: newDate.startOf("day"),
+    });
+    this.props.fetchTimetable(this.props.user.token, this.state.date);
+  }
+
   loginCheck(props) {
     if (Object.keys(props.user).length > 0) {
       if (props.user.scopeNumber < 0) {
@@ -83,7 +91,7 @@ class TimetableScreen extends Component {
   render() {
     const { navigate } = this.props.navigation;
     const { user, timetable, isFetchingTimetable } = this.props;
-    const { token, scopeNumber } = user;
+    const { scopeNumber } = user;
     const { date } = this.state;
     const dateString = date.format("dddd, Do MMMM");
     return (
@@ -96,42 +104,17 @@ class TimetableScreen extends Component {
         )}
         <TitleText>Your Timetable</TitleText>
         <SubtitleText>{dateString}</SubtitleText>
-        <Horizontal>
-          <RoundButton
-            onPress={async () => {
-              await this.setState({
-                date: this.state.date.subtract(1, "days"),
-              });
-              this.props.fetchTimetable(token, this.state.date);
-            }}
-            icon="chevron-left"
-          />
-          <Spacer />
-          <Button
-            onPress={() =>
-              this.setState({
-                date: moment().startOf("day"),
-              })
-            }
-          >
-            Today
-          </Button>
-          <Spacer />
-          <RoundButton
-            onPress={async () => {
-              await this.setState({
-                date: this.state.date.add(1, "days"),
-              });
-              this.props.fetchTimetable(token, this.state.date);
-            }}
-            icon="chevron-right"
-          />
-        </Horizontal>
+        <DateControls date={date} onDateChanged={d => this.onDateChanged(d)} />
         <TimetableComponent
           timetable={timetable}
           date={date}
           isLoading={isFetchingTimetable}
         />
+        {!date.isSame(moment().startOf("day")) && (
+          <Button onPress={() => this.onDateChanged(moment())}>
+            Jump To Today
+          </Button>
+        )}
 
         {/* <SubtitleText>Find A Timetable</SubtitleText>
         <BodyText>Coming soon.</BodyText> */}

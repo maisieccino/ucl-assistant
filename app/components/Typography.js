@@ -29,6 +29,12 @@ export const BodyText = ({ children }) => (
 BodyText.propTypes = propTypes;
 BodyText.defaultTextProps = defaultProps;
 
+export const CentredText = ({ children }) => (
+  <Text style={Style.centredText}>{children}</Text>
+);
+CentredText.propTypes = propTypes;
+CentredText.defaultTextProps = defaultProps;
+
 export const ButtonText = ({ children }) => (
   <Text style={Style.buttonText}>{children}</Text>
 );
