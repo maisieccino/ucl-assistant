@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import { Feather } from "@expo/vector-icons";
 import moment from "moment";
 import { fetchTimetable } from "../../actions/timetableActions";
-import { TitleText, SubtitleText, BodyText } from "../../components/Typography";
+import { TitleText, BodyText } from "../../components/Typography";
 import { MainTabPage } from "../../components/Containers";
 import Button from "../../components/Button";
 import Colors from "../../constants/Colors";
@@ -102,8 +102,7 @@ class TimetableScreen extends Component {
             <Button onPress={() => navigate("Splash")}>Sign In</Button>
           </View>
         )}
-        <TitleText>Your Timetable</TitleText>
-        <SubtitleText>{dateString}</SubtitleText>
+        <TitleText>{dateString}</TitleText>
         <DateControls date={date} onDateChanged={d => this.onDateChanged(d)} />
         <TimetableComponent
           timetable={timetable}
@@ -115,9 +114,6 @@ class TimetableScreen extends Component {
             Jump To Today
           </Button>
         )}
-
-        {/* <SubtitleText>Find A Timetable</SubtitleText>
-        <BodyText>Coming soon.</BodyText> */}
       </MainTabPage>
     );
   }

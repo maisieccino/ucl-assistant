@@ -25,7 +25,8 @@ const TimetableCard = ({
         <Feather name="map-pin" /> {location}
       </BodyText>
       <BodyText>
-        <Feather name="user" /> {lecturer}
+        <Feather name="user" />{" "}
+        {lecturer === "unknown" ? "Unknown Lecturer" : lecturer}
       </BodyText>
     </Card>
   );

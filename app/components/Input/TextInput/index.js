@@ -1,9 +1,15 @@
 import React from "react";
-import { TextInput, StyleSheet } from "react-native";
-import { textInput } from "../../../styles/Input";
+import { TextInput } from "react-native";
+import styles from "../../../styles/Input";
+import Colors from "../../../constants/Colors";
 
 const TextInputComponent = props => (
-  <TextInput {...props} style={StyleSheet.flatten([textInput, props.style])} />
+  <TextInput
+    {...props}
+    underlineColorAndroid="transparent"
+    style={styles.textInput}
+    placeholderTextColor={Colors.lightTextColor}
+  />
 );
 TextInputComponent.propTypes = TextInput.propTypes;
 TextInputComponent.defaultProps = TextInput.defaultProps;

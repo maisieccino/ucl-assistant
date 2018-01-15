@@ -50,7 +50,9 @@ const TimetableComponent = ({ timetable, date, isLoading }) => {
   }
   return (
     <View>
-      <CentredText>Nothing scheduled on this day.</CentredText>
+      <CentredText>
+        Nothing scheduled on {date.format("dddd")}. Take it easy!
+      </CentredText>
       <Image
         source={require("../../assets/images/undraw_relaxation.png")}
         resizeMethod="scale"

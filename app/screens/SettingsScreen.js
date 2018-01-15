@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Platform, ToastAndroid } from "react-native"; // eslint-disable-line react-native/split-platform-components
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { TitleText } from "../components/Typography";
+import { TitleText, BodyText } from "../components/Typography";
 import { MainTabPage } from "../components/Containers";
 import { signOut } from "../actions/userActions";
 import Button from "../components/Button";
@@ -39,6 +39,12 @@ class TimetableScreen extends Component {
       <MainTabPage>
         <TitleText>Settings</TitleText>
         <Button onPress={() => this.signOut()}>Sign Out</Button>
+        <TitleText>About</TitleText>
+        <BodyText>Created by Matt Bell, using the UCL API.</BodyText>
+        <BodyText>
+          Illustrations courtesy of the unDraw project, released under the MIT
+          license.
+        </BodyText>
       </MainTabPage>
     );
   }
