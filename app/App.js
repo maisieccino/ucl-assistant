@@ -72,7 +72,7 @@ class App extends Component {
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <View style={Styles.app}>
-            {Platform.OS === "ios" && <StatusBar barStyle="default" />}
+            <StatusBar barStyle="light-content" hidden={false} />
             {Platform.OS === "android" && (
               <View style={Styles.statusBarUnderlay} />
             )}

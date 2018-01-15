@@ -30,6 +30,9 @@ const Wrapper = ({ children, onPress, disabled }) =>
     </TouchableOpacity>
   );
 
+Wrapper.propTypes = propTypes;
+Wrapper.defaultProps = defaultProps;
+
 const Button = ({ onPress, styles, children, disabled }) => (
   <Wrapper onPress={onPress} disabled={disabled}>
     <LinearGradient

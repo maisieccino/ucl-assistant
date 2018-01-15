@@ -29,6 +29,7 @@ class TimetableScreen extends Component {
     timetable: PropTypes.shape(),
     error: PropTypes.string,
     fetchTimetable: PropTypes.func,
+    isFetchingTimetable: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -36,6 +37,7 @@ class TimetableScreen extends Component {
     timetable: {},
     error: "",
     fetchTimetable: () => {},
+    isFetchingTimetable: false,
   };
 
   static mapStateToProps = state => ({
@@ -70,7 +72,7 @@ class TimetableScreen extends Component {
 
   render() {
     const { navigate } = this.props.navigation;
-    const { user, timetable } = this.props;
+    const { user, timetable, isFetchingTimetable } = this.props;
     const { token, scopeNumber } = user;
     const { date } = this.state;
     const dateString = date.format("dddd, Do MMMM");
@@ -115,10 +117,14 @@ class TimetableScreen extends Component {
             icon="chevron-right"
           />
         </Horizontal>
-        <TimetableComponent timetable={timetable} date={date} />
+        <TimetableComponent
+          timetable={timetable}
+          date={date}
+          isLoading={isFetchingTimetable}
+        />
 
-        <SubtitleText>Find A Timetable</SubtitleText>
-        <BodyText>Coming soon.</BodyText>
+        {/* <SubtitleText>Find A Timetable</SubtitleText>
+        <BodyText>Coming soon.</BodyText> */}
       </MainTabPage>
     );
   }

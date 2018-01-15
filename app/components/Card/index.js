@@ -18,6 +18,16 @@ const Wrapper = ({ children, onPress }) =>
     <TouchableOpacity onPress={onPress}>{children}</TouchableOpacity>
   );
 
+Wrapper.propTypes = {
+  children: PropTypes.node,
+  onPress: PropTypes.func,
+};
+
+Wrapper.defaultProps = {
+  children: "",
+  onPress: () => {},
+};
+
 class Card extends Component {
   static propTypes = {
     children: PropTypes.node,

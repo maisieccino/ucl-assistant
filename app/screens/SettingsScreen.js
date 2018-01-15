@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Platform, ToastAndroid } from "react-native";
+import { Platform, ToastAndroid } from "react-native"; // eslint-disable-line react-native/split-platform-components
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { TitleText } from "../components/Typography";

@@ -11,7 +11,7 @@ const TimetableComponent = ({ timetable, date, isLoading }) => {
   const dateISO = date.format("YYYY-MM-DD");
   const filteredTimetable = timetable[dateISO] || [];
 
-  if (isLoading) {
+  if (isLoading && filteredTimetable.length === 0) {
     return (
       <View>
         <BodyText>Loading timetable</BodyText>
@@ -21,7 +21,11 @@ const TimetableComponent = ({ timetable, date, isLoading }) => {
   }
 
   const items = filteredTimetable
-    .sort((a, b) => Date.parse(b.start_time) - Date.parse(a.start_time))
+    .sort(
+      (a, b) =>
+        Date.parse(`${dateISO}T${a.start_time}:00`) -
+        Date.parse(`${dateISO}T${b.start_time}:00`),
+    )
     .map(item => (
       <TimetableCard
         moduleName={item.module.name}
@@ -29,12 +33,19 @@ const TimetableComponent = ({ timetable, date, isLoading }) => {
         startTime={`${dateISO} ${item.start_time}`}
         endTime={`${dateISO} ${item.end_time}`}
         location={item.location.name || "TBA"}
-        lecturer={item.lecturer ? item.lecturer.name : "Unknown Lecturer"}
+        lecturer={
+          item.module.lecturer ? item.module.lecturer.name : "Unknown Lecturer"
+        }
         key={generate()}
       />
     ));
   if (filteredTimetable.length > 0) {
-    return items;
+    return (
+      <View>
+        {items}
+        {isLoading && <ActivityIndicator size="large" />}
+      </View>
+    );
   }
   return <BodyText>Nothing scheduled on this day.</BodyText>;
 };
@@ -42,11 +53,13 @@ const TimetableComponent = ({ timetable, date, isLoading }) => {
 TimetableComponent.propTypes = {
   timetable: PropTypes.shape(),
   date: momentObj,
+  isLoading: PropTypes.bool,
 };
 
 TimetableComponent.defaultProps = {
   timetable: {},
   date: moment(),
+  isLoading: false,
 };
 
 export default TimetableComponent;

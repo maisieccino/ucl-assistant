@@ -8,7 +8,7 @@ import Styles from "../styles/Containers";
 class StorybookScreen extends Component {
   static navigationOptions = {
     header: null,
-    title: "Playbook",
+    title: "Components",
     tabBarIcon: ({ focused }) => (
       <Feather
         name="layers"
