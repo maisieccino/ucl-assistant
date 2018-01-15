@@ -56,22 +56,12 @@ class TimetableScreen extends Component {
     super(props);
     this.state = {
       date: moment().startOf("day"),
-      todayLoaded: false,
     };
   }
 
   componentDidMount() {
-    if (this.loginCheck(this.props)) {
-      this.props.fetchTimetable(
-        this.state.date || moment().format("YYYY-MM-DD"),
-      );
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (!this.state.todayLoaded && nextProps.user.token !== "") {
-      this.props.fetchTimetable(this.state.date);
-      this.setState({ todayLoaded: true });
+    if (this.loginCheck(this.props) && this.props.user.token !== "") {
+      this.props.fetchTimetable(this.props.user.token, this.state.date);
     }
   }
 

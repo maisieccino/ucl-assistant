@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Alert } from "react-native";
+import { Alert, Image } from "react-native";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { NavigationActions } from "react-navigation";
@@ -9,6 +9,7 @@ import { TitleText, BodyText } from "../components/Typography";
 import { PageNoScroll, Spacer } from "../components/Containers";
 import CustomButton from "../components/Button";
 import Colors from "../constants/Colors";
+import Styles from "../styles/Containers";
 
 class SplashScreen extends Component {
   static navigationOptions = {
@@ -71,7 +72,12 @@ class SplashScreen extends Component {
       <PageNoScroll>
         <TitleText>UCL Assistant</TitleText>
         <BodyText>One app to manage your life at UCL.</BodyText>
-        <BodyText>{JSON.stringify(this.props, "\n", 2)}</BodyText>
+        <Image
+          source={require("../assets/images/undraw_calendar.png")}
+          resizeMethod="scale"
+          style={Styles.image}
+          resizeMode="contain"
+        />
         <Spacer />
         <CustomButton
           onPress={() => this.props.signIn()}

@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/es/integration/react";
 import { Platform, StatusBar, View } from "react-native";
 import { AppLoading, Asset, Font } from "expo";
-import { Ionicons } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import configureStore from "./configureStore";
 import RootNavigation from "./navigation/RootNavigation";
 import Styles from "./styles/Containers";
@@ -32,13 +32,10 @@ class App extends Component {
 
   loadResourcesAsync = async () =>
     Promise.all([
-      Asset.loadAsync([
-        require("./assets/images/robot-dev.png"),
-        require("./assets/images/robot-prod.png"),
-      ]),
+      Asset.loadAsync([require("./assets/images/undraw_calendar.png")]),
       Font.loadAsync({
         // This is the font that we are using for our tab bar
-        ...Ionicons.font,
+        ...Feather.font,
         // We include SpaceMono because we use it in HomeScreen.js. Feel free
         // to remove this if you are not using it in your app
         "space-mono": require("./assets/fonts/SpaceMono-Regular.ttf"),

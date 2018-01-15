@@ -38,4 +38,11 @@ export default StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
   },
+  image: {
+    flex: 1,
+    width: undefined,
+    height: undefined,
+    alignSelf: "stretch",
+    marginTop: 50,
+  },
 });
