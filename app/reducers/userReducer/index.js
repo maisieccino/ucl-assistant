@@ -3,6 +3,7 @@ import {
   SIGN_IN_SUCCESS,
   SIGN_IN_CANCEL,
   SIGN_IN_FAILURE,
+  SIGN_OUT_USER,
 } from "../../constants/userConstants";
 import signIn, { initialState as signInState } from "./signInReducer";
 
@@ -47,6 +48,9 @@ export default (state = initialState, action = null) => {
     case SIGN_IN_CANCEL:
     case SIGN_IN_FAILURE: {
       return combineState(state, action);
+    }
+    case SIGN_OUT_USER: {
+      return initialState;
     }
     default: {
       return state;

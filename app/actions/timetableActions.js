@@ -5,6 +5,7 @@ import {
   TIMETABLE_FETCH_SUCCESS,
   TIMETABLE_FETCH_FAILURE,
   TIMETABLE_IS_FETCHING,
+  CLEAR_TIMETABLE,
 } from "../constants/timetableConstants";
 
 export const fetchTimetableSuccess = (timetableFrag: Object) => ({
@@ -45,3 +46,7 @@ export const fetchTimetable = (
     );
   }
 };
+
+export const clearTimetable = () => ({
+  type: CLEAR_TIMETABLE,
+});

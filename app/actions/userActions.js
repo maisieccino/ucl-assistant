@@ -1,5 +1,6 @@
 import { AuthSession, Constants as ExpoConstants } from "expo";
 import * as constants from "../constants/userConstants";
+import { clearTimetable } from "./timetableActions";
 
 export const isSigningIn = () => ({
   type: constants.IS_SIGNING_IN,
@@ -43,4 +44,13 @@ export const signIn = () => async dispatch => {
   }
   // login cancelled by user.
   return dispatch(signInCancel());
+};
+
+export const signOutUser = () => ({
+  type: constants.SIGN_OUT_USER,
+});
+
+export const signOut = () => async dispatch => {
+  await dispatch(clearTimetable());
+  return dispatch(signOutUser());
 };

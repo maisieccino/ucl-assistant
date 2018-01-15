@@ -2,6 +2,7 @@ import {
   TIMETABLE_FETCH_FAILURE,
   TIMETABLE_FETCH_SUCCESS,
   TIMETABLE_IS_FETCHING,
+  CLEAR_TIMETABLE,
 } from "../constants/timetableConstants";
 
 export const initialState = {
@@ -39,6 +40,10 @@ export default (state = initialState, action = null) => {
           ...timetableFrag,
         },
       };
+    }
+
+    case CLEAR_TIMETABLE: {
+      return initialState;
     }
 
     default: {

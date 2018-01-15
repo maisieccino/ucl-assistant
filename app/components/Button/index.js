@@ -29,3 +29,4 @@ class Button extends Component {
 }
 
 export default Button;
+export { default as RoundButton } from "./RoundButton";
