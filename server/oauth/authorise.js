@@ -3,7 +3,7 @@ const moment = require("moment");
 module.exports = async ctx => {
   ctx.session = {
     state: moment().valueOf(),
-    redirectURL: ctx.query.return || "UCLAssistant://+auth",
+    redirectURL: decodeURIComponent(ctx.query.return) || "UCLAssistant://+auth",
   };
   const url = `https://uclapi.com/oauth/authorise?client_id=${
     process.env.UCLAPI_CLIENT_ID

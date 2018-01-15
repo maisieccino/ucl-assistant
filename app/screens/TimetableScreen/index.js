@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { View } from "react-native";
 import { connect } from "react-redux";
+import { NavigationActions } from "react-navigation";
 import PropTypes from "prop-types";
 import { Feather } from "@expo/vector-icons";
 import moment from "moment";
@@ -55,19 +56,38 @@ class TimetableScreen extends Component {
     super(props);
     this.state = {
       date: moment().startOf("day"),
+      todayLoaded: false,
     };
   }
 
   componentDidMount() {
-    this.loginCheck(this.props);
+    if (this.loginCheck(this.props)) {
+      this.props.fetchTimetable(
+        this.state.date || moment().format("YYYY-MM-DD"),
+      );
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.state.todayLoaded && nextProps.user.token !== "") {
+      this.props.fetchTimetable(this.state.date);
+      this.setState({ todayLoaded: true });
+    }
   }
 
   loginCheck(props) {
     if (Object.keys(props.user).length > 0) {
       if (props.user.scopeNumber < 0) {
-        this.props.navigation.navigate("Splash");
+        this.props.navigation.dispatch(
+          NavigationActions.reset({
+            index: 0,
+            actions: [NavigationActions.navigate({ routeName: "Splash" })],
+          }),
+        );
+        return false;
       }
     }
+    return true;
   }
 
   render() {

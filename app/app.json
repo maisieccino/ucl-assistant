@@ -21,6 +21,6 @@
     "android": {
       "package": "me.mbell.uclassistant"
     },
-    "scheme": "UCLAssistant"
+    "scheme": "uclassistant"
   }
 }

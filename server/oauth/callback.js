@@ -46,5 +46,5 @@ module.exports = async ctx => {
     token: jwt,
   };
   const query = querystring.stringify(queryObj);
-  ctx.redirect(`${ctx.session.redirectURL}auth?${query}`);
+  ctx.redirect(`${ctx.session.redirectURL}?${query}`);
 };

@@ -32,12 +32,11 @@ export const signInCancel = () => ({
 
 export const signIn = () => async dispatch => {
   await dispatch(isSigningIn());
-  const authURL = `${ExpoConstants.linkingUri}auth`;
+  const returnUrl = AuthSession.getRedirectUrl();
   const result = await AuthSession.startAsync({
     authUrl: `https://ucl-assistant-server.now.sh/connect/uclapi?return=${encodeURIComponent(
-      authURL,
+      returnUrl,
     )}`,
-    returnUrl: authURL,
   });
   if (result.type === "success") {
     return dispatch(signInSuccess(result));
