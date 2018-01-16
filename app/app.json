@@ -19,7 +19,12 @@
       "bundleIdentifier": "me.mbell.uclassistant"
     },
     "android": {
-      "package": "me.mbell.uclassistant"
+      "package": "me.mbell.uclassistant",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCmjOws0mCO8dNWJ1JOnAb9gWHL5-3XjEs"
+        }
+      }
     },
     "scheme": "uclassistant"
   }
