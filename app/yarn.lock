@@ -15,6 +15,13 @@
     lodash "^4.17.4"
     react-native-vector-icons "4.4.2"
 
+"@expo/vector-icons@^6.2.2":
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/@expo/vector-icons/-/vector-icons-6.2.2.tgz#441edb58a52c0f4e5b4aba1e6f8da1e87cea7e11"
+  dependencies:
+    lodash "^4.17.4"
+    react-native-vector-icons "4.4.2"
+
 "@hypnosphi/fuse.js@^3.0.9":
   version "3.0.9"
   resolved "https://registry.yarnpkg.com/@hypnosphi/fuse.js/-/fuse.js-3.0.9.tgz#ea99f6121b4a8f065b4c71f85595db2714498807"
@@ -1157,7 +1164,7 @@ babel-plugin-transform-es3-property-literals@^6.8.0:
   dependencies:
     babel-runtime "^6.22.0"
 
-babel-plugin-transform-exponentiation-operator@^6.22.0, babel-plugin-transform-exponentiation-operator@^6.24.1:
+babel-plugin-transform-exponentiation-operator@^6.22.0, babel-plugin-transform-exponentiation-operator@^6.24.1, babel-plugin-transform-exponentiation-operator@^6.5.0:
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-exponentiation-operator/-/babel-plugin-transform-exponentiation-operator-6.24.1.tgz#2ab0c9c7f3098fa48907772bb813fe41e8de3a0e"
   dependencies:
@@ -2984,11 +2991,11 @@ expect@^21.2.1:
     jest-message-util "^21.2.1"
     jest-regex-util "^21.2.0"
 
-expo@^23.0.0:
-  version "23.0.4"
-  resolved "https://registry.yarnpkg.com/expo/-/expo-23.0.4.tgz#2e772287e2fda2f7dbedecc3b998a29f7b4d7f45"
+expo@^24.0.0:
+  version "24.0.2"
+  resolved "https://registry.yarnpkg.com/expo/-/expo-24.0.2.tgz#3ff9784afd9efbb8eb739289aa53290ddf31a5a5"
   dependencies:
-    "@expo/vector-icons" "^6.2.0"
+    "@expo/vector-icons" "^6.2.2"
     babel-preset-expo "^4.0.0"
     fbemitter "^2.1.1"
     invariant "^2.2.2"
@@ -4340,9 +4347,9 @@ jest-environment-node@^21.2.1:
     jest-mock "^21.2.0"
     jest-util "^21.2.1"
 
-jest-expo@^23.0.0:
-  version "23.0.0"
-  resolved "https://registry.yarnpkg.com/jest-expo/-/jest-expo-23.0.0.tgz#31e392017ed91e099ff0be3586c4f2f1f7d0c201"
+jest-expo@^24.0.0:
+  version "24.0.0"
+  resolved "https://registry.yarnpkg.com/jest-expo/-/jest-expo-24.0.0.tgz#3a74f8452060768c48c5b254c08c6e53cf7ee847"
   dependencies:
     babel-jest "^21.2.0"
     jest "^21.2.1"
@@ -5034,7 +5041,7 @@ methods@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/methods/-/methods-1.1.2.tgz#5529a4d67654134edcc5266656835b0f851afcee"
 
-metro-bundler@^0.20.1:
+metro-bundler@^0.20.0:
   version "0.20.3"
   resolved "https://registry.yarnpkg.com/metro-bundler/-/metro-bundler-0.20.3.tgz#0ded01b64e8963117017b106f75b83cfc34f3656"
   dependencies:
@@ -6404,11 +6411,11 @@ react-native-storybook-loader@^1.6.0:
     color "^2.0.1"
     lodash "^4.16.6"
 
-react-native-tab-view@^0.0.70:
-  version "0.0.70"
-  resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-0.0.70.tgz#1dd2ded32acd0cb6bfef38d26e53675db733b37b"
+react-native-tab-view@^0.0.74:
+  version "0.0.74"
+  resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-0.0.74.tgz#62c0c882d9232b461ce181d440d683b4f99d1bd8"
   dependencies:
-    prop-types "^15.5.10"
+    prop-types "^15.6.0"
 
 react-native-vector-icons@4.4.2:
   version "4.4.2"
@@ -6418,9 +6425,9 @@ react-native-vector-icons@4.4.2:
     prop-types "^15.5.10"
     yargs "^8.0.2"
 
-"react-native@https://github.com/expo/react-native/archive/sdk-23.0.0.tar.gz":
-  version "0.50.3"
-  resolved "https://github.com/expo/react-native/archive/sdk-23.0.0.tar.gz#4c1f6efcf4d8a7726b8efe4501053165bbfaeb32"
+"react-native@https://github.com/expo/react-native/archive/sdk-24.0.0.tar.gz":
+  version "0.51.0"
+  resolved "https://github.com/expo/react-native/archive/sdk-24.0.0.tar.gz#aa7b9c20266b844bfc916aa2e4ddb51036d2b83c"
   dependencies:
     absolute-path "^0.0.0"
     art "^0.10.0"
@@ -6428,6 +6435,7 @@ react-native-vector-icons@4.4.2:
     babel-plugin-syntax-trailing-function-commas "^6.20.0"
     babel-plugin-transform-async-to-generator "6.16.0"
     babel-plugin-transform-class-properties "^6.18.0"
+    babel-plugin-transform-exponentiation-operator "^6.5.0"
     babel-plugin-transform-flow-strip-types "^6.21.0"
     babel-plugin-transform-object-rest-spread "^6.20.2"
     babel-register "^6.24.1"
@@ -6448,7 +6456,7 @@ react-native-vector-icons@4.4.2:
     graceful-fs "^4.1.3"
     inquirer "^3.0.6"
     lodash "^4.16.6"
-    metro-bundler "^0.20.1"
+    metro-bundler "^0.20.0"
     mime "^1.3.4"
     minimist "^1.2.0"
     mkdirp "^0.5.1"
@@ -6464,7 +6472,7 @@ react-native-vector-icons@4.4.2:
     react-clone-referenced-element "^1.0.1"
     react-devtools-core "^2.5.0"
     react-timer-mixin "^0.13.2"
-    regenerator-runtime "^0.9.5"
+    regenerator-runtime "^0.11.0"
     rimraf "^2.5.4"
     semver "^5.0.3"
     shell-quote "1.6.1"
@@ -6475,9 +6483,9 @@ react-native-vector-icons@4.4.2:
     xmldoc "^0.4.0"
     yargs "^9.0.0"
 
-react-navigation@^1.0.0-beta.19:
-  version "1.0.0-beta.21"
-  resolved "https://registry.yarnpkg.com/react-navigation/-/react-navigation-1.0.0-beta.21.tgz#086c504ba84c966ef8db898baef6fa14ff45a06f"
+react-navigation@^1.0.0-beta.21:
+  version "1.0.0-beta.26"
+  resolved "https://registry.yarnpkg.com/react-navigation/-/react-navigation-1.0.0-beta.26.tgz#186fcd1ec13828c7c133ca560b5d95a55e2b9f66"
   dependencies:
     babel-plugin-transform-define "^1.3.0"
     clamp "^1.0.1"
@@ -6485,7 +6493,7 @@ react-navigation@^1.0.0-beta.19:
     path-to-regexp "^1.7.0"
     prop-types "^15.5.10"
     react-native-drawer-layout-polyfill "^1.3.2"
-    react-native-tab-view "^0.0.70"
+    react-native-tab-view "^0.0.74"
 
 react-onclickoutside@^6.5.0:
   version "6.7.0"
@@ -6714,10 +6722,6 @@ regenerator-runtime@^0.10.5:
 regenerator-runtime@^0.11.0:
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.0.tgz#7e54fe5b5ccd5d6624ea6255c3473be090b802e1"
-
-regenerator-runtime@^0.9.5:
-  version "0.9.6"
-  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.9.6.tgz#d33eb95d0d2001a4be39659707c51b0cb71ce029"
 
 regenerator-transform@^0.10.0:
   version "0.10.1"
