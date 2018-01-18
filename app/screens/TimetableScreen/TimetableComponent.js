@@ -10,7 +10,7 @@ import Styles from "../../styles/Containers";
 
 const TimetableComponent = ({ timetable, date, isLoading }) => {
   const dateISO = date.format("YYYY-MM-DD");
-  const filteredTimetable = timetable[dateISO] || [];
+  const filteredTimetable = (timetable[dateISO] || {}).timetable || [];
 
   if (isLoading && filteredTimetable.length === 0) {
     return (
