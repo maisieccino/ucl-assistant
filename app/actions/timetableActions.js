@@ -6,7 +6,6 @@ import {
   TIMETABLE_FETCH_FAILURE,
   TIMETABLE_IS_FETCHING,
   CLEAR_TIMETABLE,
-  TIMETABLE_CACHE_TIME,
 } from "../constants/timetableConstants";
 
 export const fetchTimetableSuccess = (timetableFrag: Object) => ({

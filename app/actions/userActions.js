@@ -1,4 +1,4 @@
-import { AuthSession, Constants as ExpoConstants } from "expo";
+import { AuthSession } from "expo";
 import * as constants from "../constants/userConstants";
 import { clearTimetable } from "./timetableActions";
 
