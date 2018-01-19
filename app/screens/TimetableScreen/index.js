@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import { Feather } from "@expo/vector-icons";
 import moment from "moment";
 import { fetchTimetable } from "../../actions/timetableActions";
-import { TIMETABLE_CACHE_TIME } from "../../constants/timetableConstants";
+import { TIMETABLE_CACHE_TIME_HOURS } from "../../constants/timetableConstants";
 import { TitleText, BodyText } from "../../components/Typography";
 import { MainTabPage } from "../../components/Containers";
 import Button from "../../components/Button";
@@ -80,10 +80,10 @@ class TimetableScreen extends Component {
     ) {
       this.props.fetchTimetable(this.props.user.token, this.state.date);
     } else {
-      const diff = moment
-        .duration()
-        .subtract(moment(this.props.timetable[dateString].lastUpdated));
-      if (diff.asMilliseconds() > TIMETABLE_CACHE_TIME) {
+      const diff = moment.duration(
+        moment().diff(this.props.timetable[dateString].lastUpdated),
+      );
+      if (diff.asHours() > TIMETABLE_CACHE_TIME_HOURS) {
         this.props.fetchTimetable(this.props.user.token, this.state.date);
       }
     }
