@@ -21,8 +21,8 @@ export const Page = ({ children, styles }) => (
 Page.propTypes = propTypes;
 Page.defaultProps = defaultProps;
 
-export const MainTabPage = ({ children, styles }) => (
-  <ScrollView style={Styles.pageScrollContainer}>
+export const MainTabPage = ({ children, styles, ...props }) => (
+  <ScrollView style={Styles.pageScrollContainer} {...props}>
     <View style={[styles, Styles.page, Styles.mainTabPage]}>{children}</View>
   </ScrollView>
 );

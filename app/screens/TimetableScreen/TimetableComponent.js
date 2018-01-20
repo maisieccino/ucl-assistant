@@ -16,7 +16,6 @@ const TimetableComponent = ({ timetable, date, isLoading }) => {
     return (
       <View>
         <CentredText>Loading timetable...</CentredText>
-        <ActivityIndicator size="large" />
       </View>
     );
   }
@@ -39,12 +38,7 @@ const TimetableComponent = ({ timetable, date, isLoading }) => {
       />
     ));
   if (filteredTimetable.length > 0) {
-    return (
-      <View>
-        {items}
-        {isLoading && <ActivityIndicator size="large" />}
-      </View>
-    );
+    return <View>{items}</View>;
   }
   return (
     <View>

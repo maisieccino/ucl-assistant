@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { RefreshControl, View } from "react-native";
 import { connect } from "react-redux";
 import { NavigationActions } from "react-navigation";
 import PropTypes from "prop-types";
@@ -7,9 +7,10 @@ import { Feather } from "@expo/vector-icons";
 import moment from "moment";
 import { fetchTimetable } from "../../actions/timetableActions";
 import { TIMETABLE_CACHE_TIME_HOURS } from "../../constants/timetableConstants";
-import { TitleText, BodyText } from "../../components/Typography";
+import { TitleText, BodyText, SubtitleText } from "../../components/Typography";
 import { MainTabPage } from "../../components/Containers";
 import Button from "../../components/Button";
+import { TextInput } from "../../components/Input";
 import Colors from "../../constants/Colors";
 import TimetableComponent from "./TimetableComponent";
 import DateControls from "./DateControls";
@@ -111,7 +112,14 @@ class TimetableScreen extends Component {
     const { date } = this.state;
     const dateString = date.format("dddd, Do MMMM");
     return (
-      <MainTabPage>
+      <MainTabPage
+        refreshControl={
+          <RefreshControl
+            refreshing={isFetchingTimetable}
+            onRefresh={() => this.onDateChanged(date, true)}
+          />
+        }
+      >
         {scopeNumber < 0 && (
           <View>
             <BodyText>You are not signed in.</BodyText>
@@ -130,6 +138,9 @@ class TimetableScreen extends Component {
             Jump To Today
           </Button>
         )}
+
+        <SubtitleText>Find A Timetable</SubtitleText>
+        <TextInput placeholder="Search for a course or module..." />
       </MainTabPage>
     );
   }
