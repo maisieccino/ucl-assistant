@@ -7,7 +7,7 @@
     "start": "node server.js"
   },
   "engines": {
-    "node": "9.x"
+    "node": "8.x"
   },
   "repository": "https://github.com/mbellgb/ucl-assistant",
   "author": "Matthew Bell",
