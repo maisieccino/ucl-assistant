@@ -34,9 +34,7 @@ const TimetableComponent = ({ timetable, date, isLoading }) => {
         startTime={`${dateISO} ${item.start_time}`}
         endTime={`${dateISO} ${item.end_time}`}
         location={item.location.name || "TBA"}
-        lecturer={
-          item.module.lecturer ? item.module.lecturer.name : "Unknown Lecturer"
-        }
+        lecturer={item.contact ? item.contact : "Unknown Lecturer"}
         key={generate()}
       />
     ));
