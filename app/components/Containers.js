@@ -1,7 +1,12 @@
 /* eslint react/require-default-props: 0 */
 import React from "react";
 import PropTypes from "prop-types";
-import { ScrollView, View, ViewPropTypes } from "react-native";
+import {
+  KeyboardAvoidingView,
+  ScrollView,
+  View,
+  ViewPropTypes,
+} from "react-native";
 import Styles from "../styles/Containers";
 
 const propTypes = {
@@ -23,7 +28,12 @@ Page.defaultProps = defaultProps;
 
 export const MainTabPage = ({ children, styles, ...props }) => (
   <ScrollView style={Styles.pageScrollContainer} {...props}>
-    <View style={[styles, Styles.page, Styles.mainTabPage]}>{children}</View>
+    <KeyboardAvoidingView
+      behavior="padding"
+      style={[styles, Styles.page, Styles.mainTabPage]}
+    >
+      {children}
+    </KeyboardAvoidingView>
   </ScrollView>
 );
 MainTabPage.propTypes = propTypes;

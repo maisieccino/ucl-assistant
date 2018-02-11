@@ -16,7 +16,9 @@ export default StyleSheet.create({
     backgroundColor: "rgb(255,255,255)",
   },
   page: {
-    padding: 20,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingTop: 20,
     flexGrow: 1,
     backgroundColor: Colors.pageBackground,
   },
