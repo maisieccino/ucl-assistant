@@ -2,6 +2,7 @@ import { StackNavigator } from "react-navigation";
 
 import MainTabNavigator from "./MainTabNavigator";
 import SplashScreen from "../screens/SplashScreen";
+import TimetableDetailScreen from "../screens/TimetableDetailScreen";
 
 const RootStackNavigator = StackNavigator(
   {
@@ -10,6 +11,9 @@ const RootStackNavigator = StackNavigator(
     },
     Splash: {
       screen: SplashScreen,
+    },
+    TimetableDetail: {
+      screen: TimetableDetailScreen,
     },
   },
   {

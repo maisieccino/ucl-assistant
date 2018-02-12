@@ -29,7 +29,8 @@ Page.defaultProps = defaultProps;
 export const MainTabPage = ({ children, styles, ...props }) => (
   <ScrollView style={Styles.pageScrollContainer} {...props}>
     <KeyboardAvoidingView
-      behavior="padding"
+      keyboardVerticalOffset={20}
+      behavior="position"
       style={[styles, Styles.page, Styles.mainTabPage]}
     >
       {children}

@@ -12,11 +12,22 @@ const TimetableCard = ({
   endTime,
   location,
   lecturer,
+  navigation,
 }) => {
   const start = moment(startTime).format("HH:mma");
   const end = moment(endTime).format("HH:mma");
   return (
-    <Card title={moduleCode}>
+    <Card
+      title={moduleCode}
+      onPress={() =>
+        navigation.navigate("TimetableDetail", {
+          date: moment(startTime).format("YYYY-MM-DD"),
+          time: moment(startTime).format("HH:mm"),
+          module: moduleName,
+          code: moduleCode,
+        })
+      }
+    >
       <BodyText>{moduleName}</BodyText>
       <BodyText>
         <Feather name="clock" /> {start} - {end}
@@ -39,6 +50,7 @@ TimetableCard.propTypes = {
   endTime: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   location: PropTypes.string,
   lecturer: PropTypes.string,
+  navigation: PropTypes.shape().isRequired,
 };
 
 TimetableCard.defaultProps = {

@@ -132,6 +132,7 @@ class TimetableScreen extends Component {
           timetable={timetable}
           date={date}
           isLoading={isFetchingTimetable}
+          navigation={this.props.navigation}
         />
         {!date.isSame(moment().startOf("day")) && (
           <Button onPress={() => this.onDateChanged(moment())}>
