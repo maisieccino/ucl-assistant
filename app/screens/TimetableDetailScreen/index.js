@@ -1,12 +1,8 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { Location, MapView, Permissions } from "expo";
-import moment from "moment";
-import { TitleText, SubtitleText, BodyText } from "../../components/Typography";
-import Button from "../../components/Button";
-import { Page } from "../../components/Containers";
-import MapStyle from "../../styles/Map";
+import { Location, Permissions } from "expo";
+import TimetableDetailView from "./TimetableDetailView";
 
 class TimetableDetailScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -38,22 +34,7 @@ class TimetableDetailScreen extends Component {
       latitude: 51.5246586,
       longitude: -0.1339784,
       // from timetable
-      start_time: "",
-      contact: "",
-      end_time: "",
-      location: {
-        name: "",
-        address: [],
-      },
-      module: {
-        name: "",
-        lecturer: {
-          department_id: "",
-          department_name: "",
-          email: "",
-          name: "",
-        },
-      },
+      event: {},
     };
   }
 
@@ -95,7 +76,7 @@ class TimetableDetailScreen extends Component {
     const event = timetableDay.filter(
       ev => ev.module.module_id === code && ev.start_time === time,
     )[0];
-    await this.setState({ ...event });
+    await this.setState({ event });
     await this.getLocationCoords(event.location.address);
   }
 
@@ -108,35 +89,12 @@ class TimetableDetailScreen extends Component {
       longitudeDelta: 0.0071,
     };
     return (
-      <Page>
-        <TitleText>{this.state.module.name}</TitleText>
-        <BodyText>{moment(this.state.date).format("dddd, Do MMMM")}</BodyText>
-        <BodyText>
-          {this.state.start_time} - {this.state.end_time}
-        </BodyText>
-        <BodyText>{this.state.location.name}</BodyText>
-
-        <MapView
-          style={MapStyle.wideMap}
-          initialRegion={initialRegion}
-          region={{
-            latitude,
-            longitude,
-            latitudeDelta: initialRegion.latitudeDelta,
-            longitudeDelta: initialRegion.longitudeDelta,
-          }}
-        >
-          <MapView.Marker coordinate={{ latitude, longitude }} />
-        </MapView>
-        <Button>Directions</Button>
-
-        <SubtitleText>Lecturer</SubtitleText>
-        <BodyText>{this.state.contact}</BodyText>
-        <Button>Details</Button>
-
-        {__DEV__ && <SubtitleText>Debug Information</SubtitleText>}
-        {__DEV__ && <BodyText>{JSON.stringify(this.state, "\n", 2)}</BodyText>}
-      </Page>
+      <TimetableDetailView
+        latitude={latitude}
+        longitude={longitude}
+        initialRegion={initialRegion}
+        {...this.state.event}
+      />
     );
   }
 }
