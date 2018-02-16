@@ -1,13 +1,13 @@
 {
   "name": "ucl-assistant-server",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Server to support the UCL Assistant app",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
   "engines": {
-    "node": "9.x"
+    "node": "8.x"
   },
   "repository": "https://github.com/mbellgb/ucl-assistant",
   "author": "Matthew Bell",

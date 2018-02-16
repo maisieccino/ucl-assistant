@@ -1,14 +1,16 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { RefreshControl, View } from "react-native";
 import { connect } from "react-redux";
 import { NavigationActions } from "react-navigation";
 import PropTypes from "prop-types";
 import { Feather } from "@expo/vector-icons";
 import moment from "moment";
 import { fetchTimetable } from "../../actions/timetableActions";
-import { TitleText, BodyText } from "../../components/Typography";
+import { TIMETABLE_CACHE_TIME_HOURS } from "../../constants/timetableConstants";
+import { TitleText, BodyText, SubtitleText } from "../../components/Typography";
 import { MainTabPage } from "../../components/Containers";
 import Button from "../../components/Button";
+import { TextInput } from "../../components/Input";
 import Colors from "../../constants/Colors";
 import TimetableComponent from "./TimetableComponent";
 import DateControls from "./DateControls";
@@ -66,11 +68,26 @@ class TimetableScreen extends Component {
     }
   }
 
-  async onDateChanged(newDate) {
+  async onDateChanged(newDate, forceUpdate = false) {
+    const newDay = newDate.startOf("day");
     await this.setState({
-      date: newDate.startOf("day"),
+      date: newDay,
     });
-    this.props.fetchTimetable(this.props.user.token, this.state.date);
+    const dateString = newDay.format("YYYY-MM-DD");
+    if (
+      forceUpdate ||
+      !this.props.timetable[dateString] ||
+      !this.props.timetable[dateString].lastUpdated
+    ) {
+      this.props.fetchTimetable(this.props.user.token, this.state.date);
+    } else {
+      const diff = moment.duration(
+        moment().diff(this.props.timetable[dateString].lastUpdated),
+      );
+      if (diff.asHours() > TIMETABLE_CACHE_TIME_HOURS) {
+        this.props.fetchTimetable(this.props.user.token, this.state.date);
+      }
+    }
   }
 
   loginCheck(props) {
@@ -95,7 +112,14 @@ class TimetableScreen extends Component {
     const { date } = this.state;
     const dateString = date.format("dddd, Do MMMM");
     return (
-      <MainTabPage>
+      <MainTabPage
+        refreshControl={
+          <RefreshControl
+            refreshing={isFetchingTimetable}
+            onRefresh={() => this.onDateChanged(date, true)}
+          />
+        }
+      >
         {scopeNumber < 0 && (
           <View>
             <BodyText>You are not signed in.</BodyText>
@@ -108,12 +132,16 @@ class TimetableScreen extends Component {
           timetable={timetable}
           date={date}
           isLoading={isFetchingTimetable}
+          navigation={this.props.navigation}
         />
         {!date.isSame(moment().startOf("day")) && (
           <Button onPress={() => this.onDateChanged(moment())}>
             Jump To Today
           </Button>
         )}
+
+        {/* <SubtitleText>Find A Timetable</SubtitleText>
+        <TextInput placeholder="Search for a course or module..." /> */}
       </MainTabPage>
     );
   }

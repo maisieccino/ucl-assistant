@@ -39,6 +39,14 @@ export const fetchTimetable = (
     if (!res.ok) {
       throw new Error(json.error || "There was a problem");
     }
+    const now = moment();
+    Object.keys(json.content.timetable).forEach(day => {
+      const timetable = json.content.timetable[day];
+      json.content.timetable[day] = {
+        lastUpdated: now,
+        timetable,
+      };
+    });
     return dispatch(fetchTimetableSuccess(json.content.timetable));
   } catch (error) {
     return dispatch(

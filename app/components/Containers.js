@@ -1,7 +1,13 @@
 /* eslint react/require-default-props: 0 */
 import React from "react";
 import PropTypes from "prop-types";
-import { ScrollView, View, ViewPropTypes } from "react-native";
+import { Feather } from "@expo/vector-icons";
+import {
+  KeyboardAvoidingView,
+  ScrollView,
+  View,
+  ViewPropTypes,
+} from "react-native";
 import Styles from "../styles/Containers";
 
 const propTypes = {
@@ -21,9 +27,15 @@ export const Page = ({ children, styles }) => (
 Page.propTypes = propTypes;
 Page.defaultProps = defaultProps;
 
-export const MainTabPage = ({ children, styles }) => (
-  <ScrollView style={Styles.pageScrollContainer}>
-    <View style={[styles, Styles.page, Styles.mainTabPage]}>{children}</View>
+export const MainTabPage = ({ children, styles, ...props }) => (
+  <ScrollView style={Styles.pageScrollContainer} {...props}>
+    <KeyboardAvoidingView
+      keyboardVerticalOffset={20}
+      behavior="position"
+      style={[styles, Styles.page, Styles.mainTabPage]}
+    >
+      {children}
+    </KeyboardAvoidingView>
   </ScrollView>
 );
 MainTabPage.propTypes = propTypes;
@@ -42,5 +54,11 @@ export const Horizontal = ({ children }) => (
 );
 Horizontal.propTypes = propTypes;
 Horizontal.defaultProps = defaultProps;
+
+export const PaddedIcon = props => (
+  <Feather {...props} style={Styles.paddedIcon} />
+);
+PaddedIcon.propTypes = Feather.propTypes;
+PaddedIcon.propTypes = Feather.defaultProps;
 
 export default {};

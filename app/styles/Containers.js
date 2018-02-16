@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import Colors from "../constants/Colors";
 
 export default StyleSheet.create({
@@ -11,16 +11,15 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.pageBackground,
   },
-  statusBarUnderlay: {
-    height: 24,
-    backgroundColor: "rgb(255,255,255)",
-  },
   page: {
-    padding: 20,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingTop: 20,
     flexGrow: 1,
     backgroundColor: Colors.pageBackground,
   },
   mainTabPage: {
+    marginTop: Platform.OS === "android" ? 20 : 0,
     marginBottom: 60,
   },
   spacer: {
@@ -44,5 +43,9 @@ export default StyleSheet.create({
     height: undefined,
     alignSelf: "stretch",
     marginTop: 50,
+  },
+  paddedIcon: {
+    marginLeft: 5,
+    marginRight: 5,
   },
 });

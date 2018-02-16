@@ -1,0 +1,25 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: ucl-assistant-backend
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: ucl-assistant
+        tier: backend
+        track: stable
+    spec:
+      containers:
+        - name: ucl-assistant-backend
+          image: "mbellgb/ucl-assistant-server:latest"
+          ports:
+            - name: http
+              containerPort: 3000
+          envFrom:
+          - secretRef:
+              name: ucl-assistant-backend-secret
+          env:
+          - name: PORT
+            value: "3000"

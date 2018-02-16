@@ -1,5 +1,5 @@
 import React from "react";
-import { ActivityIndicator, Image, View } from "react-native";
+import { Image, View } from "react-native";
 import PropTypes from "prop-types";
 import { momentObj } from "react-moment-proptypes";
 import moment from "moment";
@@ -8,15 +8,14 @@ import TimetableCard from "../../components/Card/TimetableCard";
 import { CentredText } from "../../components/Typography";
 import Styles from "../../styles/Containers";
 
-const TimetableComponent = ({ timetable, date, isLoading }) => {
+const TimetableComponent = ({ timetable, date, isLoading, navigation }) => {
   const dateISO = date.format("YYYY-MM-DD");
-  const filteredTimetable = timetable[dateISO] || [];
+  const filteredTimetable = (timetable[dateISO] || {}).timetable || [];
 
   if (isLoading && filteredTimetable.length === 0) {
     return (
       <View>
         <CentredText>Loading timetable...</CentredText>
-        <ActivityIndicator size="large" />
       </View>
     );
   }
@@ -34,19 +33,13 @@ const TimetableComponent = ({ timetable, date, isLoading }) => {
         startTime={`${dateISO} ${item.start_time}`}
         endTime={`${dateISO} ${item.end_time}`}
         location={item.location.name || "TBA"}
-        lecturer={
-          item.module.lecturer ? item.module.lecturer.name : "Unknown Lecturer"
-        }
+        lecturer={item.contact ? item.contact : "Unknown Lecturer"}
         key={generate()}
+        navigation={navigation}
       />
     ));
   if (filteredTimetable.length > 0) {
-    return (
-      <View>
-        {items}
-        {isLoading && <ActivityIndicator size="large" />}
-      </View>
-    );
+    return <View>{items}</View>;
   }
   return (
     <View>
@@ -67,6 +60,7 @@ TimetableComponent.propTypes = {
   timetable: PropTypes.shape(),
   date: momentObj,
   isLoading: PropTypes.bool,
+  navigation: PropTypes.shape().isRequired,
 };
 
 TimetableComponent.defaultProps = {

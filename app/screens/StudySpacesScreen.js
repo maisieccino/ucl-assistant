@@ -5,6 +5,7 @@ import { TitleText, SubtitleText, CentredText } from "../components/Typography";
 import { MainTabPage } from "../components/Containers";
 import { TextInput } from "../components/Input";
 import Colors from "../constants/Colors";
+import MapStyle from "../styles/Map";
 
 class TimetableScreen extends Component {
   static navigationOptions = {
@@ -28,13 +29,7 @@ class TimetableScreen extends Component {
 
         <SubtitleText>Nearby Study Spaces</SubtitleText>
         <MapView
-          style={{
-            height: 200,
-            marginLeft: -20,
-            marginRight: -20,
-            marginTop: 10,
-            marginBottom: 10,
-          }}
+          style={MapStyle.wideMap}
           initialRegion={{
             latitude: 51.5246586,
             longitude: -0.1339784,

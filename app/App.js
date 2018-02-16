@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/es/integration/react";
-import { Platform, StatusBar, View } from "react-native";
+import { StatusBar, View } from "react-native";
 import { AppLoading, Asset, Font } from "expo";
 import { Feather } from "@expo/vector-icons";
 import configureStore from "./configureStore";
@@ -24,10 +24,6 @@ class App extends Component {
       isLoadingComplete: false,
       store: configureStore(),
     };
-  }
-
-  componentWillMount() {
-    StatusBar.setHidden(false);
   }
 
   loadResourcesAsync = async () =>
@@ -73,9 +69,6 @@ class App extends Component {
         <PersistGate persistor={persistor}>
           <View style={Styles.app}>
             <StatusBar barStyle="light-content" hidden={false} />
-            {Platform.OS === "android" && (
-              <View style={Styles.statusBarUnderlay} />
-            )}
             <RootNavigation />
           </View>
         </PersistGate>
