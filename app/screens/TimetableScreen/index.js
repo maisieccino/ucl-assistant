@@ -140,8 +140,8 @@ class TimetableScreen extends Component {
           </Button>
         )}
 
-        <SubtitleText>Find A Timetable</SubtitleText>
-        <TextInput placeholder="Search for a course or module..." />
+        {/* <SubtitleText>Find A Timetable</SubtitleText>
+        <TextInput placeholder="Search for a course or module..." /> */}
       </MainTabPage>
     );
   }

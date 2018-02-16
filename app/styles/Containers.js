@@ -44,4 +44,8 @@ export default StyleSheet.create({
     alignSelf: "stretch",
     marginTop: 50,
   },
+  paddedIcon: {
+    marginLeft: 5,
+    marginRight: 5,
+  },
 });

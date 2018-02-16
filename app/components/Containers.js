@@ -1,6 +1,7 @@
 /* eslint react/require-default-props: 0 */
 import React from "react";
 import PropTypes from "prop-types";
+import { Feather } from "@expo/vector-icons";
 import {
   KeyboardAvoidingView,
   ScrollView,
@@ -53,5 +54,11 @@ export const Horizontal = ({ children }) => (
 );
 Horizontal.propTypes = propTypes;
 Horizontal.defaultProps = defaultProps;
+
+export const PaddedIcon = props => (
+  <Feather {...props} style={Styles.paddedIcon} />
+);
+PaddedIcon.propTypes = Feather.propTypes;
+PaddedIcon.propTypes = Feather.defaultProps;
 
 export default {};

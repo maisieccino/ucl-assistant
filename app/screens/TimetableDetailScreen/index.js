@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { Location, Permissions } from "expo";
 import TimetableDetailView from "./TimetableDetailView";
 
 class TimetableDetailScreen extends Component {
@@ -31,8 +30,6 @@ class TimetableDetailScreen extends Component {
       date,
       time,
       code,
-      latitude: 51.5246586,
-      longitude: -0.1339784,
       // from timetable
       event: {},
     };
@@ -50,25 +47,6 @@ class TimetableDetailScreen extends Component {
     }
   }
 
-  async getLocationCoords(location) {
-    const { status } = await Permissions.getAsync(Permissions.LOCATION);
-    if (status === "undetermined") {
-      const { status: res } = await Permissions.askAsync(Permissions.LOCATION);
-      if (res === "denied") {
-        return;
-      }
-    }
-    if (status === "denied") {
-      return;
-    }
-    const address = location.join(",");
-    const result = await Location.geocodeAsync(address);
-    await this.setState({
-      latitude: result[0].latitude,
-      longitude: result[0].longitude,
-    });
-  }
-
   async findEvent(props) {
     const { timetable } = props;
     const { date, time, code } = this.state;
@@ -77,11 +55,9 @@ class TimetableDetailScreen extends Component {
       ev => ev.module.module_id === code && ev.start_time === time,
     )[0];
     await this.setState({ event });
-    await this.getLocationCoords(event.location.address);
   }
 
   render() {
-    const { latitude, longitude } = this.state;
     const initialRegion = {
       latitude: 51.5246586,
       longitude: -0.1339784,
@@ -90,8 +66,6 @@ class TimetableDetailScreen extends Component {
     };
     return (
       <TimetableDetailView
-        latitude={latitude}
-        longitude={longitude}
         initialRegion={initialRegion}
         {...this.state.event}
       />

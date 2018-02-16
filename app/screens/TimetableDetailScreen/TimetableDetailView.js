@@ -27,7 +27,13 @@ const TimetableDetailView = props => {
     }
   }
 
-  const { latitude, longitude } = props;
+  const { lat, lng } = props.location.coordinates;
+  const latitude = parseFloat(lat, 10) || props.initialRegion.latitude;
+  const longitude = parseFloat(lng, 10) || props.initialRegion.longitude;
+  let mapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+  if (!lat || !lng) {
+    mapsUrl = `https://www.google.com/maps/search/?api=1&query=${props.location.address.join()}`;
+  }
 
   return (
     <Page>
@@ -41,6 +47,12 @@ const TimetableDetailView = props => {
       {props.session_group.length > 0 && (
         <BodyText>Group {props.session_group}</BodyText>
       )}
+      {(!lat || !lng) && (
+        <BodyText>
+          Error: No coordinates were provided for this location, map marker may
+          be incorrect.
+        </BodyText>
+      )}
       <MapView
         style={MapStyle.wideMap}
         initialRegion={props.initialRegion}
@@ -53,15 +65,7 @@ const TimetableDetailView = props => {
       >
         <MapView.Marker coordinate={{ latitude, longitude }} />
       </MapView>
-      <Button
-        onPress={() =>
-          Linking.openURL(
-            `https://www.google.com/maps/search/?api=1&query=${props.location.address.join()}`,
-          )
-        }
-      >
-        Directions
-      </Button>
+      <Button onPress={() => Linking.openURL(mapsUrl)}>Directions</Button>
 
       <SubtitleText>{contactTypeStr}</SubtitleText>
       <BodyText>{props.contact}</BodyText>
@@ -74,15 +78,23 @@ const TimetableDetailView = props => {
 };
 
 TimetableDetailView.propTypes = {
+  initialRegion: PropTypes.shape({
+    latitude: PropTypes.number,
+    longitude: PropTypes.number,
+    latitudeDelta: PropTypes.number,
+    longitudeDelta: PropTypes.number,
+  }),
   date: PropTypes.string,
-  latitude: PropTypes.number,
-  longitude: PropTypes.number,
   start_time: PropTypes.string,
   end_time: PropTypes.string,
   contact: PropTypes.string,
   location: PropTypes.shape({
     name: PropTypes.string,
     address: PropTypes.arrayOf(PropTypes.string),
+    coordinates: PropTypes.shape({
+      lat: PropTypes.string,
+      lng: PropTypes.string,
+    }),
   }),
   module: PropTypes.shape({
     name: PropTypes.string,
@@ -98,15 +110,23 @@ TimetableDetailView.propTypes = {
 };
 
 TimetableDetailView.defaultProps = {
+  initialRegion: {
+    latitude: 51.5246586,
+    longitude: -0.1339784,
+    latitudeDelta: 0.0012,
+    longitudeDelta: 0.0071,
+  },
   date: "2017-01-01",
-  latitude: 51.5246586,
-  longitude: -0.1339784,
   start_time: "",
   end_time: "",
   contact: "",
   location: {
     name: "",
     address: [],
+    coordinates: {
+      lat: "51.5246586",
+      lng: "-0.1339784",
+    },
   },
   module: {
     name: "",

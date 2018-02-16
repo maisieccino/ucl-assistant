@@ -2,10 +2,18 @@ import React, { Component } from "react";
 import { Platform, ToastAndroid, View } from "react-native"; // eslint-disable-line react-native/split-platform-components
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { TitleText, BodyText, SubtitleText } from "../components/Typography";
-import { MainTabPage } from "../components/Containers";
+import {
+  TitleText,
+  BodyText,
+  SubtitleText,
+  ButtonText,
+} from "../components/Typography";
+import { MainTabPage, Horizontal, PaddedIcon } from "../components/Containers";
 import { signOut } from "../actions/userActions";
 import Button from "../components/Button";
+import Colors from "../constants/Colors";
+
+const { version } = require("../package.json");
 
 class TimetableScreen extends Component {
   static navigationOptions = {
@@ -45,8 +53,20 @@ class TimetableScreen extends Component {
     return (
       <MainTabPage>
         <TitleText>Settings</TitleText>
-        <Button onPress={() => this.signOut()}>Sign Out</Button>
+        <Button onPress={() => this.signOut()}>
+          <Horizontal>
+            <PaddedIcon
+              name="log-out"
+              size={24}
+              color={Colors.pageBackground}
+            />
+            <ButtonText>Sign Out</ButtonText>
+          </Horizontal>
+        </Button>
         <TitleText>About</TitleText>
+        <SubtitleText>Version</SubtitleText>
+        <BodyText>{version}</BodyText>
+        <SubtitleText>Author</SubtitleText>
         <BodyText>Created by Matt Bell, using the UCL API.</BodyText>
         <BodyText>
           Illustrations courtesy of the unDraw project, released under the MIT
