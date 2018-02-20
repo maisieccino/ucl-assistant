@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { Feather } from "@expo/vector-icons";
-import { TitleText, SubtitleText, CentredText } from "../components/Typography";
-import { MainTabPage } from "../components/Containers";
-import { TextInput } from "../components/Input";
-import Colors from "../constants/Colors";
+import { TitleText } from "../../components/Typography";
+import { MainTabPage } from "../../components/Containers";
+import Colors from "../../constants/Colors";
+
+import SearchControl from "./SearchControl";
+import RecentResults from "./RecentResults";
 
 class TimetableScreen extends Component {
   static navigationOptions = {
@@ -17,14 +19,17 @@ class TimetableScreen extends Component {
     ),
   };
 
+  static mapStateToProps = state => ({
+    searchResults: state.people.searchResults,
+    isSearching: state.people.isSearching,
+  });
+
   render() {
     return (
       <MainTabPage>
         <TitleText>People</TitleText>
-        <TextInput placeholder="Search for a name or email..." />
-        <CentredText>Start typing to get search results</CentredText>
-
-        <SubtitleText>Recently Searched</SubtitleText>
+        <SearchControl />
+        <RecentResults />
       </MainTabPage>
     );
   }
