@@ -8,9 +8,13 @@ require("dotenv").config();
 
 const app = new Koa();
 
-if (!process.env.UCLAPI_CLIENT_ID || !process.env.UCLAPI_CLIENT_SECRET) {
+if (
+  !process.env.UCLAPI_CLIENT_ID ||
+  !process.env.UCLAPI_CLIENT_SECRET ||
+  !process.env.UCLAPI_TOKEN
+) {
   console.error(
-    "Error! You have not set the UCLAPI_CLIENT_ID or UCLAPI_CLIENT_SECRET environment variables.",
+    "Error! You have not set the UCLAPI_CLIENT_ID, UCLAPI_TOKEN, or UCLAPI_CLIENT_SECRET environment variables.",
   );
   console.log("Please set them to run this app.");
   process.abort();
