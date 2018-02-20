@@ -6,5 +6,5 @@ module.exports = {
   USER_DATA_URL: `${API_URL}/oauth/user/data`,
   PERSONAL_TIMETABLE_URL: `${TIMETABLE_BASE_URL}/personal`,
   MODULE_TIMETABLE_URL: `${TIMETABLE_BASE_URL}/bymodule`,
-  PEOPLE_SEARCH_URL: `${API_URL}/search/`,
+  PEOPLE_SEARCH_URL: `${API_URL}/search/people`,
 };
