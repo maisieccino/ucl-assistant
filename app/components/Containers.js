@@ -12,27 +12,27 @@ import Styles from "../styles/Containers";
 
 const propTypes = {
   children: PropTypes.node,
-  styles: ViewPropTypes.style,
+  style: ViewPropTypes.style,
 };
 const defaultProps = {
   children: "",
-  styles: {},
+  style: {},
 };
 
-export const Page = ({ children, styles }) => (
+export const Page = ({ children, style }) => (
   <ScrollView style={Styles.pageScrollContainer}>
-    <View style={[styles, Styles.page]}>{children}</View>
+    <View style={[style, Styles.page]}>{children}</View>
   </ScrollView>
 );
 Page.propTypes = propTypes;
 Page.defaultProps = defaultProps;
 
-export const MainTabPage = ({ children, styles, ...props }) => (
+export const MainTabPage = ({ children, style, ...props }) => (
   <ScrollView style={Styles.pageScrollContainer} {...props}>
     <KeyboardAvoidingView
       keyboardVerticalOffset={20}
       behavior="position"
-      style={[styles, Styles.page, Styles.mainTabPage]}
+      style={[style, Styles.page, Styles.mainTabPage]}
     >
       {children}
     </KeyboardAvoidingView>
@@ -41,16 +41,16 @@ export const MainTabPage = ({ children, styles, ...props }) => (
 MainTabPage.propTypes = propTypes;
 MainTabPage.defaultProps = defaultProps;
 
-export const PageNoScroll = ({ children, styles }) => (
-  <View style={[styles, Styles.page]}>{children}</View>
+export const PageNoScroll = ({ children, style }) => (
+  <View style={[style, Styles.page]}>{children}</View>
 );
 PageNoScroll.propTypes = propTypes;
 PageNoScroll.defaultProps = defaultProps;
 
 export const Spacer = () => <View style={Styles.spacer} />;
 
-export const Horizontal = ({ children }) => (
-  <View style={Styles.horizontal}>{children}</View>
+export const Horizontal = ({ children, style }) => (
+  <View style={[Styles.horizontal, style]}>{children}</View>
 );
 Horizontal.propTypes = propTypes;
 Horizontal.defaultProps = defaultProps;
@@ -59,6 +59,6 @@ export const PaddedIcon = props => (
   <Feather {...props} style={Styles.paddedIcon} />
 );
 PaddedIcon.propTypes = Feather.propTypes;
-PaddedIcon.propTypes = Feather.defaultProps;
+PaddedIcon.defaultProps = Feather.defaultProps;
 
 export default {};

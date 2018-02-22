@@ -35,6 +35,21 @@ export const style = StyleSheet.create({
     marginTop: 5,
     marginBottom: 5,
   },
+  infoTextContainer: {
+    marginTop: 5,
+  },
+  errorText: {
+    color: Color.errorColor,
+    marginTop: -1,
+    flex: 1,
+    marginLeft: 5,
+  },
+  warningText: {
+    color: Color.warningColor,
+    marginTop: -1,
+    flex: 1,
+    marginLeft: 5,
+  },
 });
 
 export default StyleSheet.create({
@@ -60,4 +75,7 @@ export default StyleSheet.create({
     marginLeft: 2,
     marginBottom: 5,
   },
+  errorText: StyleSheet.flatten([style.baseStyle, style.errorText]),
+  warningText: StyleSheet.flatten([style.baseStyle, style.warningText]),
+  infoTextContainer: StyleSheet.flatten([style.infoTextContainer]),
 });

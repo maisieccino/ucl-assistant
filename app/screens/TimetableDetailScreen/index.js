@@ -67,6 +67,7 @@ class TimetableDetailScreen extends Component {
     return (
       <TimetableDetailView
         initialRegion={initialRegion}
+        date={this.state.date}
         {...this.state.event}
       />
     );

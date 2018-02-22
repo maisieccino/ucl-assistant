@@ -3,7 +3,13 @@ import PropTypes from "prop-types";
 import { Linking } from "react-native";
 import { MapView } from "expo";
 import moment from "moment";
-import { TitleText, SubtitleText, BodyText } from "../../components/Typography";
+import {
+  ErrorText,
+  WarningText,
+  TitleText,
+  SubtitleText,
+  BodyText,
+} from "../../components/Typography";
 import Button from "../../components/Button";
 import { Page } from "../../components/Containers";
 import MapStyle from "../../styles/Map";
@@ -38,7 +44,7 @@ const TimetableDetailView = props => {
   return (
     <Page>
       <TitleText>{props.module.name}</TitleText>
-      <BodyText>{moment(props.date).format("dddd, Do MMMM")}</BodyText>
+      <BodyText>{moment(props.date).format("dddd, Do MMMM YYYY")}</BodyText>
       <BodyText>
         {props.start_time} - {props.end_time}
       </BodyText>
@@ -48,10 +54,10 @@ const TimetableDetailView = props => {
         <BodyText>Group {props.session_group}</BodyText>
       )}
       {(!lat || !lng) && (
-        <BodyText>
+        <ErrorText>
           Error: No coordinates were provided for this location, map marker may
           be incorrect.
-        </BodyText>
+        </ErrorText>
       )}
       <MapView
         style={MapStyle.wideMap}
