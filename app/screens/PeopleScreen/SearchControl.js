@@ -7,6 +7,7 @@ import { generate } from "shortid";
 import { CentredText, BodyText } from "../../components/Typography";
 import { TextInput } from "../../components/Input";
 import Button from "../../components/Button";
+import SearchResult from "../../components/SearchResult";
 import { search, searchClear } from "../../actions/peopleActions";
 
 class SearchControl extends Component {
@@ -97,9 +98,13 @@ class SearchControl extends Component {
           )}
 
         {searchResults.map(res => (
-          <View key={generate()}>
-            <BodyText>{res.name}</BodyText>
-          </View>
+          <SearchResult
+            key={generate()}
+            topText={res.name}
+            bottomText={res.department}
+            type="person"
+            buttonText="View"
+          />
         ))}
       </View>
     );

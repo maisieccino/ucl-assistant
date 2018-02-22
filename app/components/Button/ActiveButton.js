@@ -33,11 +33,11 @@ const Wrapper = ({ children, onPress, disabled }) =>
 Wrapper.propTypes = propTypes;
 Wrapper.defaultProps = defaultProps;
 
-const Button = ({ onPress, styles, children, disabled }) => (
+const Button = ({ onPress, style, children, disabled }) => (
   <Wrapper onPress={onPress} disabled={disabled}>
     <LinearGradient
       colors={[Colors.accentColor, Colors.buttonBackground]}
-      style={[Styles.button, styles]}
+      style={[Styles.button, style]}
       start={[0, 1]}
       end={[1, 0]}
     >

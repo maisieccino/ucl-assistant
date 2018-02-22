@@ -3,7 +3,7 @@ import { TouchableNativeFeedback, View } from "react-native";
 import Styles from "../../styles/Button";
 import { propTypes, defaultProps } from "./props";
 
-const Button = ({ onPress, styles, children, disabled }) => (
+const Button = ({ onPress, style, children, disabled }) => (
   <TouchableNativeFeedback
     background={TouchableNativeFeedback.SelectableBackground()}
     onPress={e => onPress(e)}
@@ -11,7 +11,7 @@ const Button = ({ onPress, styles, children, disabled }) => (
     style={Styles.buttonWrapper}
     disabled={disabled}
   >
-    <View style={[Styles.button, Styles.disabled, styles]}>{children}</View>
+    <View style={[Styles.button, Styles.disabled, style]}>{children}</View>
   </TouchableNativeFeedback>
 );
 

@@ -30,7 +30,6 @@ export const searchClear = () => ({
 export const search = (token = null, query) => async dispatch => {
   dispatch(setIsSearching());
   try {
-    console.log(`${PEOPLE_URL}?query=${encodeURIComponent(query)}`);
     const res = await fetch(
       `${PEOPLE_URL}?query=${encodeURIComponent(query)}`,
       {
@@ -43,7 +42,6 @@ export const search = (token = null, query) => async dispatch => {
     if (!res.ok) {
       throw new Error(json.error || "There was a problem");
     }
-    console.log(json);
     return dispatch(searchSuccess(json.content.people));
   } catch (error) {
     return dispatch(

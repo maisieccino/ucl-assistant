@@ -41,6 +41,12 @@ export const ButtonText = ({ children }) => (
 ButtonText.propTypes = propTypes;
 ButtonText.defaultTextProps = defaultProps;
 
+export const SmallButtonText = ({ children }) => (
+  <Text style={Style.smallButtonText}>{children}</Text>
+);
+SmallButtonText.propTypes = propTypes;
+SmallButtonText.defaultTextProps = defaultProps;
+
 export const CardTitleText = ({ children }) => (
   <View>
     <Text style={Style.cardTitle}>{children}</Text>
@@ -49,5 +55,17 @@ export const CardTitleText = ({ children }) => (
 );
 CardTitleText.propTypes = propTypes;
 CardTitleText.defaultTextProps = defaultProps;
+
+export const SearchResultTopText = ({ children }) => (
+  <Text style={Style.searchResultTopText}>{children}</Text>
+);
+SearchResultTopText.propTypes = propTypes;
+SearchResultTopText.defaultTextProps = defaultProps;
+
+export const SearchResultBottomText = ({ children }) => (
+  <Text style={Style.searchResultBottomText}>{children}</Text>
+);
+SearchResultBottomText.propTypes = propTypes;
+SearchResultBottomText.defaultTextProps = defaultProps;
 
 export default {};

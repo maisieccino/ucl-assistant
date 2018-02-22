@@ -7,12 +7,14 @@ function loadStories() {
   require("../components/Button/button-stories.js");
   require("../components/Card/card-stories.js");
   require("../components/Input/TextInput/textinput-stories.js");
+  require("../components/SearchResult/searchresult-stories.js");
 }
 
 const stories = [
   "../components/Button/button-stories.js",
   "../components/Card/card-stories.js",
   "../components/Input/TextInput/textinput-stories.js",
+  "../components/SearchResult/searchresult-stories.js",
 ];
 
 module.exports = {

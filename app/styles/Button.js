@@ -6,15 +6,19 @@ const buttonStyle = {
   paddingLeft: 16,
   paddingRight: 16,
   borderRadius: 8,
-  minWidth: 150,
-  minHeight: 55,
   elevation: 2,
+  minHeight: 55,
+  minWidth: 150,
+  alignItems: "center",
   justifyContent: "center",
+  flexDirection: "row",
 };
 
 export default StyleSheet.create({
   buttonWrapper: {
     borderRadius: 8,
+    flex: 1,
+    justifyContent: "center",
   },
   roundButtonWrapper: {
     borderRadius: 100,
@@ -29,6 +33,15 @@ export default StyleSheet.create({
     {
       marginTop: 5,
       marginBottom: 5,
+    },
+  ]),
+  smallButton: StyleSheet.flatten([
+    buttonStyle,
+    {
+      marginTop: 5,
+      marginBottom: 5,
+      minHeight: 30,
+      minWidth: 90,
     },
   ]),
   roundButton: StyleSheet.flatten([
