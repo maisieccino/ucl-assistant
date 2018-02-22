@@ -3,6 +3,7 @@ import { StackNavigator } from "react-navigation";
 import MainTabNavigator from "./MainTabNavigator";
 import SplashScreen from "../screens/SplashScreen";
 import TimetableDetailScreen from "../screens/TimetableDetailScreen";
+import PersonDetailScreen from "../screens/PersonDetailScreen";
 
 const RootStackNavigator = StackNavigator(
   {
@@ -14,6 +15,9 @@ const RootStackNavigator = StackNavigator(
     },
     TimetableDetail: {
       screen: TimetableDetailScreen,
+    },
+    PersonDetail: {
+      screen: PersonDetailScreen,
     },
   },
   {

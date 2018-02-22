@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { ActivityIndicator, View } from "react-native";
 import { generate } from "shortid";
-import { CentredText, BodyText } from "../../components/Typography";
+import { CentredText } from "../../components/Typography";
 import { TextInput } from "../../components/Input";
 import Button from "../../components/Button";
 import SearchResult from "../../components/SearchResult";
@@ -18,6 +18,7 @@ class SearchControl extends Component {
     search: PropTypes.func,
     clear: PropTypes.func,
     token: PropTypes.string,
+    navigation: PropTypes.shape().isRequired,
   };
 
   static defaultProps = {
@@ -71,10 +72,10 @@ class SearchControl extends Component {
   }
 
   render() {
-    const { error, isSearching, searchResults } = this.props;
+    const { error, isSearching, navigation, searchResults } = this.props;
     return (
       <View>
-        {this.state.query.length > 0 && (
+        {searchResults.length > 0 && (
           <Button onPress={() => this.clear()}>Clear</Button>
         )}
         <TextInput
@@ -104,6 +105,9 @@ class SearchControl extends Component {
             bottomText={res.department}
             type="person"
             buttonText="View"
+            onPress={() => {
+              navigation.navigate("PersonDetail", res);
+            }}
           />
         ))}
       </View>
