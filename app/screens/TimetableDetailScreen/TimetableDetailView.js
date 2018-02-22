@@ -55,8 +55,8 @@ const TimetableDetailView = props => {
       )}
       {(!lat || !lng) && (
         <ErrorText>
-          Error: No coordinates were provided for this location, map marker may
-          be incorrect.
+          Error: We couldn{"'"}t fetch coordinates for this venue, so the map
+          may be incorrect.
         </ErrorText>
       )}
       <MapView
