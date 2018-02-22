@@ -9,7 +9,6 @@ import StudySpacesScreen from "../screens/StudySpacesScreen";
 import PeopleScreen from "../screens/PeopleScreen";
 import RoomsScreen from "../screens/RoomsScreen";
 import SettingsScreen from "../screens/SettingsScreen";
-import StorybookScreen from "../screens/StorybookScreen";
 
 const screens = {
   Timetable: {
@@ -28,9 +27,6 @@ const screens = {
     screen: SettingsScreen,
   },
 };
-if (__DEV__) {
-  screens.Storybook = { screen: StorybookScreen };
-}
 
 export default TabNavigator(screens, {
   navigationOptions: ({ navigation }) => ({

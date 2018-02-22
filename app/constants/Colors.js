@@ -4,7 +4,7 @@ export default {
   pageBackground: "#fefefe",
   accentColor: "#1B998B",
   accentColorLight: "#73CCC2",
-  cardBackground: "#efeded",
+  cardBackground: "#eaeaea",
   buttonBackground: "#4BB3FD",
   disabledButtonBackground: "#9899a0",
 };

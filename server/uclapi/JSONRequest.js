@@ -13,7 +13,7 @@ module.exports = async (url, { headers = {}, ...options } = {}) => {
   try {
     json = await res.json();
   } catch (_) {
-    json = { body: await res.text() };
+    json = { body: `Couldn't parse body` };
   }
   if (!res.ok) {
     throw new Error(JSON.stringify(json), "\n", 2);

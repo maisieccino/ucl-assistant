@@ -29,11 +29,23 @@ export const style = StyleSheet.create({
     fontSize: 20,
     textAlign: "center",
   },
+  smallButtonText: {
+    fontSize: 16,
+    flex: 1,
+  },
   centredText: {
     textAlign: "center",
     color: Color.lightTextColor,
     marginTop: 5,
     marginBottom: 5,
+  },
+  searchResultTopText: {
+    fontFamily: "apercu-bold",
+    marginBottom: 0,
+  },
+  searchResultBottomText: {
+    marginTop: 0,
+    fontStyle: "italic",
   },
 });
 
@@ -47,6 +59,11 @@ export default StyleSheet.create({
   bodyText: StyleSheet.flatten([style.baseStyle]),
   centredText: StyleSheet.flatten([style.baseStyle, style.centredText]),
   buttonText: StyleSheet.flatten([style.baseStyle, style.buttonText]),
+  smallButtonText: StyleSheet.flatten([
+    style.baseStyle,
+    style.buttonText,
+    style.smallButtonText,
+  ]),
   cardTitle: StyleSheet.flatten([
     style.baseStyle,
     style.title,
@@ -60,4 +77,12 @@ export default StyleSheet.create({
     marginLeft: 2,
     marginBottom: 5,
   },
+  searchResultTopText: StyleSheet.flatten([
+    style.baseStyle,
+    style.searchResultTopText,
+  ]),
+  searchResultBottomText: StyleSheet.flatten([
+    style.baseStyle,
+    style.searchResultBottomText,
+  ]),
 });

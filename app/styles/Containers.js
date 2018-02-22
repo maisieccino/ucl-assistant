@@ -31,11 +31,13 @@ export default StyleSheet.create({
     elevation: 3,
     marginBottom: 5,
     marginTop: 5,
+    borderRadius: 10,
     flexDirection: "column",
   },
   horizontal: {
     flexDirection: "row",
     justifyContent: "center",
+    alignItems: "center",
   },
   image: {
     flex: 1,
@@ -47,5 +49,11 @@ export default StyleSheet.create({
   paddedIcon: {
     marginLeft: 5,
     marginRight: 5,
+  },
+  circularIcon: {
+    marginRight: 15,
+    backgroundColor: Colors.cardBackground,
+    padding: 10,
+    borderRadius: 80,
   },
 });
