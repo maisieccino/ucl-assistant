@@ -16,12 +16,12 @@ const propTypes = {
 };
 const defaultProps = {
   children: "",
-  styles: {},
+  style: {},
 };
 
 export const Page = ({ children, style }) => (
   <ScrollView style={Styles.pageScrollContainer}>
-    <View style={[styles, Styles.page]}>{children}</View>
+    <View style={[style, Styles.page]}>{children}</View>
   </ScrollView>
 );
 Page.propTypes = propTypes;
@@ -59,7 +59,7 @@ export const PaddedIcon = props => (
   <Feather {...props} style={Styles.paddedIcon} />
 );
 PaddedIcon.propTypes = Feather.propTypes;
-PaddedIcon.propTypes = Feather.defaultProps;
+PaddedIcon.defaultProps = Feather.defaultProps;
 
 export const CircularIcon = props => (
   <Feather {...props} style={Styles.circularIcon} />

@@ -7,4 +7,6 @@ export default {
   cardBackground: "#eaeaea",
   buttonBackground: "#4BB3FD",
   disabledButtonBackground: "#9899a0",
+  errorColor: "#D7263D",
+  warningColor: "#AB7627",
 };

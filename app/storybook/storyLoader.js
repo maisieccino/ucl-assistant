@@ -8,6 +8,7 @@ function loadStories() {
   require("../components/Card/card-stories.js");
   require("../components/Input/TextInput/textinput-stories.js");
   require("../components/SearchResult/searchresult-stories.js");
+  require("../components/Typography/typography-stories.js");
 }
 
 const stories = [
@@ -15,6 +16,7 @@ const stories = [
   "../components/Card/card-stories.js",
   "../components/Input/TextInput/textinput-stories.js",
   "../components/SearchResult/searchresult-stories.js",
+  "../components/Typography/typography-stories.js",
 ];
 
 module.exports = {
