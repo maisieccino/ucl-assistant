@@ -5,7 +5,6 @@ import { MapView } from "expo";
 import moment from "moment";
 import {
   ErrorText,
-  WarningText,
   TitleText,
   SubtitleText,
   BodyText,

@@ -50,17 +50,19 @@ export const style = StyleSheet.create({
   infoTextContainer: {
     marginTop: 5,
   },
-  errorText: {
-    color: Color.errorColor,
+  informational: {
     marginTop: -1,
     flex: 1,
     marginLeft: 5,
   },
+  errorText: {
+    color: Color.errorColor,
+  },
   warningText: {
     color: Color.warningColor,
-    marginTop: -1,
-    flex: 1,
-    marginLeft: 5,
+  },
+  infoText: {
+    color: Color.infoColor,
   },
 });
 
@@ -100,7 +102,20 @@ export default StyleSheet.create({
     style.baseStyle,
     style.searchResultBottomText,
   ]),
-  errorText: StyleSheet.flatten([style.baseStyle, style.errorText]),
-  warningText: StyleSheet.flatten([style.baseStyle, style.warningText]),
+  errorText: StyleSheet.flatten([
+    style.baseStyle,
+    style.informational,
+    style.errorText,
+  ]),
+  warningText: StyleSheet.flatten([
+    style.baseStyle,
+    style.informational,
+    style.warningText,
+  ]),
+  infoText: StyleSheet.flatten([
+    style.baseStyle,
+    style.informational,
+    style.infoText,
+  ]),
   infoTextContainer: StyleSheet.flatten([style.infoTextContainer]),
 });

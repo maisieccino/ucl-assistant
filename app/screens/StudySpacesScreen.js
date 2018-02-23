@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { Feather } from "@expo/vector-icons";
 import { MapView } from "expo";
 import { TitleText, SubtitleText, CentredText } from "../components/Typography";
@@ -21,7 +22,12 @@ class TimetableScreen extends Component {
     ),
   };
 
+  static propTypes = {
+    navigation: PropTypes.shape().isRequired,
+  };
+
   render() {
+    const { navigation } = this.props;
     return (
       <MainTabPage>
         <TitleText>Find Study Spaces</TitleText>
@@ -45,6 +51,7 @@ class TimetableScreen extends Component {
           buttonText="View"
           indicator
           indicatorColor={Colors.indicatorGreen}
+          onPress={() => navigation.navigate("StudySpaceDetail")}
         />
         <SearchResult
           topText="UCL Bartlett Library"
@@ -53,6 +60,7 @@ class TimetableScreen extends Component {
           buttonText="View"
           indicator
           indicatorColor={Colors.indicatorYellow}
+          onPress={() => navigation.navigate("StudySpaceDetail")}
         />
         <SearchResult
           topText="UCL Science Library"
@@ -61,6 +69,7 @@ class TimetableScreen extends Component {
           buttonText="View"
           indicator
           indicatorColor={Colors.indicatorRed}
+          onPress={() => navigation.navigate("StudySpaceDetail")}
         />
       </MainTabPage>
     );

@@ -4,6 +4,7 @@ import MainTabNavigator from "./MainTabNavigator";
 import SplashScreen from "../screens/SplashScreen";
 import TimetableDetailScreen from "../screens/TimetableDetailScreen";
 import PersonDetailScreen from "../screens/PersonDetailScreen";
+import StudySpaceDetailScreen from "../screens/StudySpaceDetailScreen";
 
 const RootStackNavigator = StackNavigator(
   {
@@ -18,6 +19,9 @@ const RootStackNavigator = StackNavigator(
     },
     PersonDetail: {
       screen: PersonDetailScreen,
+    },
+    StudySpaceDetail: {
+      screen: StudySpaceDetailScreen,
     },
   },
   {

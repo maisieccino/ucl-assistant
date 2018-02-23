@@ -77,6 +77,15 @@ export const WarningText = ({ children, icon }) => (
 WarningText.propTypes = { ...propTypes, icon: PropTypes.string };
 WarningText.defaultProps = { ...defaultProps, icon: "info" };
 
+export const InfoText = ({ children, icon }) => (
+  <Horizontal style={Style.infoTextContainer}>
+    <Feather size={18} color={Colors.infoColor} name={icon} />
+    <Text style={Style.infoText}>{children}</Text>
+  </Horizontal>
+);
+InfoText.propTypes = { ...propTypes, icon: PropTypes.string };
+InfoText.defaultProps = { ...defaultProps, icon: "info" };
+
 export const SearchResultTopText = ({ children }) => (
   <Text style={Style.searchResultTopText}>{children}</Text>
 );
