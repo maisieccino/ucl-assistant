@@ -10,4 +10,7 @@ export default {
   disabledButtonBackground: "#9899a0",
   errorColor: "#D7263D",
   warningColor: "#AB7627",
+  indicatorRed: "#FF0000",
+  indicatorYellow: "#FFB800",
+  indicatorGreen: "#6DD149",
 };

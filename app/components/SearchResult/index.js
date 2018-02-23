@@ -5,6 +5,8 @@ import { View } from "react-native";
 import { SmallButton } from "../Button";
 import { Horizontal, CircularIcon } from "../Containers";
 import { SearchResultTopText, SearchResultBottomText } from "../Typography";
+import Colors from "../../constants/Colors";
+import Styles from "../../styles/Containers";
 
 const getIcon = type => {
   switch (type) {
@@ -17,9 +19,30 @@ const getIcon = type => {
   }
 };
 
-const SearchResult = ({ type, topText, bottomText, buttonText, onPress }) => (
+const SearchResult = ({
+  type,
+  topText,
+  bottomText,
+  buttonText,
+  onPress,
+  indicator,
+  indicatorColor,
+}) => (
   <Horizontal style={{ marginTop: 2, marginBottom: 2 }}>
     <CircularIcon name={getIcon(type)} size={24} />
+    {indicator && (
+      <View
+        style={[
+          Styles.circle,
+          {
+            backgroundColor: indicatorColor,
+            position: "relative",
+            left: -25,
+            top: 12,
+          },
+        ]}
+      />
+    )}
     <View style={{ flex: 1 }}>
       <SearchResultTopText>{topText}</SearchResultTopText>
       <SearchResultBottomText>{bottomText}</SearchResultBottomText>
@@ -33,6 +56,8 @@ SearchResult.propTypes = {
   bottomText: PropTypes.string,
   buttonText: PropTypes.string,
   onPress: PropTypes.func,
+  indicator: PropTypes.bool,
+  indicatorColor: PropTypes.string,
 };
 SearchResult.defaultProps = {
   type: "",
@@ -40,6 +65,8 @@ SearchResult.defaultProps = {
   bottomText: "",
   buttonText: "Button",
   onPress: () => {},
+  indicator: false,
+  indicatorColor: Colors.textInputBackground,
 };
 
 export default SearchResult;

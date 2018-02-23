@@ -52,8 +52,15 @@ export default StyleSheet.create({
   },
   circularIcon: {
     marginRight: 15,
-    backgroundColor: Colors.cardBackground,
+    backgroundColor: Colors.textInputBackground,
     padding: 10,
     borderRadius: 80,
+  },
+  circle: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    borderColor: Colors.textColor,
+    borderWidth: 1,
   },
 });

@@ -4,6 +4,7 @@ import { MapView } from "expo";
 import { TitleText, SubtitleText, CentredText } from "../components/Typography";
 import { MainTabPage } from "../components/Containers";
 import { TextInput } from "../components/Input";
+import SearchResult from "../components/SearchResult";
 import Colors from "../constants/Colors";
 import MapStyle from "../styles/Map";
 
@@ -36,6 +37,30 @@ class TimetableScreen extends Component {
             latitudeDelta: 0.0012,
             longitudeDelta: 0.0071,
           }}
+        />
+        <SearchResult
+          topText="UCL Main Library"
+          bottomText="A little busy right now"
+          type="location"
+          buttonText="View"
+          indicator
+          indicatorColor={Colors.indicatorGreen}
+        />
+        <SearchResult
+          topText="UCL Bartlett Library"
+          bottomText="A little busy right now"
+          type="location"
+          buttonText="View"
+          indicator
+          indicatorColor={Colors.indicatorYellow}
+        />
+        <SearchResult
+          topText="UCL Science Library"
+          bottomText="A little busy right now"
+          type="location"
+          buttonText="View"
+          indicator
+          indicatorColor={Colors.indicatorRed}
         />
       </MainTabPage>
     );
