@@ -15,6 +15,9 @@ export const style = {
     height: 50,
     minWidth: 200,
     borderRadius: 10,
+    flex: 1,
+    marginRight: 2,
+    marginLeft: 2,
   },
 };
 

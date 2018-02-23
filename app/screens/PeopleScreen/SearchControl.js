@@ -6,9 +6,10 @@ import { ActivityIndicator, View } from "react-native";
 import { generate } from "shortid";
 import { CentredText } from "../../components/Typography";
 import { TextInput } from "../../components/Input";
-import Button from "../../components/Button";
+import { SmallButton } from "../../components/Button";
 import SearchResult from "../../components/SearchResult";
 import { search, searchClear } from "../../actions/peopleActions";
+import { Horizontal } from "../../components/Containers";
 
 class SearchControl extends Component {
   static propTypes = {
@@ -75,15 +76,17 @@ class SearchControl extends Component {
     const { error, isSearching, navigation, searchResults } = this.props;
     return (
       <View>
-        {searchResults.length > 0 && (
-          <Button onPress={() => this.clear()}>Clear</Button>
-        )}
-        <TextInput
-          placeholder="Search for a name or email..."
-          onChangeText={text => this.onQueryChange(text)}
-          value={this.state.query}
-          clearButtonMode="always"
-        />
+        <Horizontal>
+          <TextInput
+            placeholder="Search for a name or email..."
+            onChangeText={text => this.onQueryChange(text)}
+            value={this.state.query}
+            clearButtonMode="always"
+          />
+          {(searchResults.length > 0 || this.state.query.length > 0) && (
+            <SmallButton onPress={() => this.clear()}>Clear</SmallButton>
+          )}
+        </Horizontal>
 
         {error.length > 0 && <CentredText>Error! {error} </CentredText>}
 
