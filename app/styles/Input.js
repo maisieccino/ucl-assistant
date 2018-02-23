@@ -9,7 +9,7 @@ export const style = {
     paddingLeft: 10,
     paddingRight: 10,
     borderColor: Colors.lightTextColor,
-    backgroundColor: Colors.cardBackground,
+    backgroundColor: Colors.textInputBackground,
     marginTop: 10,
     marginBottom: 10,
     height: 50,
