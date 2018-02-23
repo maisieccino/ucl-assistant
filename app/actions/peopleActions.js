@@ -7,6 +7,7 @@ import {
   PEOPLE_IS_FETCHING,
   PEOPLE_FETCH_SUCCESS,
   PEOPLE_FETCH_FAILURE,
+  PEOPLE_CLEAR_RECENTS,
 } from "../constants/peopleConstants";
 
 export const setIsSearching = () => ({
@@ -89,4 +90,8 @@ export const fetchPerson = (token = null, email) => async dispatch => {
 
 export const clear = () => ({
   type: "CLEAR",
+});
+
+export const clearRecents = () => ({
+  type: PEOPLE_CLEAR_RECENTS,
 });

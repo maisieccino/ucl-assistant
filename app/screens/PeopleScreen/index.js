@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { Feather } from "@expo/vector-icons";
 import { TitleText } from "../../components/Typography";
 import { MainTabPage } from "../../components/Containers";
@@ -24,12 +25,17 @@ class TimetableScreen extends Component {
     isSearching: state.people.isSearching,
   });
 
+  static propTypes = {
+    navigation: PropTypes.shape().isRequired,
+  };
+
   render() {
+    const { navigation } = this.props;
     return (
       <MainTabPage>
         <TitleText>People</TitleText>
-        <SearchControl />
-        <RecentResults />
+        <SearchControl navigation={navigation} />
+        <RecentResults navigation={navigation} />
       </MainTabPage>
     );
   }

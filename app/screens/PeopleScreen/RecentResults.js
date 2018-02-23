@@ -4,34 +4,59 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { View } from "react-native";
 import { generate } from "shortid";
-import { SubtitleText, BodyText } from "../../components/Typography";
+import { clearRecents } from "../../actions/peopleActions";
+import Button from "../../components/Button";
+import { SubtitleText, CentredText } from "../../components/Typography";
+import SearchResult from "../../components/SearchResult";
 
-class SearchControl extends Component {
+class RecentResults extends Component {
   static propTypes = {
     recents: PropTypes.arrayOf(PropTypes.shape()),
+    navigation: PropTypes.shape().isRequired,
+    clearRecents: PropTypes.func,
   };
 
   static defaultProps = {
     recents: [],
+    clearRecents: () => {},
   };
 
   static mapStateToProps = state => ({
     recents: state.people.recents,
   });
 
+  static mapDispatchToProps = dispatch => ({
+    clearRecents: () => dispatch(clearRecents()),
+  });
+
   render() {
-    const { recents } = this.props;
+    const { navigation, recents } = this.props;
     return (
       <View>
         <SubtitleText>Recently Searched</SubtitleText>
         {recents.map(res => (
-          <View key={generate()}>
-            <BodyText>{res.name}</BodyText>
-          </View>
+          <SearchResult
+            key={generate()}
+            topText={res.name}
+            bottomText={res.department}
+            type="person"
+            buttonText="View"
+            onPress={() => {
+              navigation.navigate("PersonDetail", res);
+            }}
+          />
         ))}
+        {recents.length > 0 ? (
+          <Button onPress={() => this.props.clearRecents()}>Clear</Button>
+        ) : (
+          <CentredText>Recent results will appear here.</CentredText>
+        )}
       </View>
     );
   }
 }
 
-export default connect(SearchControl.mapStateToProps)(SearchControl);
+export default connect(
+  RecentResults.mapStateToProps,
+  RecentResults.mapDispatchToProps,
+)(RecentResults);
