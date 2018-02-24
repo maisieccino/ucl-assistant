@@ -3,6 +3,7 @@ const { jwt } = require("../middleware/auth");
 const { getUserData } = require("./user");
 const { getPersonalTimetable } = require("./timetable");
 const { search } = require("./people");
+const { getWorkspaces, getImage } = require("./workspaces");
 
 module.exports = app => {
   const router = new Router();
@@ -19,6 +20,16 @@ module.exports = app => {
   router.get("/search", jwt, async ctx => {
     ctx.assert(ctx.query.query);
     ctx.body = await search(ctx.query.query);
+  });
+
+  router.get("/workspaces/image/:id.png", jwt, async ctx => {
+    ctx.assert(ctx.params.id, 400);
+    ctx.response.headers["Content-Type"] = "image/png";
+    ctx.body = await getImage(ctx.params.id);
+  });
+
+  router.get("/workspaces", jwt, async ctx => {
+    ctx.body = getWorkspaces();
   });
 
   app.use(router.routes());
