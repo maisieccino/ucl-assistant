@@ -27,6 +27,7 @@ module.exports = app => {
   router.get("/workspaces/getimage/:id.png", jwt, async ctx => {
     ctx.assert(ctx.params.id, 400);
     ctx.response.headers["Content-Type"] = "image/png";
+    ctx.state.jsonify = false;
     const res = await getImage(ctx.params.id);
     ctx.body = res.body;
   });

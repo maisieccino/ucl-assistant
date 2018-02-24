@@ -44,7 +44,7 @@ const jsonFormat = ctx =>
  * @param  {Function} next async function to call next
  */
 const jsonify = async (ctx, next) => {
-  ctx.response.headers["Content-Type"] = "application/json";
+  ctx.state.jsonify = true;
   try {
     await next();
   } catch (error) {
@@ -60,7 +60,7 @@ const jsonify = async (ctx, next) => {
     ctx.status = error.status || 500;
   }
 
-  if (ctx.response.headers["Content-Type"] === "application/json") {
+  if (ctx.state.jsonify) {
     // pretty-print if the pretty query variable is present
     ctx.body = ctx.query.pretty ? jsonFormatPretty(ctx) : jsonFormat(ctx);
   }
