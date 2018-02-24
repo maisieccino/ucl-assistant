@@ -1,4 +1,4 @@
-const API_URL = "https://uclapi.com";
+const API_URL = process.env.API_URL || "https://uclapi.com";
 const TIMETABLE_BASE_URL = `${API_URL}/timetable`;
 module.exports = {
   API_URL,
