@@ -1,9 +1,11 @@
 const Router = require("koa-router");
+const fetch = require("node-fetch");
 const { jwt } = require("../middleware/auth");
 const { getUserData } = require("./user");
 const { getPersonalTimetable } = require("./timetable");
 const { search } = require("./people");
-const { getWorkspaces, getImage } = require("./workspaces");
+const { getWorkspaces, getImage, getSeatingInfo } = require("./workspaces");
+const { WORKSPACE_IMAGE_URL } = require("./constants");
 
 module.exports = app => {
   const router = new Router();
@@ -22,10 +24,16 @@ module.exports = app => {
     ctx.body = await search(ctx.query.query);
   });
 
-  router.get("/workspaces/image/:id.png", jwt, async ctx => {
+  router.get("/workspaces/getimage/:id.png", jwt, async ctx => {
     ctx.assert(ctx.params.id, 400);
     ctx.response.headers["Content-Type"] = "image/png";
-    ctx.body = await getImage(ctx.params.id);
+    const res = await getImage(ctx.params.id);
+    ctx.body = res.body;
+  });
+
+  router.get("/workspaces/:id/seatinfo", jwt, async ctx => {
+    ctx.assert(ctx.params.id, 400);
+    ctx.body = await getSeatingInfo(process.env.UCLAPI_TOKEN, ctx.params.id);
   });
 
   router.get("/workspaces", jwt, async ctx => {

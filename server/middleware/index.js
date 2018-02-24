@@ -44,6 +44,7 @@ const jsonFormat = ctx =>
  * @param  {Function} next async function to call next
  */
 const jsonify = async (ctx, next) => {
+  ctx.response.headers["Content-Type"] = "application/json";
   try {
     await next();
   } catch (error) {
@@ -58,8 +59,11 @@ const jsonify = async (ctx, next) => {
     }
     ctx.status = error.status || 500;
   }
-  // pretty-print if the pretty query variable is present
-  ctx.body = ctx.query.pretty ? jsonFormatPretty(ctx) : jsonFormat(ctx);
+
+  if (ctx.response.headers["Content-Type"] === "application/json") {
+    // pretty-print if the pretty query variable is present
+    ctx.body = ctx.query.pretty ? jsonFormatPretty(ctx) : jsonFormat(ctx);
+  }
 };
 
 module.exports = {

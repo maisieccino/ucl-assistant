@@ -10,4 +10,5 @@ module.exports = {
   PEOPLE_SEARCH_URL: `${API_URL}/search/people`,
   WORKSPACE_IMAGE_URL: `${WORKSPACES_BASE_URL}/image`,
   WORKSPACE_SURVEYS_URL: `${WORKSPACES_BASE_URL}/surveys`,
+  WORKSPACE_SENSORS_URL: `${WORKSPACES_BASE_URL}/sensors`,
 };
