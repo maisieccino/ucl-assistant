@@ -46,6 +46,7 @@ export const style = StyleSheet.create({
   searchResultBottomText: {
     marginTop: 0,
     fontStyle: "italic",
+    color: Color.lightTextColor,
   },
   infoTextContainer: {
     marginTop: 5,

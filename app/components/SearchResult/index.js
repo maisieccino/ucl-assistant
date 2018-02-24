@@ -6,7 +6,7 @@ import { SmallButton } from "../Button";
 import { Horizontal, CircularIcon } from "../Containers";
 import { SearchResultTopText, SearchResultBottomText } from "../Typography";
 import Colors from "../../constants/Colors";
-import Styles from "../../styles/Containers";
+import Indicator from "./Indicator";
 
 const getIcon = type => {
   switch (type) {
@@ -27,21 +27,12 @@ const SearchResult = ({
   onPress,
   indicator,
   indicatorColor,
+  indicatorLoading,
 }) => (
-  <Horizontal style={{ marginTop: 2, marginBottom: 2 }}>
+  <Horizontal style={{ marginTop: 5, marginBottom: 5 }}>
     <CircularIcon name={getIcon(type)} size={24} />
     {indicator && (
-      <View
-        style={[
-          Styles.circle,
-          {
-            backgroundColor: indicatorColor,
-            position: "relative",
-            left: -25,
-            top: 12,
-          },
-        ]}
-      />
+      <Indicator color={indicatorColor} loading={indicatorLoading} />
     )}
     <View style={{ flex: 1 }}>
       <SearchResultTopText>{topText}</SearchResultTopText>
@@ -50,6 +41,7 @@ const SearchResult = ({
     <SmallButton onPress={onPress}>{buttonText}</SmallButton>
   </Horizontal>
 );
+
 SearchResult.propTypes = {
   type: PropTypes.oneOf(["location", "person", ""]),
   topText: PropTypes.string,
@@ -58,6 +50,7 @@ SearchResult.propTypes = {
   onPress: PropTypes.func,
   indicator: PropTypes.bool,
   indicatorColor: PropTypes.string,
+  indicatorLoading: PropTypes.bool,
 };
 SearchResult.defaultProps = {
   type: "",
@@ -67,6 +60,7 @@ SearchResult.defaultProps = {
   onPress: () => {},
   indicator: false,
   indicatorColor: Colors.textInputBackground,
+  indicatorLoading: false,
 };
 
 export default SearchResult;

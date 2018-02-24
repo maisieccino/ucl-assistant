@@ -11,7 +11,9 @@ export default {
   errorColor: "#D7263D",
   warningColor: "#AB7627",
   infoColor: "#1C5C8A",
-  indicatorRed: "#FF0000",
+  indicatorRed: "#E4331C",
+  indicatorOrange: "#E87E19",
   indicatorYellow: "#FFB800",
+  indicatorLime: "#A6BC35",
   indicatorGreen: "#6DD149",
 };
