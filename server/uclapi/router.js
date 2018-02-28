@@ -9,6 +9,10 @@ const {
   getSeatingInfo,
   getAllSeatInfo,
 } = require("./workspaces");
+const {
+  WORKSPACE_SUMMARY_CACHE_PATH,
+  WORKSPACE_SUMMARY_TTL,
+} = require("./constants");
 
 module.exports = app => {
   const router = new Router();
@@ -36,7 +40,20 @@ module.exports = app => {
   });
 
   router.get("/workspaces/summary", jwt, async ctx => {
-    ctx.body = await getAllSeatInfo();
+    const cacheData = await ctx.redisGet(WORKSPACE_SUMMARY_CACHE_PATH);
+    if (cacheData) {
+      console.log("Fetched workspace data from cache.");
+      ctx.body = JSON.parse(cacheData);
+    } else {
+      console.log("Fetching fresh workspace data.");
+      const newData = await getAllSeatInfo();
+      await ctx.redisSetex(
+        WORKSPACE_SUMMARY_CACHE_PATH,
+        WORKSPACE_SUMMARY_TTL,
+        JSON.stringify(newData),
+      );
+      ctx.body = newData;
+    }
   });
 
   router.get("/workspaces/:id/seatinfo", jwt, async ctx => {

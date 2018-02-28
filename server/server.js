@@ -2,7 +2,17 @@ const Koa = require("koa");
 const bodyparser = require("koa-bodyparser");
 const session = require("koa-session");
 const { jsonify, logger, timer } = require("./middleware");
+const URL = require("url");
+const redis = require("redis");
+const { promisify } = require("util");
 const router = require("./router");
+
+const connectionString = process.env.REDIS_URL;
+
+if (connectionString === undefined) {
+  console.error("Please set the REDIS_URL environment variable");
+  process.exit(1);
+}
 
 require("dotenv").config();
 
@@ -27,6 +37,21 @@ if (!process.env.SECRET) {
 }
 
 app.keys = [process.env.SECRET || "secret"];
+
+if (connectionString.startsWith("rediss://")) {
+  app.context.redisClient = redis.createClient(connectionString, {
+    tls: { servername: new URL(connectionString).hostname },
+  });
+} else {
+  app.context.redisClient = redis.createClient(connectionString);
+}
+
+app.context.redisGet = promisify(app.context.redisClient.get).bind(
+  app.context.redisClient,
+);
+app.context.redisSetex = promisify(app.context.redisClient.setex).bind(
+  app.context.redisClient,
+);
 
 app.use(session({}, app));
 
