@@ -1,11 +1,14 @@
 const Router = require("koa-router");
-const fetch = require("node-fetch");
 const { jwt } = require("../middleware/auth");
 const { getUserData } = require("./user");
 const { getPersonalTimetable } = require("./timetable");
 const { search } = require("./people");
-const { getWorkspaces, getImage, getSeatingInfo } = require("./workspaces");
-const { WORKSPACE_IMAGE_URL } = require("./constants");
+const {
+  getWorkspaces,
+  getImage,
+  getSeatingInfo,
+  getAllSeatInfo,
+} = require("./workspaces");
 
 module.exports = app => {
   const router = new Router();
@@ -32,9 +35,13 @@ module.exports = app => {
     ctx.body = res.body;
   });
 
+  router.get("/workspaces/summary", jwt, async ctx => {
+    ctx.body = await getAllSeatInfo();
+  });
+
   router.get("/workspaces/:id/seatinfo", jwt, async ctx => {
     ctx.assert(ctx.params.id, 400);
-    ctx.body = await getSeatingInfo(process.env.UCLAPI_TOKEN, ctx.params.id);
+    ctx.body = await getSeatingInfo(ctx.params.id);
   });
 
   router.get("/workspaces", jwt, async ctx => {

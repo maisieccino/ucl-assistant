@@ -1,10 +1,10 @@
 const fetch = require("node-fetch");
-const { WORKSPACE_IMAGE_URL, WORKSPACE_SENSORS_URL } = require("./constants");
+const { WORKSPACE_IMAGE_URL, WORKSPACE_SUMMARY_URL } = require("./constants");
 const JSONRequest = require("./JSONRequest");
-const surveys = require("./surveysList");
+const surveyList = require("./surveysList");
 
 const getWorkspaces = () =>
-  surveys.surveys.map(survey => ({ name: survey.name, id: survey.id }));
+  surveyList.surveys.map(survey => ({ name: survey.name, id: survey.id }));
 
 const getImage = async imageId =>
   fetch(
@@ -13,34 +13,53 @@ const getImage = async imageId =>
     }&image_format=raw`,
   );
 
-const getSeatingInfo = async (token, surveyId) => {
-  const data = await JSONRequest(
-    `${WORKSPACE_SENSORS_URL}?token=${token}&survey_id=${
-      surveyId
-    }&return_states=true`,
-  );
-  return data.maps.reduce(
+/**
+ * Takes a list of maps, returns a an object with number of occupied seats
+ * and a number of total seats.
+ *
+ * @param {any} maps
+ */
+const reduceSeatInfo = maps =>
+  maps.reduce(
     (obj, map) => {
-      const { occupied, total } = Object.keys(map.sensors)
-        .map(id => map.sensors[id])
-        .reduce(
-          (object, sensor) => ({
-            total: object.total + 1,
-            occupied:
-              sensor.last_trigger_type.toLowerCase() === "occupied"
-                ? object.occupied + 1
-                : object.occupied,
-          }),
-          { occupied: 0, total: 0 },
-        );
-      return { occupied: obj.occupied + occupied, total: obj.total + total };
+      const capacity =
+        map.sensors_absent + map.sensors_other + map.sensors_occupied;
+      return {
+        occupied: obj.occupied + map.sensors_occupied,
+        total: obj.total + capacity,
+      };
     },
     { occupied: 0, total: 0 },
   );
+
+const getSeatingInfo = async surveyId => {
+  const data = await JSONRequest(
+    `${WORKSPACE_SUMMARY_URL}?token=${process.env.UCLAPI_TOKEN}&survey_ids=${
+      surveyId
+    }`,
+  );
+  const { surveys } = data;
+  if (surveys.length !== 1) {
+    throw new Error("Survey with that id not found.");
+  }
+  return reduceSeatInfo(surveys[0].maps);
+};
+
+const getAllSeatInfo = async () => {
+  const data = await JSONRequest(
+    `${WORKSPACE_SUMMARY_URL}?token=${process.env.UCLAPI_TOKEN}`,
+  );
+  const { surveys } = data;
+  return surveys.map(survey => ({
+    ...reduceSeatInfo(survey.maps),
+    name: survey.name,
+    id: survey.id,
+  }));
 };
 
 module.exports = {
   getWorkspaces,
   getImage,
   getSeatingInfo,
+  getAllSeatInfo,
 };
