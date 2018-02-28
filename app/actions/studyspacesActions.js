@@ -1,3 +1,4 @@
+// @flow
 import { WORKSPACES_URL } from "../constants/API";
 import {
   WORKSPACES_FETCH_SEATINFO_FAILURE,
@@ -45,6 +46,45 @@ export const fetchSeatInfo = (token, id) => async dispatch => {
       fetchSeatInfoFailure(
         id,
         typeof error === "string" ? error : error.message,
+      ),
+    );
+  }
+};
+
+export const fetchSeatInfos = (token: String, ids: Array) => async (
+  dispatch: Function,
+) => {
+  await Promise.all(ids.map(id => dispatch(setIsFetchingSeatInfo(id))));
+  try {
+    const res = await fetch(`${WORKSPACES_URL}/summary`, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
+    const json = await res.json();
+    if (!res.ok) {
+      throw new Error(json.error || "There was a problem");
+    }
+    return Promise.all(
+      ids.map(id => {
+        const info = json.content.filter(obj => obj.id === id)[0];
+        return dispatch(
+          fetchSeatInfoSuccess(id, {
+            occupied: info.occupied,
+            capacity: info.total,
+          }),
+        );
+      }),
+    );
+  } catch (error) {
+    return Promise.all(
+      ids.map(id =>
+        dispatch(
+          fetchSeatInfoFailure(
+            id,
+            typeof error === "string" ? error : error.message,
+          ),
+        ),
       ),
     );
   }

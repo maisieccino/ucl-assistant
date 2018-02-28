@@ -11,7 +11,7 @@ export const initialState = {
     occupied: 0,
     capacity: 0,
     fetchSeatInfoError: "",
-    isFetchingSeatinfo: false,
+    isFetchingSeatInfo: false,
   })),
   isFetchingSpaces: false,
 };
@@ -25,7 +25,7 @@ export default (state = initialState, action = null) => {
       if (space) {
         const newStudyspaces = [
           ...state.studyspaces.filter(s => s.id !== id),
-          { ...space, isFetchingSeatinfo: true, fetchSeatInfoError: "" },
+          { ...space, isFetchingSeatInfo: true, fetchSeatInfoError: "" },
         ];
         return { ...state, studyspaces: newStudyspaces };
       }
@@ -37,7 +37,7 @@ export default (state = initialState, action = null) => {
       if (space) {
         const newStudyspaces = [
           ...state.studyspaces.filter(s => s.id !== id),
-          { ...space, isFetchingSeatinfo: false, fetchSeatInfoError: error },
+          { ...space, isFetchingSeatInfo: false, fetchSeatInfoError: error },
         ];
         return { ...state, studyspaces: newStudyspaces };
       }
@@ -49,7 +49,7 @@ export default (state = initialState, action = null) => {
       if (space) {
         const newStudyspaces = [
           ...state.studyspaces.filter(s => s.id !== id),
-          { ...space, ...data, isFetchingSeatinfo: false },
+          { ...space, ...data, isFetchingSeatInfo: false },
         ];
         return { ...state, studyspaces: newStudyspaces };
       }

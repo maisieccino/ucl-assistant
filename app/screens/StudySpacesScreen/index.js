@@ -1,14 +1,16 @@
 import React, { Component } from "react";
+import { RefreshControl } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Feather } from "@expo/vector-icons";
 import { MapView } from "expo";
 import { generate } from "shortid";
-import { fetchSeatInfo } from "../../actions/studyspacesActions";
+import { fetchSeatInfos } from "../../actions/studyspacesActions";
 import {
   TitleText,
   SubtitleText,
   CentredText,
+  ErrorText,
 } from "../../components/Typography";
 import { MainTabPage } from "../../components/Containers";
 import { TextInput } from "../../components/Input";
@@ -48,7 +50,7 @@ class StudySpaceScreen extends Component {
   });
 
   static mapDispatchToProps = dispatch => ({
-    fetchInfo: (id, token) => dispatch(fetchSeatInfo(token, id)),
+    fetchInfo: (ids, token) => dispatch(fetchSeatInfos(token, ids)),
   });
 
   state = {
@@ -57,26 +59,42 @@ class StudySpaceScreen extends Component {
 
   componentDidMount() {
     if (!this.state.loadedSeatInfo && this.props.token) {
-      this.props.studyspaces.forEach(space => {
-        this.props.fetchInfo(space.id, this.props.token);
-      });
-      this.state.loadedSeatInfo = true;
+      this.fetchSeatInfo();
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (!this.state.loadedSeatInfo && nextProps.token) {
-      nextProps.studyspaces.forEach(space => {
-        this.props.fetchInfo(space.id, nextProps.token);
-      });
-      this.setState({ loadedSeatInfo: true });
+      this.fetchSeatInfo();
     }
+  }
+
+  fetchSeatInfo() {
+    const ids = this.props.studyspaces.map(space => space.id);
+    this.props.fetchInfo(ids, this.props.token);
+    this.setState({ loadedSeatInfo: true });
   }
 
   render() {
     const { navigation, studyspaces } = this.props;
+    const errorneousSpaces = studyspaces.filter(
+      space => space.fetchSeatInfoError !== "",
+    );
+    const isLoading =
+      !this.state.loadedSeatInfo ||
+      this.props.studyspaces.reduce(
+        (res, space) => res || space.isFetchingSeatInfo,
+        false,
+      );
     return (
-      <MainTabPage>
+      <MainTabPage
+        refreshControl={
+          <RefreshControl
+            refreshing={isLoading}
+            onRefresh={() => this.fetchSeatInfo()}
+          />
+        }
+      >
         <TitleText>Find Study Spaces</TitleText>
         <TextInput placeholder="Search for a building name..." />
         <CentredText>Start typing to get search results</CentredText>
@@ -91,6 +109,18 @@ class StudySpaceScreen extends Component {
             longitudeDelta: 0.0071,
           }}
         />
+        {errorneousSpaces.length < 5 ? (
+          errorneousSpaces.map(space => (
+            <ErrorText key={generate()}>
+              Error fetching {space.name}: {space.fetchSeatInfoError}
+            </ErrorText>
+          ))
+        ) : (
+          <ErrorText>
+            Looks like there was an error trying to fetch live seating info.
+          </ErrorText>
+        )}
+
         {studyspaces.map(survey => (
           <StudySpaceSearchResult
             key={generate()}
@@ -99,6 +129,8 @@ class StudySpaceScreen extends Component {
               navigation.navigate("StudySpaceDetail", {
                 id: survey.id,
                 name: survey.name,
+                capacity: survey.capacity,
+                occupied: survey.occupied,
               })
             }
           />
