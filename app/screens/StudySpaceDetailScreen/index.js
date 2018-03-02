@@ -4,12 +4,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { View } from "react-native";
 import { Page, Horizontal } from "../../components/Containers";
-import {
-  BodyText,
-  TitleText,
-  SubtitleText,
-  InfoText,
-} from "../../components/Typography";
+import { BodyText, TitleText, SubtitleText } from "../../components/Typography";
 import CapacityChart from "./CapacityChart";
 
 class StudySpaceDetailScreen extends Component {
@@ -63,9 +58,6 @@ class StudySpaceDetailScreen extends Component {
     return (
       <Page>
         <TitleText>{name}</TitleText>
-        <InfoText icon="moon">
-          This study space is open 24 hours per day during exam season.
-        </InfoText>
         <Horizontal>
           <View style={{ flex: 1 }}>
             <TitleText>{capacity - occupied}</TitleText>

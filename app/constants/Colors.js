@@ -12,6 +12,7 @@ export default {
   warningColor: "#AB7627",
   infoColor: "#1C5C8A",
   indicatorRed: "#E4331C",
+  graphCurrentBar: "rgba(228, 51, 28, 0.65)",
   indicatorOrange: "#E87E19",
   indicatorYellow: "#FFB800",
   indicatorLime: "#A6BC35",

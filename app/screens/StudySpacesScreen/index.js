@@ -3,7 +3,6 @@ import { RefreshControl } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Feather } from "@expo/vector-icons";
-import { MapView } from "expo";
 import { generate } from "shortid";
 import { fetchSeatInfos } from "../../actions/studyspacesActions";
 import {
@@ -15,7 +14,6 @@ import {
 import { MainTabPage } from "../../components/Containers";
 import { TextInput } from "../../components/Input";
 import Colors from "../../constants/Colors";
-import MapStyle from "../../styles/Map";
 import StudySpaceSearchResult from "./StudySpaceResult";
 
 class StudySpaceScreen extends Component {
@@ -80,6 +78,7 @@ class StudySpaceScreen extends Component {
     const errorneousSpaces = studyspaces.filter(
       space => space.fetchSeatInfoError !== "",
     );
+    errorneousSpaces.forEach(space => console.log(space.fetchSeatInfoError));
     const isLoading =
       !this.state.loadedSeatInfo ||
       this.props.studyspaces.reduce(
@@ -100,15 +99,6 @@ class StudySpaceScreen extends Component {
         <CentredText>Start typing to get search results</CentredText>
 
         <SubtitleText>Nearby Study Spaces</SubtitleText>
-        <MapView
-          style={MapStyle.wideMap}
-          initialRegion={{
-            latitude: 51.5246586,
-            longitude: -0.1339784,
-            latitudeDelta: 0.0012,
-            longitudeDelta: 0.0071,
-          }}
-        />
         {errorneousSpaces.length < 5 ? (
           errorneousSpaces.map(space => (
             <ErrorText key={generate()}>
