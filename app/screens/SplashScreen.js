@@ -7,7 +7,7 @@ import { NavigationActions } from "react-navigation";
 import { Feather } from "@expo/vector-icons";
 import { signIn } from "../actions/userActions";
 import { TitleText, BodyText } from "../components/Typography";
-import { PageNoScroll, Spacer } from "../components/Containers";
+import { Spacer } from "../components/Containers";
 import CustomButton from "../components/Button";
 import Colors from "../constants/Colors";
 import Styles from "../styles/Containers";
@@ -50,16 +50,22 @@ class SplashScreen extends Component {
     signIn: () => dispatch(signIn()),
   });
 
+  componentDidMount() {
+    if (this.props.token !== "") {
+      this.goHome();
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
+    if (nextProps.token !== "") {
+      this.goHome();
+    }
+
     if (this.props.isSigningIn === true && nextProps.isSigningIn === false) {
       // did we just sign in?
       if (nextProps.token !== null) {
         // yes, replace screen with home screen.
-        const resetAction = NavigationActions.reset({
-          index: 0,
-          actions: [NavigationActions.navigate({ routeName: "Main" })],
-        });
-        this.props.navigation.dispatch(resetAction);
+        this.goHome();
       } else if (nextProps.error.length < 1) {
         // cancelled
       } else {
@@ -67,6 +73,14 @@ class SplashScreen extends Component {
         setTimeout(() => Alert.alert("Error Signing In", nextProps.error), 500);
       }
     }
+  }
+
+  goHome() {
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName: "Main" })],
+    });
+    this.props.navigation.dispatch(resetAction);
   }
 
   render() {
