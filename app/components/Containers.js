@@ -42,7 +42,7 @@ MainTabPage.propTypes = propTypes;
 MainTabPage.defaultProps = defaultProps;
 
 export const PageNoScroll = ({ children, style }) => (
-  <View style={[style, Styles.page]}>{children}</View>
+  <View style={[Styles.page, style]}>{children}</View>
 );
 PageNoScroll.propTypes = propTypes;
 PageNoScroll.defaultProps = defaultProps;

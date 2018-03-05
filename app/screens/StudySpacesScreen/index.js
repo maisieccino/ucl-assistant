@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import { RefreshControl } from "react-native";
+import { FlatList, RefreshControl } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import moment from "moment";
+import { momentObj } from "react-moment-proptypes";
 import { Feather } from "@expo/vector-icons";
 import { generate } from "shortid";
 import { fetchSeatInfos } from "../../actions/studyspacesActions";
@@ -10,6 +12,7 @@ import {
   SubtitleText,
   CentredText,
   ErrorText,
+  BodyText,
 } from "../../components/Typography";
 import { MainTabPage } from "../../components/Containers";
 import { TextInput } from "../../components/Input";
@@ -34,16 +37,19 @@ class StudySpaceScreen extends Component {
     studyspaces: PropTypes.arrayOf(PropTypes.shape()),
     token: PropTypes.string,
     fetchInfo: PropTypes.func,
+    lastUpdated: momentObj,
   };
 
   static defaultProps = {
     studyspaces: [],
     token: "",
     fetchInfo: () => {},
+    lastUpdated: null,
   };
 
   static mapStateToProps = state => ({
     studyspaces: state.studyspaces.studyspaces,
+    lastUpdated: state.studyspaces.lastStatusUpdate,
     token: state.user.token,
   });
 
@@ -74,11 +80,10 @@ class StudySpaceScreen extends Component {
   }
 
   render() {
-    const { navigation, studyspaces } = this.props;
+    const { lastUpdated, navigation, studyspaces } = this.props;
     const errorneousSpaces = studyspaces.filter(
       space => space.fetchSeatInfoError !== "",
     );
-    errorneousSpaces.forEach(space => console.log(space.fetchSeatInfoError));
     const isLoading =
       !this.state.loadedSeatInfo ||
       this.props.studyspaces.reduce(
@@ -111,20 +116,28 @@ class StudySpaceScreen extends Component {
           </ErrorText>
         )}
 
-        {studyspaces.map(survey => (
-          <StudySpaceSearchResult
-            key={generate()}
-            {...survey}
-            onPress={() =>
-              navigation.navigate("StudySpaceDetail", {
-                id: survey.id,
-                name: survey.name,
-                capacity: survey.capacity,
-                occupied: survey.occupied,
-              })
-            }
-          />
-        ))}
+        <BodyText>
+          Last updated: {lastUpdated ? moment(lastUpdated).fromNow() : "never"}
+        </BodyText>
+
+        <FlatList
+          data={studyspaces}
+          keyExtractor={item => item.id}
+          initialNumToRender={30}
+          renderItem={({ item }) => (
+            <StudySpaceSearchResult
+              {...item}
+              onPress={() =>
+                navigation.navigate("StudySpaceDetail", {
+                  id: item.id,
+                  name: item.name,
+                  capacity: item.capacity,
+                  occupied: item.occupied,
+                })
+              }
+            />
+          )}
+        />
       </MainTabPage>
     );
   }

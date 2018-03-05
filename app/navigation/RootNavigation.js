@@ -8,11 +8,11 @@ import StudySpaceDetailScreen from "../screens/StudySpaceDetailScreen";
 
 const RootStackNavigator = StackNavigator(
   {
-    Main: {
-      screen: MainTabNavigator,
-    },
     Splash: {
       screen: SplashScreen,
+    },
+    Main: {
+      screen: MainTabNavigator,
     },
     TimetableDetail: {
       screen: TimetableDetailScreen,

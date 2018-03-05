@@ -33,6 +33,10 @@ export default StyleSheet.create({
     marginTop: 5,
     borderRadius: 10,
     flexDirection: "column",
+    shadowColor: Colors.textColor,
+    shadowOffset: { width: 0, height: 5 },
+    shadowRadius: 3,
+    shadowOpacity: 0.75,
   },
   horizontal: {
     flexDirection: "row",
@@ -45,6 +49,7 @@ export default StyleSheet.create({
     height: undefined,
     alignSelf: "stretch",
     marginTop: 50,
+    backgroundColor: "rgba(0,0,0,0)",
   },
   paddedIcon: {
     marginLeft: 5,

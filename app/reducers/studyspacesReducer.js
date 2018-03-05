@@ -1,3 +1,4 @@
+import moment from "moment";
 import { surveys } from "../constants/studyspaces";
 import {
   WORKSPACES_FETCH_SEATINFO_FAILURE,
@@ -13,6 +14,7 @@ export const initialState = {
     fetchSeatInfoError: "",
     isFetchingSeatInfo: false,
   })),
+  lastStatusUpdate: null,
   isFetchingSpaces: false,
 };
 
@@ -39,7 +41,11 @@ export default (state = initialState, action = null) => {
           ...state.studyspaces.filter(s => s.id !== id),
           { ...space, isFetchingSeatInfo: false, fetchSeatInfoError: error },
         ];
-        return { ...state, studyspaces: newStudyspaces };
+        return {
+          ...state,
+          studyspaces: newStudyspaces,
+          lastStatusUpdate: moment(),
+        };
       }
       return state;
     }
@@ -51,7 +57,11 @@ export default (state = initialState, action = null) => {
           ...state.studyspaces.filter(s => s.id !== id),
           { ...space, ...data, isFetchingSeatInfo: false },
         ];
-        return { ...state, studyspaces: newStudyspaces };
+        return {
+          ...state,
+          studyspaces: newStudyspaces,
+          lastStatusUpdate: moment(),
+        };
       }
       return state;
     }
