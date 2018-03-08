@@ -5,3 +5,4 @@ node_modules
 **/node_modules
 **/*.env
 **/*.eslintcache
+server/yarn-error.log

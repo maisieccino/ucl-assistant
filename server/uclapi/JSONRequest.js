@@ -9,6 +9,13 @@ module.exports = async (url, { headers = {}, ...options } = {}) => {
       ...headers,
     },
   });
+  if (!res.headers["Content-Type"] === "application/json") {
+    const text = await res.text();
+    if (!res.ok) {
+      throw new Error(text);
+    }
+    return text;
+  }
   let json = {};
   json = await res.json();
   if (!res.ok) {

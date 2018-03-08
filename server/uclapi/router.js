@@ -3,16 +3,15 @@ const { jwt } = require("../middleware/auth");
 const { getUserData } = require("./user");
 const { getPersonalTimetable } = require("./timetable");
 const { search } = require("./people");
+const { loadOrFetch } = require("../redis");
 const {
   getWorkspaces,
   getImage,
   getSeatingInfo,
   getAllSeatInfo,
 } = require("./workspaces");
-const {
-  WORKSPACE_SUMMARY_CACHE_PATH,
-  WORKSPACE_SUMMARY_TTL,
-} = require("./constants");
+const { WORKSPACE_SUMMARY_PATH } = require("../redis/keys");
+const { WORKSPACE_SUMMARY_TTL } = require("../redis/ttl");
 
 module.exports = app => {
   const router = new Router();
@@ -40,20 +39,13 @@ module.exports = app => {
   });
 
   router.get("/workspaces/summary", jwt, async ctx => {
-    const cacheData = await ctx.redisGet(WORKSPACE_SUMMARY_CACHE_PATH);
-    if (cacheData) {
-      console.log("Fetched workspace data from cache.");
-      ctx.body = JSON.parse(cacheData);
-    } else {
-      console.log("Fetching fresh workspace data.");
-      const newData = await getAllSeatInfo();
-      await ctx.redisSetex(
-        WORKSPACE_SUMMARY_CACHE_PATH,
-        WORKSPACE_SUMMARY_TTL,
-        JSON.stringify(newData),
-      );
-      ctx.body = newData;
-    }
+    const data = await loadOrFetch(
+      ctx,
+      WORKSPACE_SUMMARY_PATH,
+      async () => getAllSeatInfo(),
+      WORKSPACE_SUMMARY_TTL,
+    );
+    ctx.body = data;
   });
 
   router.get("/workspaces/:id/seatinfo", jwt, async ctx => {

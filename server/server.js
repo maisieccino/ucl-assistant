@@ -5,7 +5,12 @@ const { jsonify, logger, timer } = require("./middleware");
 const URL = require("url");
 const redis = require("redis");
 const { promisify } = require("util");
+const Raven = require("raven");
 const router = require("./router");
+
+require("dotenv").config();
+
+Raven.config().install();
 
 const connectionString = process.env.REDIS_URL;
 
@@ -52,6 +57,9 @@ app.context.redisGet = promisify(app.context.redisClient.get).bind(
 app.context.redisSetex = promisify(app.context.redisClient.setex).bind(
   app.context.redisClient,
 );
+app.context.redisSet = promisify(app.context.redisClient.set).bind(
+  app.context.redisClient,
+);
 
 app.use(session({}, app));
 
@@ -61,4 +69,6 @@ app.use(logger);
 app.use(jsonify);
 router(app);
 
-app.listen(process.env.PORT || 3000);
+Raven.context(() => {
+  app.listen(process.env.PORT || 3000);
+});

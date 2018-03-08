@@ -1,6 +1,6 @@
 {
   "name": "ucl-assistant-server",
-  "version": "0.3.9",
+  "version": "0.3.10",
   "description": "Server to support the UCL Assistant app",
   "main": "server.js",
   "scripts": {
@@ -24,6 +24,7 @@
     "koa-session": "^5.5.1",
     "moment": "^2.20.1",
     "node-fetch": "^1.7.3",
+    "raven": "^2.4.2",
     "redis": "^2.8.0"
   }
 }
