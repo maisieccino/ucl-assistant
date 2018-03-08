@@ -52,12 +52,22 @@ class SplashScreen extends Component {
 
   componentDidMount() {
     if (this.props.token !== "") {
+      console.log(
+        `Component just mounted. Going to home. reason? token = ${
+          this.props.token
+        }`,
+      );
       this.goHome();
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.token !== "") {
+      console.log(
+        `Component about to receive new props. Going to home. reason? next token = ${
+          nextProps.token
+        }`,
+      );
       this.goHome();
     }
 

@@ -40,12 +40,25 @@ class TimetableScreen extends Component {
     signOut: () => dispatch(signOut()),
   });
 
+  state = {
+    isSigningOut: false,
+  };
+
+  componentWillReceiveProps(nextProps) {
+    if (this.state.isSigningOut && nextProps.state.user.token === "") {
+      if (Platform.OS === "android") {
+        ToastAndroid.show(
+          "You have successfully signed out",
+          ToastAndroid.SHORT,
+        );
+      }
+      this.props.navigation.navigate("Splash");
+    }
+  }
+
   signOut() {
     this.props.signOut();
-    if (Platform.OS === "android") {
-      ToastAndroid.show("You have successfully signed out", ToastAndroid.SHORT);
-    }
-    this.props.navigation.navigate("Splash");
+    this.setState({ isSigningOut: true });
   }
 
   render() {
