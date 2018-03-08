@@ -52,6 +52,7 @@ class TimetableScreen extends Component {
           ToastAndroid.SHORT,
         );
       }
+      this.setState({ isSigningOut: false });
       this.props.navigation.navigate("Splash");
     }
   }
