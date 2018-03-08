@@ -37,7 +37,7 @@ class StudySpaceScreen extends Component {
     studyspaces: PropTypes.arrayOf(PropTypes.shape()),
     token: PropTypes.string,
     fetchInfo: PropTypes.func,
-    lastUpdated: momentObj,
+    lastUpdated: PropTypes.oneOfType([momentObj, PropTypes.string]),
   };
 
   static defaultProps = {
