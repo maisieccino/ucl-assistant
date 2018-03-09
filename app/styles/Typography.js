@@ -11,11 +11,11 @@ export const style = StyleSheet.create({
   },
   title: {
     fontFamily: "apercu-bold",
-    fontSize: 40,
+    fontSize: 35,
     marginBottom: 10,
   },
   subtitle: {
-    fontSize: 30,
+    fontSize: 28,
     marginTop: 8,
     marginBottom: 2,
   },

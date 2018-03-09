@@ -5,7 +5,7 @@
     "slug": "ucl-assistant",
     "privacy": "public",
     "sdkVersion": "24.0.0",
-    "version": "0.5.1",
+    "version": "0.5.2",
     "orientation": "portrait",
     "primaryColor": "#1B998B",
     "icon": "./assets/images/icon.png",
