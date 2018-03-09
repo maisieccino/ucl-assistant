@@ -4,6 +4,9 @@ import {
   WORKSPACES_FETCH_SEATINFO_FAILURE,
   WORKSPACES_IS_FETCHING_SEATINFO,
   WORKSPACES_FETCH_SEATINFO_SUCCESS,
+  WORKSPACES_FETCH_HISTORIC_DATA_FAILURE,
+  WORKSPACES_FETCH_HISTORIC_DATA_SUCCESS,
+  WORKSPACES_IS_FETCHING_HISTORIC_DATA,
 } from "../constants/studyspacesConstants";
 
 export const setIsFetchingSeatInfo = id => ({
@@ -85,6 +88,48 @@ export const fetchSeatInfos = (token: String, ids: Array) => async (
             typeof error === "string" ? error : error.message,
           ),
         ),
+      ),
+    );
+  }
+};
+
+export const setIsFetchingAverages = id => ({
+  id,
+  type: WORKSPACES_IS_FETCHING_HISTORIC_DATA,
+});
+
+export const fetchAveragesSuccess = (id, dailyAverages) => ({
+  id,
+  dailyAverages,
+  type: WORKSPACES_FETCH_HISTORIC_DATA_SUCCESS,
+});
+
+export const fetchAveragesFailure = (id, error) => ({
+  id,
+  error,
+  type: WORKSPACES_FETCH_HISTORIC_DATA_FAILURE,
+});
+
+export const fetchAverages = (token: String, id: Number) => async (
+  dispatch: Function,
+) => {
+  await dispatch(setIsFetchingAverages(id));
+  try {
+    const res = await fetch(`${WORKSPACES_URL}/historic?id=${id}`, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
+    const json = await res.json();
+    if (!res.ok) {
+      throw new Error(json.error || "There was a problem");
+    }
+    return dispatch(fetchAveragesSuccess(id, json.content));
+  } catch (error) {
+    return dispatch(
+      fetchAveragesFailure(
+        id,
+        typeof error === "string" ? error : error.message,
       ),
     );
   }

@@ -7,7 +7,7 @@ import { AreaChart } from "react-native-svg-charts";
 import Styles from "../../styles/Map";
 import Colors from "../../constants/Colors";
 
-const { Defs, G, LinearGradient, Rect, Stop } = Svg;
+const { Defs, G, Line, LinearGradient, Rect, Stop, Text } = Svg;
 
 const Gradient = ({ index }) => (
   <Defs key={index}>
@@ -39,17 +39,38 @@ const HighlightBar = (data, time, occupied) => ({ x, y, width, height }) => (
     />
   </G>
 );
+
+const CapacityLine = capacity => ({ y }) => {
+  console.log(y(capacity));
+  return (
+    <G key="capacity" x={0} y={y(capacity) < 0 ? 0 : y(capacity)}>
+      <Line
+        x1="0%"
+        x2="100%"
+        y1={0}
+        y2={0}
+        stroke={Colors.textColor}
+        strokeDasharray={[8, 6]}
+      />
+      <Text x={5} y={5} fill={Colors.textColor} fontSize={15}>
+        Capacity
+      </Text>
+    </G>
+  );
+};
 /* eslint-enable react/prop-types */
 
 class CapacityChart extends Component {
   static propTypes = {
     data: PropTypes.arrayOf(PropTypes.number),
     occupied: PropTypes.number,
+    capacity: PropTypes.number,
   };
 
   static defaultProps = {
     data: [],
     occupied: 0,
+    capacity: 500,
   };
 
   state = {
@@ -60,7 +81,7 @@ class CapacityChart extends Component {
     setTimeout(() => this.setState({ showData: true }), 600);
   }
   render() {
-    const { data, occupied } = this.props;
+    const { capacity, data, occupied } = this.props;
     const { showData } = this.state;
     const hour = parseInt(moment().format("HH"), 10);
     // chart library will spleen between a list of 0s and the actual
@@ -71,6 +92,7 @@ class CapacityChart extends Component {
       showData ? hour : -1,
       occupied,
     );
+    const line = CapacityLine(capacity);
     return (
       <AreaChart
         animate
@@ -89,7 +111,7 @@ class CapacityChart extends Component {
             backgroundColor: Colors.textInputBackground,
           },
         ]}
-        extras={[Gradient, highlightBar]}
+        extras={[Gradient, highlightBar, line]}
       />
     );
   }
