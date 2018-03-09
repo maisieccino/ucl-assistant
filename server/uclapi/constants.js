@@ -12,4 +12,5 @@ module.exports = {
   WORKSPACE_SURVEYS_URL: `${WORKSPACES_BASE_URL}/surveys`,
   WORKSPACE_SENSORS_URL: `${WORKSPACES_BASE_URL}/sensors`,
   WORKSPACE_SUMMARY_URL: `${WORKSPACES_BASE_URL}/sensors/summary`,
+  WORKSPACE_HISTORIC_URL: `${WORKSPACES_BASE_URL}/sensors/averages/time`,
 };

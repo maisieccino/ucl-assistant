@@ -9,9 +9,16 @@ const {
   getImage,
   getSeatingInfo,
   getAllSeatInfo,
+  getHistoricSeatInfo,
 } = require("./workspaces");
-const { WORKSPACE_SUMMARY_PATH } = require("../redis/keys");
-const { WORKSPACE_SUMMARY_TTL } = require("../redis/ttl");
+const {
+  WORKSPACE_SUMMARY_PATH,
+  WORKSPACE_HISTORIC_DATA_PATH,
+} = require("../redis/keys");
+const {
+  WORKSPACE_SUMMARY_TTL,
+  WORKSPACE_HISTORIC_DATA_TTL,
+} = require("../redis/ttl");
 
 module.exports = app => {
   const router = new Router();
@@ -44,6 +51,17 @@ module.exports = app => {
       WORKSPACE_SUMMARY_PATH,
       async () => getAllSeatInfo(),
       WORKSPACE_SUMMARY_TTL,
+    );
+    ctx.body = data;
+  });
+
+  router.get("/workspaces/historic", jwt, async ctx => {
+    ctx.assert(ctx.query.id, 400, "Need to include a survey id.");
+    const data = await loadOrFetch(
+      ctx,
+      `${WORKSPACE_HISTORIC_DATA_PATH}/${ctx.query.id}`,
+      async () => getHistoricSeatInfo(ctx.query.id),
+      WORKSPACE_HISTORIC_DATA_TTL,
     );
     ctx.body = data;
   });

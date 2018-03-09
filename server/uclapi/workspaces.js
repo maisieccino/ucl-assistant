@@ -1,5 +1,10 @@
 const fetch = require("node-fetch");
-const { WORKSPACE_IMAGE_URL, WORKSPACE_SUMMARY_URL } = require("./constants");
+const moment = require("moment");
+const {
+  WORKSPACE_IMAGE_URL,
+  WORKSPACE_SUMMARY_URL,
+  WORKSPACE_HISTORIC_URL,
+} = require("./constants");
 const JSONRequest = require("./JSONRequest");
 const surveyList = require("./surveysList");
 
@@ -45,11 +50,46 @@ const getSeatingInfo = async surveyId => {
   return reduceSeatInfo(surveys[0].maps);
 };
 
+const reduceAverageData = averages => {
+  const returnArray = Array.from(Array(24)).map(() => 0);
+  const hours = Object.keys(averages).map(time => ({
+    time,
+    hour: moment(`01/01/01 ${time}`).hours(),
+    occupied: averages[time].sensors_occupied,
+  }));
+  return returnArray.map((_, i) => {
+    const avrObj = hours.reduce(
+      (acc, obj) =>
+        obj.hour === i
+          ? { total: acc.total + obj.occupied, count: acc.count + 1 }
+          : acc,
+      { total: 0, count: 0 },
+    );
+    return avrObj.total / avrObj.count;
+  });
+};
+
+const getHistoricSeatInfo = async surveyId => {
+  const data = await JSONRequest(
+    `${WORKSPACE_HISTORIC_URL}?token=${process.env.UCLAPI_TOKEN}&survey_ids=${
+      surveyId
+    }&days=30`,
+  );
+  const { surveys } = data;
+  if (surveys.length !== 1) {
+    throw new Error("Survey with that id not found");
+  }
+  const { averages } = surveys[0];
+  return reduceAverageData(averages);
+};
+
 const getAllSeatInfo = async () => {
   const data = await JSONRequest(
     `${WORKSPACE_SUMMARY_URL}?token=${process.env.UCLAPI_TOKEN}`,
   );
+  console.log(data);
   const { surveys } = data;
+  console.log(surveys.length);
   return surveys.map(survey => ({
     ...reduceSeatInfo(survey.maps),
     name: survey.name,
@@ -58,8 +98,10 @@ const getAllSeatInfo = async () => {
 };
 
 module.exports = {
+  reduceAverageData,
   getWorkspaces,
   getImage,
   getSeatingInfo,
   getAllSeatInfo,
+  getHistoricSeatInfo,
 };

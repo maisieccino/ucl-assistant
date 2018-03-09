@@ -9,6 +9,9 @@ module.exports = async (url, { headers = {}, ...options } = {}) => {
       ...headers,
     },
   });
+  if (process.env.NODE_ENV === "development") {
+    console.log(`requested ${url}, received ${res.status}`);
+  }
   if (!res.headers["Content-Type"] === "application/json") {
     const text = await res.text();
     if (!res.ok) {
