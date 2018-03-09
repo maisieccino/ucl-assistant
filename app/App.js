@@ -5,9 +5,14 @@ import { PersistGate } from "redux-persist/es/integration/react";
 import { StatusBar, View } from "react-native";
 import { AppLoading, Asset, Font } from "expo";
 import { Feather } from "@expo/vector-icons";
+import Sentry from "sentry-expo";
 import configureStore from "./configureStore";
 import RootNavigation from "./navigation/RootNavigation";
 import Styles from "./styles/Containers";
+
+Sentry.config(
+  "https://51d1644cf70f40b9af7d1e1416dac247@sentry.io/300408",
+).install();
 
 class App extends Component {
   static propTypes = {

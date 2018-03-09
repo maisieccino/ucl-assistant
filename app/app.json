@@ -5,7 +5,7 @@
     "slug": "ucl-assistant",
     "privacy": "public",
     "sdkVersion": "24.0.0",
-    "version": "0.5.3",
+    "version": "0.5.4",
     "orientation": "portrait",
     "primaryColor": "#1B998B",
     "icon": "./assets/images/icon.png",
@@ -25,6 +25,18 @@
           "apiKey": "AIzaSyCmjOws0mCO8dNWJ1JOnAb9gWHL5-3XjEs"
         }
       }
+    },
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "matt-bell",
+            "project": "ucl-assistant-server",
+            "authToken": ""
+          }
+        }
+      ]
     },
     "scheme": "uclassistant"
   }
