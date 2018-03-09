@@ -26,6 +26,8 @@ services:
     restart: always
     expose:
       - "3000"
+    links:
+      - redis_db
     env_file:
       - ".env"
     environment:

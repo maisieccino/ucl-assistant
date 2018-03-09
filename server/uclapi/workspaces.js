@@ -54,7 +54,7 @@ const reduceAverageData = averages => {
   const returnArray = Array.from(Array(24)).map(() => 0);
   const hours = Object.keys(averages).map(time => ({
     time,
-    hour: moment(`01/01/01 ${time}`).hours(),
+    hour: moment(time, "HH:mm:ss").hours(),
     occupied: averages[time].sensors_occupied,
   }));
   return returnArray.map((_, i) => {
@@ -87,9 +87,7 @@ const getAllSeatInfo = async () => {
   const data = await JSONRequest(
     `${WORKSPACE_SUMMARY_URL}?token=${process.env.UCLAPI_TOKEN}`,
   );
-  console.log(data);
   const { surveys } = data;
-  console.log(surveys.length);
   return surveys.map(survey => ({
     ...reduceSeatInfo(survey.maps),
     name: survey.name,

@@ -24,6 +24,7 @@ module.exports = app => {
       tips: {
         "pretty-print": "Add ?pretty=true to pretty print the json (as shown)",
       },
+      version: ctx.version,
     };
   });
 

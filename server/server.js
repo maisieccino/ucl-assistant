@@ -1,3 +1,4 @@
+const fs = require("fs");
 const Koa = require("koa");
 const bodyparser = require("koa-bodyparser");
 const session = require("koa-session");
@@ -10,6 +11,8 @@ const router = require("./router");
 
 require("dotenv").config();
 
+const { version } = JSON.parse(fs.readFileSync("./package.json"));
+
 Raven.config().install();
 
 const connectionString = process.env.REDIS_URL;
@@ -19,9 +22,11 @@ if (connectionString === undefined) {
   process.exit(1);
 }
 
-require("dotenv").config();
-
 const app = new Koa();
+
+app.context.version = version;
+
+console.log(`Running server version ${version}`);
 
 if (
   !process.env.UCLAPI_CLIENT_ID ||
