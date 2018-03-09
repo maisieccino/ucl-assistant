@@ -23,7 +23,7 @@ services:
   web:
     image: mbellgb/ucl-assistant-server
     container_name: web
-    restart: unless-stopped
+    restart: always
     expose:
       - "3000"
     env_file:
