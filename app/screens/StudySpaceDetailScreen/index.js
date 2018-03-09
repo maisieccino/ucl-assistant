@@ -10,7 +10,12 @@ import { Page, Horizontal } from "../../components/Containers";
 import { BodyText, TitleText, SubtitleText } from "../../components/Typography";
 import CapacityChart from "./CapacityChart";
 
-const busyText = (time, data, occupied, capacity) => {
+const busyText = (
+  time = 0,
+  data = Array.from(Array(24)).map(() => 0),
+  occupied = 0,
+  capacity = 1,
+) => {
   const diff = data[time] - occupied;
   if (Math.abs(diff) / capacity < 0.05) {
     return "about as busy as normal";
