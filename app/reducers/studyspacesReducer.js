@@ -10,17 +10,19 @@ import {
 } from "../constants/studyspacesConstants";
 
 export const initialState = {
-  studyspaces: surveys.map(survey => ({
-    ...survey,
-    occupied: 0,
-    capacity: 0,
-    fetchSeatInfoError: "",
-    isFetchingSeatInfo: false,
-    dailyAverages: Array.from(Array(24)).map(() => 0),
-    isFetchingAverages: false,
-    dailyAveragesError: "",
-    lastUpdatedAverages: null,
-  })),
+  studyspaces: surveys
+    .map(survey => ({
+      ...survey,
+      occupied: 0,
+      capacity: 0,
+      fetchSeatInfoError: "",
+      isFetchingSeatInfo: false,
+      dailyAverages: Array.from(Array(24)).map(() => 0),
+      isFetchingAverages: false,
+      dailyAveragesError: "",
+      lastUpdatedAverages: null,
+    }))
+    .sort((s1, s2) => s1.id - s2.id),
   lastStatusUpdate: null,
   isFetchingSpaces: false,
 };
@@ -32,10 +34,13 @@ export default (state = initialState, action = null) => {
   switch (type) {
     case WORKSPACES_IS_FETCHING_SEATINFO: {
       if (space) {
-        const newStudyspaces = [
-          ...state.studyspaces.filter(s => s.id !== id),
-          { ...space, isFetchingSeatInfo: true, fetchSeatInfoError: "" },
-        ];
+        const idx = state.studyspaces.findIndex(s => s.id === id);
+        const newStudyspaces = state.studyspaces.filter(s => s.id !== id);
+        newStudyspaces.splice(idx, 0, {
+          ...space,
+          isFetchingSeatInfo: true,
+          fetchSeatInfoError: "",
+        });
         return { ...state, studyspaces: newStudyspaces };
       }
       return state;

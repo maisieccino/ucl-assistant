@@ -13,9 +13,9 @@ const Indicator = ({ color, loading }) => {
         Styles.circle,
         {
           backgroundColor: loading ? Colors.textInputBackground : color,
-          position: "relative",
-          left: -25,
-          top: 12,
+          position: "absolute",
+          left: 44,
+          top: 40,
         },
       ]}
     >

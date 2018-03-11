@@ -57,30 +57,48 @@ class StudySpaceScreen extends Component {
     fetchInfo: (ids, token) => dispatch(fetchSeatInfos(token, ids)),
   });
 
+  constructor(props) {
+    super(props);
+    this.updateTextInterval = null;
+  }
+
   state = {
     loadedSeatInfo: false,
+    lastUpdated: "never",
   };
 
   componentDidMount() {
     if (!this.state.loadedSeatInfo && this.props.token) {
       this.fetchSeatInfo();
     }
+    this.updateTextInterval = setInterval(
+      () => this.updateLastUpdatedText(),
+      10000,
+    );
   }
 
   componentWillReceiveProps(nextProps) {
     if (!this.state.loadedSeatInfo && nextProps.token) {
       this.fetchSeatInfo();
     }
+    this.updateLastUpdatedText();
   }
 
-  fetchSeatInfo() {
+  updateLastUpdatedText() {
+    const { lastUpdated } = this.props;
+    this.setState({
+      lastUpdated: lastUpdated ? moment(lastUpdated).fromNow() : "never",
+    });
+  }
+
+  async fetchSeatInfo() {
+    await this.setState({ loadedSeatInfo: true });
     const ids = this.props.studyspaces.map(space => space.id);
     this.props.fetchInfo(ids, this.props.token);
-    this.setState({ loadedSeatInfo: true });
   }
 
   render() {
-    const { lastUpdated, navigation, studyspaces } = this.props;
+    const { navigation, studyspaces } = this.props;
     const errorneousSpaces = studyspaces.filter(
       space => space.fetchSeatInfoError !== "",
     );
@@ -103,7 +121,7 @@ class StudySpaceScreen extends Component {
         <TextInput placeholder="Search for a building name..." />
         <CentredText>Start typing to get search results</CentredText>
 
-        <SubtitleText>Nearby Study Spaces</SubtitleText>
+        <SubtitleText>All Study Spaces</SubtitleText>
         {errorneousSpaces.length < 5 ? (
           errorneousSpaces.map(space => (
             <ErrorText key={generate()}>
@@ -116,9 +134,7 @@ class StudySpaceScreen extends Component {
           </ErrorText>
         )}
 
-        <BodyText>
-          Last updated: {lastUpdated ? moment(lastUpdated).fromNow() : "never"}
-        </BodyText>
+        <BodyText>Last updated: {this.state.lastUpdated}</BodyText>
 
         <FlatList
           data={studyspaces}

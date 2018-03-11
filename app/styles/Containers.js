@@ -72,7 +72,7 @@ export default StyleSheet.create({
     marginRight: 5,
   },
   circularIcon: {
-    marginRight: 15,
+    marginRight: 10,
     backgroundColor: Colors.textInputBackground,
     padding: 10,
     borderRadius: 80,

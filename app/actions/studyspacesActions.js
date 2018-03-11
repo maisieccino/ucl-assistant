@@ -70,7 +70,7 @@ export const fetchSeatInfos = (token: String, ids: Array) => async (
     }
     return Promise.all(
       ids.map(id => {
-        const info = json.content.filter(obj => obj.id === id)[0];
+        const info = json.content.filter(obj => `${obj.id}` === `${id}`)[0];
         return dispatch(
           fetchSeatInfoSuccess(id, {
             occupied: info.occupied,
