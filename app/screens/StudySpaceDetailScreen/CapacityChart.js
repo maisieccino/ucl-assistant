@@ -40,23 +40,21 @@ const HighlightBar = (data, time, occupied) => ({ x, y, width, height }) => (
   </G>
 );
 
-const CapacityLine = capacity => ({ y }) => {
-  return (
-    <G key="capacity" x={0} y={y(capacity) < 0 ? 0 : y(capacity)}>
-      <Line
-        x1="0%"
-        x2="100%"
-        y1={0}
-        y2={0}
-        stroke={Colors.textColor}
-        strokeDasharray={[8, 6]}
-      />
-      <Text x={5} y={5} fill={Colors.textColor} fontSize={15}>
-        Capacity
-      </Text>
-    </G>
-  );
-};
+const CapacityLine = capacity => ({ y }) => (
+  <G key="capacity" x={0} y={y(capacity) < 0 ? 0 : y(capacity)}>
+    <Line
+      x1="0%"
+      x2="100%"
+      y1={0}
+      y2={0}
+      stroke={Colors.textColor}
+      strokeDasharray={[8, 6]}
+    />
+    <Text x={5} y={5} fill={Colors.textColor} fontSize={15}>
+      Capacity
+    </Text>
+  </G>
+);
 /* eslint-enable react/prop-types */
 
 class CapacityChart extends Component {

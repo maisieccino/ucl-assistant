@@ -1,12 +1,7 @@
 /* eslint react-native/no-inline-styles: 0 */
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  Platform,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { Horizontal, CircularIcon } from "../Containers";
 import { SearchResultTopText, SearchResultBottomText } from "../Typography";
 import Colors from "../../constants/Colors";

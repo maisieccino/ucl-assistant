@@ -27,20 +27,25 @@ export const initialState = {
   isFetchingSpaces: false,
 };
 
+const updateStudyspaces = (studyspaces, id, newSpace) => {
+  const idx = studyspaces.findIndex(s => s.id === id);
+  const newStudyspaces = studyspaces.filter(s => s.id !== id);
+  newStudyspaces.splice(idx, 0, newSpace);
+  return newStudyspaces;
+};
+
 export default (state = initialState, action = null) => {
   const { type, id, data, error, dailyAverages } = action;
   const space = id ? state.studyspaces.filter(s => s.id === id)[0] : null;
 
   switch (type) {
     case WORKSPACES_IS_FETCHING_SEATINFO: {
+      const newStudyspaces = updateStudyspaces(state.studyspaces, id, {
+        ...space,
+        isFetchingSeatInfo: true,
+        fetchSeatInfoError: "",
+      });
       if (space) {
-        const idx = state.studyspaces.findIndex(s => s.id === id);
-        const newStudyspaces = state.studyspaces.filter(s => s.id !== id);
-        newStudyspaces.splice(idx, 0, {
-          ...space,
-          isFetchingSeatInfo: true,
-          fetchSeatInfoError: "",
-        });
         return { ...state, studyspaces: newStudyspaces };
       }
       return state;
@@ -48,10 +53,11 @@ export default (state = initialState, action = null) => {
 
     case WORKSPACES_FETCH_SEATINFO_FAILURE: {
       if (space) {
-        const newStudyspaces = [
-          ...state.studyspaces.filter(s => s.id !== id),
-          { ...space, isFetchingSeatInfo: false, fetchSeatInfoError: error },
-        ];
+        const newStudyspaces = updateStudyspaces(state.studyspaces, id, {
+          ...space,
+          isFetchingSeatInfo: false,
+          fetchSeatInfoError: error,
+        });
         return {
           ...state,
           studyspaces: newStudyspaces,
@@ -63,10 +69,11 @@ export default (state = initialState, action = null) => {
 
     case WORKSPACES_FETCH_SEATINFO_SUCCESS: {
       if (space) {
-        const newStudyspaces = [
-          ...state.studyspaces.filter(s => s.id !== id),
-          { ...space, ...data, isFetchingSeatInfo: false },
-        ];
+        const newStudyspaces = updateStudyspaces(state.studyspaces, id, {
+          ...space,
+          ...data,
+          isFetchingSeatInfo: false,
+        });
         return {
           ...state,
           studyspaces: newStudyspaces,
@@ -78,10 +85,11 @@ export default (state = initialState, action = null) => {
 
     case WORKSPACES_IS_FETCHING_HISTORIC_DATA: {
       if (space) {
-        const newStudyspaces = [
-          ...state.studyspaces.filter(s => s.id !== id),
-          { ...space, isFetchingAverages: true, dailyAveragesError: "" },
-        ];
+        const newStudyspaces = updateStudyspaces(state.studyspaces, id, {
+          ...space,
+          isFetchingAverages: true,
+          dailyAveragesError: "",
+        });
         return {
           ...state,
           studyspaces: newStudyspaces,
@@ -92,15 +100,12 @@ export default (state = initialState, action = null) => {
 
     case WORKSPACES_FETCH_HISTORIC_DATA_FAILURE: {
       if (space) {
-        const newStudyspaces = [
-          ...state.studyspaces.filter(s => s.id !== id),
-          {
-            ...space,
-            isFetchingAverages: false,
-            dailyAveragesError: error,
-            lastUpdatedAverages: moment(),
-          },
-        ];
+        const newStudyspaces = updateStudyspaces(state.studyspaces, id, {
+          ...space,
+          isFetchingAverages: false,
+          dailyAveragesError: error,
+          lastUpdatedAverages: moment(),
+        });
         return {
           ...state,
           studyspaces: newStudyspaces,
@@ -111,15 +116,12 @@ export default (state = initialState, action = null) => {
     }
     case WORKSPACES_FETCH_HISTORIC_DATA_SUCCESS: {
       if (space) {
-        const newStudyspaces = [
-          ...state.studyspaces.filter(s => s.id !== id),
-          {
-            ...space,
-            dailyAverages,
-            isFetchingAverages: false,
-            lastUpdatedAverages: moment(),
-          },
-        ];
+        const newStudyspaces = updateStudyspaces(state.studyspaces, id, {
+          ...space,
+          dailyAverages,
+          isFetchingAverages: false,
+          lastUpdatedAverages: moment(),
+        });
         return {
           ...state,
           studyspaces: newStudyspaces,
