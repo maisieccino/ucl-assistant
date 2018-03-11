@@ -10,9 +10,11 @@ import configureStore from "./configureStore";
 import RootNavigation from "./navigation/RootNavigation";
 import Styles from "./styles/Containers";
 
-Sentry.config(
-  "https://51d1644cf70f40b9af7d1e1416dac247@sentry.io/300408",
-).install();
+if (!__DEV__) {
+  Sentry.config(
+    "https://51d1644cf70f40b9af7d1e1416dac247@sentry.io/300408",
+  ).install();
+}
 
 class App extends Component {
   static propTypes = {

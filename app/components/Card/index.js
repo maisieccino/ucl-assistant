@@ -9,7 +9,7 @@ import PropTypes from "prop-types";
 import { BodyText, CardTitleText } from "../Typography";
 import Style from "../../styles/Containers";
 
-const Wrapper = ({ children, onPress }) =>
+export const Wrapper = ({ children, onPress }) =>
   Platform.OS === "android" ? (
     <TouchableNativeFeedback onPress={onPress}>
       {children}

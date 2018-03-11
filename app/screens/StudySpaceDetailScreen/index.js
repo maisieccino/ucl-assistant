@@ -73,10 +73,7 @@ class StudySpaceDetailScreen extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(`fetching? ${this.state.fetchingData}`);
-    console.log(`token? ${nextProps.token.length}`);
     if (!this.state.fetchingData && nextProps.token.length > 0) {
-      console.log("fetching...");
       this.props.fetchAverages(nextProps.token, this.state.id);
       this.setState({ fetchingData: true });
     }

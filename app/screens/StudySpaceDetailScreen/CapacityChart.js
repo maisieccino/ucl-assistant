@@ -41,7 +41,6 @@ const HighlightBar = (data, time, occupied) => ({ x, y, width, height }) => (
 );
 
 const CapacityLine = capacity => ({ y }) => {
-  console.log(y(capacity));
   return (
     <G key="capacity" x={0} y={y(capacity) < 0 ? 0 : y(capacity)}>
       <Line

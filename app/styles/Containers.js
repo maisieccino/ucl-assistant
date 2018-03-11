@@ -1,5 +1,19 @@
 import { Platform, StyleSheet } from "react-native";
 import Colors from "../constants/Colors";
+import { BORDER_RADIUS } from "../constants/styleConstants";
+
+const cardShared = {
+  padding: 10,
+  backgroundColor: Colors.cardBackground,
+  elevation: 3,
+  marginBottom: 5,
+  marginTop: 5,
+  borderRadius: BORDER_RADIUS,
+  shadowColor: Colors.textColor,
+  shadowOffset: { width: 0, height: 5 },
+  shadowRadius: 3,
+  shadowOpacity: 0.75,
+};
 
 export default StyleSheet.create({
   pageScrollContainer: {
@@ -25,19 +39,21 @@ export default StyleSheet.create({
   spacer: {
     flex: 1,
   },
-  card: {
-    padding: 10,
-    backgroundColor: Colors.cardBackground,
-    elevation: 3,
-    marginBottom: 5,
-    marginTop: 5,
-    borderRadius: 10,
-    flexDirection: "column",
-    shadowColor: Colors.textColor,
-    shadowOffset: { width: 0, height: 5 },
-    shadowRadius: 3,
-    shadowOpacity: 0.75,
-  },
+  card: StyleSheet.flatten([
+    cardShared,
+    {
+      flexDirection: "column",
+    },
+  ]),
+  resultCard: StyleSheet.flatten([
+    cardShared,
+    {
+      marginTop: 5,
+      marginBottom: 10,
+      marginLeft: 2,
+      marginRight: 2,
+    },
+  ]),
   horizontal: {
     flexDirection: "row",
     justifyContent: "center",

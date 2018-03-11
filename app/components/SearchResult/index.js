@@ -1,12 +1,17 @@
 /* eslint react-native/no-inline-styles: 0 */
 import React from "react";
 import PropTypes from "prop-types";
-import { View } from "react-native";
-import { SmallButton } from "../Button";
+import {
+  Platform,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Horizontal, CircularIcon } from "../Containers";
 import { SearchResultTopText, SearchResultBottomText } from "../Typography";
 import Colors from "../../constants/Colors";
 import Indicator from "./Indicator";
+import Styles from "../../styles/Containers";
 
 const getIcon = type => {
   switch (type) {
@@ -23,30 +28,29 @@ const SearchResult = ({
   type,
   topText,
   bottomText,
-  buttonText,
   onPress,
   indicator,
   indicatorColor,
   indicatorLoading,
 }) => (
-  <Horizontal style={{ marginTop: 5, marginBottom: 5 }}>
-    <CircularIcon name={getIcon(type)} size={24} />
-    {indicator && (
-      <Indicator color={indicatorColor} loading={indicatorLoading} />
-    )}
-    <View style={{ flex: 1 }}>
-      <SearchResultTopText>{topText}</SearchResultTopText>
-      <SearchResultBottomText>{bottomText}</SearchResultBottomText>
-    </View>
-    <SmallButton onPress={onPress}>{buttonText}</SmallButton>
-  </Horizontal>
+  <TouchableOpacity onPress={onPress}>
+    <Horizontal style={Styles.resultCard}>
+      <CircularIcon name={getIcon(type)} size={24} />
+      {indicator && (
+        <Indicator color={indicatorColor} loading={indicatorLoading} />
+      )}
+      <View style={{ flex: 1 }}>
+        <SearchResultTopText>{topText}</SearchResultTopText>
+        <SearchResultBottomText>{bottomText}</SearchResultBottomText>
+      </View>
+    </Horizontal>
+  </TouchableOpacity>
 );
 
 SearchResult.propTypes = {
   type: PropTypes.oneOf(["location", "person", ""]),
   topText: PropTypes.string,
   bottomText: PropTypes.string,
-  buttonText: PropTypes.string,
   onPress: PropTypes.func,
   indicator: PropTypes.bool,
   indicatorColor: PropTypes.string,
@@ -56,7 +60,6 @@ SearchResult.defaultProps = {
   type: "",
   topText: "",
   bottomText: "",
-  buttonText: "Button",
   onPress: () => {},
   indicator: false,
   indicatorColor: Colors.textInputBackground,
