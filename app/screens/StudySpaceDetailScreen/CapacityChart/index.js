@@ -1,11 +1,14 @@
 /* eslint react-native/no-inline-styles: 0 */
 import React, { Component } from "react";
+import { View } from "react-native";
 import PropTypes from "prop-types";
 import moment from "moment";
 import { Svg } from "expo";
 import { AreaChart } from "react-native-svg-charts";
-import Styles from "../../styles/Map";
-import Colors from "../../constants/Colors";
+import Styles from "../../../styles/Map";
+import { BodyText } from "../../../components/Typography";
+import Colors from "../../../constants/Colors";
+import ChartLoading from "./ChartLoading";
 
 const { Defs, G, Line, LinearGradient, Rect, Stop, Text } = Svg;
 
@@ -40,21 +43,6 @@ const HighlightBar = (data, time, occupied) => ({ x, y, width, height }) => (
   </G>
 );
 
-const CapacityLine = capacity => ({ y }) => (
-  <G key="capacity" x={0} y={y(capacity) < 0 ? 0 : y(capacity)}>
-    <Line
-      x1="0%"
-      x2="100%"
-      y1={0}
-      y2={0}
-      stroke={Colors.textColor}
-      strokeDasharray={[8, 6]}
-    />
-    <Text x={5} y={5} fill={Colors.textColor} fontSize={15}>
-      Capacity
-    </Text>
-  </G>
-);
 /* eslint-enable react/prop-types */
 
 class CapacityChart extends Component {
@@ -62,23 +50,28 @@ class CapacityChart extends Component {
     data: PropTypes.arrayOf(PropTypes.number),
     occupied: PropTypes.number,
     capacity: PropTypes.number,
+    loading: PropTypes.bool,
   };
 
   static defaultProps = {
     data: [],
     occupied: 0,
     capacity: 500,
+    loading: false,
   };
 
   state = {
     showData: false,
   };
 
-  componentDidMount() {
-    setTimeout(() => this.setState({ showData: true }), 600);
+  componentWillReceiveProps(nextProps) {
+    if (this.props.loading && !nextProps.loading) {
+      setTimeout(() => this.setState({ showData: true }), 600);
+    }
   }
+
   render() {
-    const { capacity, data, occupied } = this.props;
+    const { capacity, data, loading, occupied } = this.props;
     const { showData } = this.state;
     const hour = parseInt(moment().format("HH"), 10);
     // chart library will spleen between a list of 0s and the actual
@@ -89,27 +82,31 @@ class CapacityChart extends Component {
       showData ? hour : -1,
       occupied,
     );
-    const line = CapacityLine(capacity);
     return (
-      <AreaChart
-        animate
-        animationDuration={500}
-        contentInset={{ top: 10 }}
-        data={graphData}
-        showGrid={false}
-        svg={{
-          fill: showData ? "url(#gradient)" : "transparent",
-          stroke: showData ? Colors.accentColor : "none",
-          strokeWidth: showData ? 2 : 0,
-        }}
-        style={[
-          Styles.wideMap,
-          {
-            backgroundColor: Colors.textInputBackground,
-          },
-        ]}
-        extras={[Gradient, highlightBar, line]}
-      />
+      <View style={[Styles.wideMap, { height: undefined }]}>
+        {loading ? (
+          <ChartLoading />
+        ) : (
+          <AreaChart
+            animate
+            animationDuration={500}
+            contentInset={{ top: 10 }}
+            data={graphData}
+            showGrid={false}
+            svg={{
+              fill: showData ? "url(#gradient)" : "transparent",
+              stroke: showData ? Colors.accentColor : "none",
+              strokeWidth: showData ? 2 : 0,
+            }}
+            style={{
+              backgroundColor: Colors.textInputBackground,
+              height: 200,
+            }}
+            extras={[Gradient, highlightBar]}
+          />
+        )}
+        <BodyText>Scale</BodyText>
+      </View>
     );
   }
 }

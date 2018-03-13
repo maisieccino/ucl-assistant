@@ -62,6 +62,9 @@ class StudySpaceDetailScreen extends Component {
       occupied,
       data: Array.from(Array(24)).map(() => 0),
       fetchingData: false,
+      space: {
+        isFetchingAverages: false,
+      },
     };
   }
 
@@ -81,12 +84,13 @@ class StudySpaceDetailScreen extends Component {
       const space = nextProps.studyspaces.filter(
         s => s.id === this.state.id,
       )[0];
-      this.setState({ data: space.dailyAverages });
+      this.setState({ data: space.dailyAverages, space });
     }
   }
 
   render() {
     const { id, name, data, capacity, occupied } = this.state;
+    const { isFetchingAverages } = this.state.space;
     const hour = parseInt(moment().format("HH"), 10);
     return (
       <Page>
@@ -107,6 +111,7 @@ class StudySpaceDetailScreen extends Component {
           data={data}
           occupied={occupied}
           capacity={capacity}
+          loading={isFetchingAverages}
         />
         <BodyText>
           {moment().format("HH:mm")} -{" "}
