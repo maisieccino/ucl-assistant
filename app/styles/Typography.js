@@ -119,4 +119,7 @@ export default StyleSheet.create({
     style.infoText,
   ]),
   infoTextContainer: StyleSheet.flatten([style.infoTextContainer]),
+  bold: {
+    fontWeight: "bold",
+  },
 });

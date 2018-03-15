@@ -84,4 +84,11 @@ export default StyleSheet.create({
     borderColor: Colors.textColor,
     borderWidth: 1,
   },
+  liveIndicator: {
+    flex: 0,
+    paddingVertical: 2,
+    paddingHorizontal: 5,
+    marginRight: 5,
+    borderRadius: 5,
+  },
 });

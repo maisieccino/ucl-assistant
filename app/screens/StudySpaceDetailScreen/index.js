@@ -9,6 +9,7 @@ import { fetchAverages } from "../../actions/studyspacesActions";
 import { Page, Horizontal } from "../../components/Containers";
 import { BodyText, TitleText, SubtitleText } from "../../components/Typography";
 import CapacityChart from "./CapacityChart";
+import LiveIndicator from "./LiveIndicator";
 
 const busyText = (
   time = 0,
@@ -18,12 +19,12 @@ const busyText = (
 ) => {
   const diff = data[time] - occupied;
   if (Math.abs(diff) / capacity < 0.05) {
-    return "about as busy as normal";
+    return "about as busy as normal.";
   }
   if (diff > 0) {
-    return "quieter than usual";
+    return "quieter than usual.";
   }
-  return "busier than usual";
+  return "busier than usual.";
 };
 
 class StudySpaceDetailScreen extends Component {
@@ -105,7 +106,7 @@ class StudySpaceDetailScreen extends Component {
             <BodyText>Seats Occupied</BodyText>
           </View>
         </Horizontal>
-        <SubtitleText>Live Status</SubtitleText>
+        <SubtitleText>Popular Times</SubtitleText>
         <CapacityChart
           id={id}
           data={data}
@@ -113,10 +114,13 @@ class StudySpaceDetailScreen extends Component {
           capacity={capacity}
           loading={isFetchingAverages}
         />
-        <BodyText>
-          {moment().format("HH:mm")} -{" "}
-          {busyText(hour, data, occupied, capacity)}
-        </BodyText>
+        <Horizontal style={{ justifyContent: "flex-start" }}>
+          <LiveIndicator />
+          <BodyText>
+            {moment().format("HH:mm")} -{" "}
+            {busyText(hour, data, occupied, capacity)}
+          </BodyText>
+        </Horizontal>
         <SubtitleText>Facilities</SubtitleText>
         <BodyText>
           See the libraries website for more information about what facilities

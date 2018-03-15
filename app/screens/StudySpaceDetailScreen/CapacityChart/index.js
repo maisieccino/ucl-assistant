@@ -4,9 +4,8 @@ import { View } from "react-native";
 import PropTypes from "prop-types";
 import moment from "moment";
 import { Svg } from "expo";
-import { AreaChart } from "react-native-svg-charts";
+import { AreaChart, XAxis } from "react-native-svg-charts";
 import Styles from "../../../styles/Map";
-import { BodyText } from "../../../components/Typography";
 import Colors from "../../../constants/Colors";
 import ChartLoading from "./ChartLoading";
 
@@ -40,6 +39,22 @@ const HighlightBar = (data, time, occupied) => ({ x, y, width, height }) => (
       width={width / 24}
       fill={Colors.graphCurrentBar}
     />
+  </G>
+);
+
+const CapacityLine = capacity => ({ y }) => (
+  <G key="capacity" x={0} y={y(capacity) < 0 ? 0 : y(capacity)}>
+    <Line
+      x1="0%"
+      x2="100%"
+      y1={0}
+      y2={0}
+      stroke={Colors.textColor}
+      strokeDasharray={[8, 6]}
+    />
+    <Text x={5} y={5} fill={Colors.textColor} fontSize={15}>
+      Capacity
+    </Text>
   </G>
 );
 
@@ -82,6 +97,7 @@ class CapacityChart extends Component {
       showData ? hour : -1,
       occupied,
     );
+    const line = CapacityLine(capacity);
     return (
       <View style={[Styles.wideMap, { height: undefined }]}>
         {loading ? (
@@ -93,6 +109,8 @@ class CapacityChart extends Component {
             contentInset={{ top: 10 }}
             data={graphData}
             showGrid={false}
+            gridMin={0}
+            gridMax={capacity}
             svg={{
               fill: showData ? "url(#gradient)" : "transparent",
               stroke: showData ? Colors.accentColor : "none",
@@ -102,10 +120,24 @@ class CapacityChart extends Component {
               backgroundColor: Colors.textInputBackground,
               height: 200,
             }}
-            extras={[Gradient, highlightBar]}
+            extras={[Gradient, line, highlightBar]}
           />
         )}
-        <BodyText>Scale</BodyText>
+        <XAxis
+          style={{ marginVertical: 5, height: 15 }}
+          data={graphData}
+          svg={{ fontFamily: "apercu" }}
+          min={0}
+          max={capacity}
+          formatLabel={value =>
+            value % 6 === 0
+              ? moment()
+                  .hour(value + 1)
+                  .minute(0)
+                  .format("h:mm a")
+              : ""
+          }
+        />
       </View>
     );
   }

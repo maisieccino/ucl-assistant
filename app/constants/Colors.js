@@ -13,7 +13,7 @@ export default {
   infoColor: "#1C5C8A",
   indicatorRed: "#E4331C",
   graphCurrentBar: "rgba(228, 51, 28, 0.65)",
-  indicatorOrange: "#E87E19",
+  indicatorOrange: "#D77026",
   indicatorYellow: "#FFB800",
   indicatorLime: "#A6BC35",
   indicatorGreen: "#6DD149",
