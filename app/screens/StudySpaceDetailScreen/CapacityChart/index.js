@@ -52,8 +52,8 @@ const CapacityLine = capacity => ({ y }) => (
       stroke={Colors.textColor}
       strokeDasharray={[8, 6]}
     />
-    <Text x={5} y={5} fill={Colors.textColor} fontSize={15}>
-      Capacity
+    <Text x={3} y={3} fill={Colors.textColor} fontSize={15}>
+      Capacity{`(${capacity} seats)`}
     </Text>
   </G>
 );

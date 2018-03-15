@@ -10,6 +10,8 @@ import { Page, Horizontal } from "../../components/Containers";
 import { BodyText, TitleText, SubtitleText } from "../../components/Typography";
 import CapacityChart from "./CapacityChart";
 import LiveIndicator from "./LiveIndicator";
+import OpeningHours from "./OpeningHours";
+import FloatingHeartButton from "../../components/Button/FloatingHeartButton";
 
 const busyText = (
   time = 0,
@@ -57,6 +59,7 @@ class StudySpaceDetailScreen extends Component {
     super(props);
     const { id, name, occupied, capacity } = this.props.navigation.state.params;
     this.state = {
+      favourite: false,
       name,
       id,
       capacity,
@@ -90,43 +93,51 @@ class StudySpaceDetailScreen extends Component {
   }
 
   render() {
-    const { id, name, data, capacity, occupied } = this.state;
+    const { id, name, data, favourite, capacity, occupied } = this.state;
     const { isFetchingAverages } = this.state.space;
     const hour = parseInt(moment().format("HH"), 10);
     return (
-      <Page>
-        <TitleText>{name}</TitleText>
-        <Horizontal>
-          <View style={{ flex: 1 }}>
-            <TitleText>{capacity - occupied}</TitleText>
-            <BodyText>Seats Available</BodyText>
-          </View>
-          <View style={{ flex: 1 }}>
-            <TitleText>{occupied}</TitleText>
-            <BodyText>Seats Occupied</BodyText>
-          </View>
-        </Horizontal>
-        <SubtitleText>Popular Times</SubtitleText>
-        <CapacityChart
-          id={id}
-          data={data}
-          occupied={occupied}
-          capacity={capacity}
-          loading={isFetchingAverages}
-        />
-        <Horizontal style={{ justifyContent: "flex-start" }}>
-          <LiveIndicator />
+      <View style={{ flex: 1 }}>
+        <Page style={{ flex: 1.8 }}>
+          <TitleText>{name}</TitleText>
+          <Horizontal>
+            <View style={{ flex: 1 }}>
+              <TitleText>{capacity - occupied}</TitleText>
+              <BodyText>Seats Available</BodyText>
+            </View>
+            <View style={{ flex: 1 }}>
+              <TitleText>{occupied}</TitleText>
+              <BodyText>Seats Occupied</BodyText>
+            </View>
+          </Horizontal>
+          <SubtitleText>Popular Times</SubtitleText>
+          <CapacityChart
+            id={id}
+            data={data}
+            occupied={occupied}
+            capacity={capacity}
+            loading={isFetchingAverages}
+          />
+          <Horizontal style={{ justifyContent: "flex-start" }}>
+            <LiveIndicator />
+            <BodyText>
+              {moment().format("HH:mm")} -{" "}
+              {busyText(hour, data, occupied, capacity)}
+            </BodyText>
+          </Horizontal>
+          <SubtitleText>Opening Hours</SubtitleText>
+          <OpeningHours />
+          <SubtitleText>Facilities</SubtitleText>
           <BodyText>
-            {moment().format("HH:mm")} -{" "}
-            {busyText(hour, data, occupied, capacity)}
+            See the libraries website for more information about what facilities
+            are offered.
           </BodyText>
-        </Horizontal>
-        <SubtitleText>Facilities</SubtitleText>
-        <BodyText>
-          See the libraries website for more information about what facilities
-          are offered.
-        </BodyText>
-      </Page>
+        </Page>
+        <FloatingHeartButton
+          active={favourite}
+          onPress={() => this.setState({ favourite: !favourite })}
+        />
+      </View>
     );
   }
 }

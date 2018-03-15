@@ -29,6 +29,7 @@ export default StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     paddingTop: 20,
+    paddingBottom: 10,
     flexGrow: 1,
     backgroundColor: Colors.pageBackground,
   },

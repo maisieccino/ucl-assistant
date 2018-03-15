@@ -58,3 +58,4 @@ SmallButton.defaultProps = defaultProps;
 
 export default Button;
 export { default as RoundButton } from "./RoundButton";
+export { default as FloatingHeartButton } from "./FloatingHeartButton";

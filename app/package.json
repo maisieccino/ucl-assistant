@@ -25,6 +25,7 @@
     "react-moment-proptypes": "^1.5.0",
     "react-native":
       "https://github.com/expo/react-native/archive/sdk-24.0.0.tar.gz",
+    "react-native-action-button": "^2.8.4",
     "react-native-modal-datetime-picker": "^4.13.0",
     "react-native-svg-charts": "^4.0.1",
     "react-navigation": "^1.0.0-beta.21",
@@ -47,7 +48,7 @@
     "react-test-renderer": "^16.2.0"
   },
   "name": "ucl-assistant-app",
-  "version": "0.5.7",
+  "version": "0.5.8",
   "description": "An app to manage your UCL life",
   "author": "Matt Bell",
   "config": {

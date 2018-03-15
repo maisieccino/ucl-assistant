@@ -137,7 +137,7 @@ class StudySpaceScreen extends Component {
         <BodyText>Last updated: {this.state.lastUpdated}</BodyText>
 
         <FlatList
-          data={studyspaces}
+          data={studyspaces.sort((s1, s2) => s1.name.localeCompare(s2.name))}
           keyExtractor={item => item.id}
           initialNumToRender={30}
           renderItem={({ item }) => (
