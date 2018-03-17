@@ -1,10 +1,12 @@
 /* eslint react-native/no-inline-styles: 0 */
 import React from "react";
 import PropTypes from "prop-types";
-import { View } from "react-native";
-import { SmallButton } from "../Button";
+import { TouchableOpacity, View } from "react-native";
 import { Horizontal, CircularIcon } from "../Containers";
 import { SearchResultTopText, SearchResultBottomText } from "../Typography";
+import Colors from "../../constants/Colors";
+import Indicator from "./Indicator";
+import Styles from "../../styles/Containers";
 
 const getIcon = type => {
   switch (type) {
@@ -17,29 +19,46 @@ const getIcon = type => {
   }
 };
 
-const SearchResult = ({ type, topText, bottomText, buttonText, onPress }) => (
-  <Horizontal style={{ marginTop: 2, marginBottom: 2 }}>
-    <CircularIcon name={getIcon(type)} size={24} />
-    <View style={{ flex: 1 }}>
-      <SearchResultTopText>{topText}</SearchResultTopText>
-      <SearchResultBottomText>{bottomText}</SearchResultBottomText>
-    </View>
-    <SmallButton onPress={onPress}>{buttonText}</SmallButton>
-  </Horizontal>
+const SearchResult = ({
+  type,
+  topText,
+  bottomText,
+  onPress,
+  indicator,
+  indicatorColor,
+  indicatorLoading,
+}) => (
+  <TouchableOpacity onPress={onPress}>
+    <Horizontal style={Styles.resultCard}>
+      <CircularIcon name={getIcon(type)} size={24} />
+      {indicator && (
+        <Indicator color={indicatorColor} loading={indicatorLoading} />
+      )}
+      <View style={{ flex: 1 }}>
+        <SearchResultTopText>{topText}</SearchResultTopText>
+        <SearchResultBottomText>{bottomText}</SearchResultBottomText>
+      </View>
+    </Horizontal>
+  </TouchableOpacity>
 );
+
 SearchResult.propTypes = {
   type: PropTypes.oneOf(["location", "person", ""]),
   topText: PropTypes.string,
   bottomText: PropTypes.string,
-  buttonText: PropTypes.string,
   onPress: PropTypes.func,
+  indicator: PropTypes.bool,
+  indicatorColor: PropTypes.string,
+  indicatorLoading: PropTypes.bool,
 };
 SearchResult.defaultProps = {
   type: "",
   topText: "",
   bottomText: "",
-  buttonText: "Button",
   onPress: () => {},
+  indicator: false,
+  indicatorColor: Colors.textInputBackground,
+  indicatorLoading: false,
 };
 
 export default SearchResult;

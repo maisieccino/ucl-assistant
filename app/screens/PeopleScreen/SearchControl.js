@@ -1,4 +1,5 @@
 // @flow
+/* eslint-disable react-native/no-inline-styles */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -82,6 +83,7 @@ class SearchControl extends Component {
             onChangeText={text => this.onQueryChange(text)}
             value={this.state.query}
             clearButtonMode="always"
+            style={{ flex: 1 }}
           />
           {(searchResults.length > 0 || this.state.query.length > 0) && (
             <SmallButton onPress={() => this.clear()}>Clear</SmallButton>

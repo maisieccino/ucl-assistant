@@ -7,7 +7,7 @@ const TextInputComponent = props => (
   <TextInput
     {...props}
     underlineColorAndroid="transparent"
-    style={styles.textInput}
+    style={[styles.textInput, props.style]}
     placeholderTextColor={Colors.lightTextColor}
   />
 );

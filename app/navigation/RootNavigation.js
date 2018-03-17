@@ -4,20 +4,24 @@ import MainTabNavigator from "./MainTabNavigator";
 import SplashScreen from "../screens/SplashScreen";
 import TimetableDetailScreen from "../screens/TimetableDetailScreen";
 import PersonDetailScreen from "../screens/PersonDetailScreen";
+import StudySpaceDetailScreen from "../screens/StudySpaceDetailScreen";
 
 const RootStackNavigator = StackNavigator(
   {
-    Main: {
-      screen: MainTabNavigator,
-    },
     Splash: {
       screen: SplashScreen,
+    },
+    Main: {
+      screen: MainTabNavigator,
     },
     TimetableDetail: {
       screen: TimetableDetailScreen,
     },
     PersonDetail: {
       screen: PersonDetailScreen,
+    },
+    StudySpaceDetail: {
+      screen: StudySpaceDetailScreen,
     },
   },
   {

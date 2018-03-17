@@ -1,3 +1,5 @@
+/* eslint react-native/no-color-literals: 0 */
+/* eslint react-native/no-inline-styles: 0 */
 import React from "react";
 import { LinearGradient } from "expo";
 import {

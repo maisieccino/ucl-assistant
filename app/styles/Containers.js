@@ -1,5 +1,19 @@
 import { Platform, StyleSheet } from "react-native";
 import Colors from "../constants/Colors";
+import { BORDER_RADIUS } from "../constants/styleConstants";
+
+const cardShared = {
+  padding: 10,
+  backgroundColor: Colors.cardBackground,
+  elevation: 3,
+  marginBottom: 5,
+  marginTop: 5,
+  borderRadius: BORDER_RADIUS,
+  shadowColor: Colors.textColor,
+  shadowOffset: { width: 0, height: 5 },
+  shadowRadius: 3,
+  shadowOpacity: 0.75,
+};
 
 export default StyleSheet.create({
   pageScrollContainer: {
@@ -15,6 +29,7 @@ export default StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     paddingTop: 20,
+    paddingBottom: 10,
     flexGrow: 1,
     backgroundColor: Colors.pageBackground,
   },
@@ -25,15 +40,21 @@ export default StyleSheet.create({
   spacer: {
     flex: 1,
   },
-  card: {
-    padding: 10,
-    backgroundColor: Colors.cardBackground,
-    elevation: 3,
-    marginBottom: 5,
-    marginTop: 5,
-    borderRadius: 10,
-    flexDirection: "column",
-  },
+  card: StyleSheet.flatten([
+    cardShared,
+    {
+      flexDirection: "column",
+    },
+  ]),
+  resultCard: StyleSheet.flatten([
+    cardShared,
+    {
+      marginTop: 5,
+      marginBottom: 10,
+      marginLeft: 2,
+      marginRight: 2,
+    },
+  ]),
   horizontal: {
     flexDirection: "row",
     justifyContent: "center",
@@ -45,15 +66,30 @@ export default StyleSheet.create({
     height: undefined,
     alignSelf: "stretch",
     marginTop: 50,
+    backgroundColor: "rgba(0,0,0,0)",
   },
   paddedIcon: {
     marginLeft: 5,
     marginRight: 5,
   },
   circularIcon: {
-    marginRight: 15,
-    backgroundColor: Colors.cardBackground,
+    marginRight: 10,
+    backgroundColor: Colors.textInputBackground,
     padding: 10,
     borderRadius: 80,
+  },
+  circle: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    borderColor: Colors.textColor,
+    borderWidth: 1,
+  },
+  liveIndicator: {
+    flex: 0,
+    paddingVertical: 2,
+    paddingHorizontal: 5,
+    marginRight: 5,
+    borderRadius: 5,
   },
 });

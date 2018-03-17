@@ -11,11 +11,11 @@ export const style = StyleSheet.create({
   },
   title: {
     fontFamily: "apercu-bold",
-    fontSize: 40,
+    fontSize: 35,
     marginBottom: 10,
   },
   subtitle: {
-    fontSize: 30,
+    fontSize: 28,
     marginTop: 8,
     marginBottom: 2,
   },
@@ -46,21 +46,24 @@ export const style = StyleSheet.create({
   searchResultBottomText: {
     marginTop: 0,
     fontStyle: "italic",
+    color: Color.lightTextColor,
   },
   infoTextContainer: {
     marginTop: 5,
   },
-  errorText: {
-    color: Color.errorColor,
+  informational: {
     marginTop: -1,
     flex: 1,
     marginLeft: 5,
   },
+  errorText: {
+    color: Color.errorColor,
+  },
   warningText: {
     color: Color.warningColor,
-    marginTop: -1,
-    flex: 1,
-    marginLeft: 5,
+  },
+  infoText: {
+    color: Color.infoColor,
   },
 });
 
@@ -100,7 +103,26 @@ export default StyleSheet.create({
     style.baseStyle,
     style.searchResultBottomText,
   ]),
-  errorText: StyleSheet.flatten([style.baseStyle, style.errorText]),
-  warningText: StyleSheet.flatten([style.baseStyle, style.warningText]),
+  errorText: StyleSheet.flatten([
+    style.baseStyle,
+    style.informational,
+    style.errorText,
+  ]),
+  warningText: StyleSheet.flatten([
+    style.baseStyle,
+    style.informational,
+    style.warningText,
+  ]),
+  infoText: StyleSheet.flatten([
+    style.baseStyle,
+    style.informational,
+    style.infoText,
+  ]),
   infoTextContainer: StyleSheet.flatten([style.infoTextContainer]),
+  bold: {
+    fontWeight: "bold",
+  },
+  small: {
+    fontSize: 12,
+  },
 });

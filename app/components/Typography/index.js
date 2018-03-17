@@ -1,4 +1,5 @@
 /* eslint react/require-default-props: 0 */
+/* eslint react/no-unused-prop-types: 0 */
 import React from "react";
 import PropTypes from "prop-types";
 import { Text, View } from "react-native";
@@ -9,31 +10,33 @@ import Colors from "../../constants/Colors";
 
 const propTypes = {
   children: PropTypes.node,
+  style: PropTypes.oneOfType([PropTypes.shape(), PropTypes.number]),
 };
 const defaultProps = {
   children: "",
+  style: {},
 };
 
-export const TitleText = ({ children }) => (
-  <Text style={Style.titleText}>{children}</Text>
+export const TitleText = ({ children, style }) => (
+  <Text style={[Style.titleText, style]}>{children}</Text>
 );
 TitleText.propTypes = propTypes;
 TitleText.defaultProps = defaultProps;
 
-export const SubtitleText = ({ children }) => (
-  <Text style={Style.subtitleText}>{children}</Text>
+export const SubtitleText = ({ children, style }) => (
+  <Text style={[Style.subtitleText, style]}>{children}</Text>
 );
 SubtitleText.propTypes = propTypes;
 SubtitleText.defaultProps = defaultProps;
 
-export const BodyText = ({ children }) => (
-  <Text style={Style.bodyText}>{children}</Text>
+export const BodyText = ({ children, style }) => (
+  <Text style={[Style.bodyText, style]}>{children}</Text>
 );
 BodyText.propTypes = propTypes;
 BodyText.defaultProps = defaultProps;
 
-export const CentredText = ({ children }) => (
-  <Text style={Style.centredText}>{children}</Text>
+export const CentredText = ({ children, style }) => (
+  <Text style={[Style.centredText, style]}>{children}</Text>
 );
 CentredText.propTypes = propTypes;
 CentredText.defaultProps = defaultProps;
@@ -76,6 +79,15 @@ export const WarningText = ({ children, icon }) => (
 );
 WarningText.propTypes = { ...propTypes, icon: PropTypes.string };
 WarningText.defaultProps = { ...defaultProps, icon: "info" };
+
+export const InfoText = ({ children, icon }) => (
+  <Horizontal style={Style.infoTextContainer}>
+    <Feather size={18} color={Colors.infoColor} name={icon} />
+    <Text style={Style.infoText}>{children}</Text>
+  </Horizontal>
+);
+InfoText.propTypes = { ...propTypes, icon: PropTypes.string };
+InfoText.defaultProps = { ...defaultProps, icon: "info" };
 
 export const SearchResultTopText = ({ children }) => (
   <Text style={Style.searchResultTopText}>{children}</Text>

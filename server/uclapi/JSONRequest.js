@@ -9,12 +9,18 @@ module.exports = async (url, { headers = {}, ...options } = {}) => {
       ...headers,
     },
   });
-  let json = {};
-  try {
-    json = await res.json();
-  } catch (_) {
-    json = { body: `Couldn't parse body` };
+  if (process.env.NODE_ENV === "development") {
+    console.log(`requested ${url}, received ${res.status}`);
   }
+  if (!res.headers["Content-Type"] === "application/json") {
+    const text = await res.text();
+    if (!res.ok) {
+      throw new Error(text);
+    }
+    return text;
+  }
+  let json = {};
+  json = await res.json();
   if (!res.ok) {
     throw new Error(JSON.stringify(json), "\n", 2);
   }

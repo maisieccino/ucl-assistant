@@ -1,15 +1,17 @@
 import React, { Component } from "react";
 import { Alert, Image } from "react-native";
+import { LinearGradient } from "expo";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { NavigationActions } from "react-navigation";
 import { Feather } from "@expo/vector-icons";
 import { signIn } from "../actions/userActions";
 import { TitleText, BodyText } from "../components/Typography";
-import { PageNoScroll, Spacer } from "../components/Containers";
+import { Spacer } from "../components/Containers";
 import CustomButton from "../components/Button";
 import Colors from "../constants/Colors";
 import Styles from "../styles/Containers";
+import SplashStyle from "../styles/Splash";
 
 class SplashScreen extends Component {
   static navigationOptions = {
@@ -27,37 +29,53 @@ class SplashScreen extends Component {
     navigation: PropTypes.shape().isRequired,
     isSigningIn: PropTypes.bool,
     error: PropTypes.string,
-    scopeNumber: PropTypes.number,
+    token: PropTypes.string,
     signIn: PropTypes.func,
   };
 
   static defaultProps = {
     isSigningIn: false,
     error: "",
-    scopeNumber: -1,
+    token: "",
     signIn: () => {},
   };
 
   static mapStateToProps = state => ({
     isSigningIn: state.user.signIn.isSigningIn,
     error: state.user.signIn.error,
-    scopeNumber: state.user.scopeNumber,
+    token: state.user.token,
   });
 
   static mapDispatchToProps = dispatch => ({
     signIn: () => dispatch(signIn()),
   });
 
+  componentDidMount() {
+    if (this.props.token !== "") {
+      console.log(
+        `Component just mounted. Going to home. reason? token = ${
+          this.props.token
+        }`,
+      );
+      this.goHome();
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
+    if (nextProps.token !== "") {
+      console.log(
+        `Component about to receive new props. Going to home. reason? next token = ${
+          nextProps.token
+        }`,
+      );
+      this.goHome();
+    }
+
     if (this.props.isSigningIn === true && nextProps.isSigningIn === false) {
       // did we just sign in?
-      if (nextProps.scopeNumber >= 0) {
+      if (nextProps.token !== null) {
         // yes, replace screen with home screen.
-        const resetAction = NavigationActions.reset({
-          index: 0,
-          actions: [NavigationActions.navigate({ routeName: "Main" })],
-        });
-        this.props.navigation.dispatch(resetAction);
+        this.goHome();
       } else if (nextProps.error.length < 1) {
         // cancelled
       } else {
@@ -67,11 +85,26 @@ class SplashScreen extends Component {
     }
   }
 
+  goHome() {
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName: "Main" })],
+    });
+    this.props.navigation.dispatch(resetAction);
+  }
+
   render() {
     return (
-      <PageNoScroll>
-        <TitleText>UCL Assistant</TitleText>
-        <BodyText>One app to manage your life at UCL.</BodyText>
+      <LinearGradient
+        colors={[Colors.accentColor, Colors.buttonBackground]}
+        style={[Styles.page, SplashStyle.page]}
+        start={[0, 1]}
+        end={[1, 0]}
+      >
+        <TitleText style={SplashStyle.text}>UCL Assistant</TitleText>
+        <BodyText style={SplashStyle.text}>
+          One app to manage your life at UCL.
+        </BodyText>
         <Image
           source={require("../assets/images/undraw_calendar.png")}
           resizeMethod="scale"
@@ -82,10 +115,11 @@ class SplashScreen extends Component {
         <CustomButton
           onPress={() => this.props.signIn()}
           loading={this.props.isSigningIn}
+          style={SplashStyle.button}
         >
           Sign In With UCL
         </CustomButton>
-      </PageNoScroll>
+      </LinearGradient>
     );
   }
 }
