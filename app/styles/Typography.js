@@ -122,4 +122,7 @@ export default StyleSheet.create({
   bold: {
     fontWeight: "bold",
   },
+  small: {
+    fontSize: 12,
+  },
 });

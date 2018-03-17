@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Platform, ToastAndroid, View } from "react-native"; // eslint-disable-line react-native/split-platform-components
 import PropTypes from "prop-types";
+import { Constants } from "expo";
 import { connect } from "react-redux";
 import {
   TitleText,
@@ -80,6 +81,10 @@ class TimetableScreen extends Component {
         <TitleText>About</TitleText>
         <SubtitleText>Version</SubtitleText>
         <BodyText>{version}</BodyText>
+        <BodyText>
+          Release channel:{" "}
+          {__DEV__ ? "Developer mode" : Constants.manifest.releaseChannel}
+        </BodyText>
         <SubtitleText>Author</SubtitleText>
         <BodyText>Created by Matt Bell, using the UCL API.</BodyText>
         <BodyText>

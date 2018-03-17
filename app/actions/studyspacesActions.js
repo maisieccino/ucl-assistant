@@ -7,6 +7,7 @@ import {
   WORKSPACES_FETCH_HISTORIC_DATA_FAILURE,
   WORKSPACES_FETCH_HISTORIC_DATA_SUCCESS,
   WORKSPACES_IS_FETCHING_HISTORIC_DATA,
+  STUDYSPACE_TOGGLE_FAVOURITE,
 } from "../constants/studyspacesConstants";
 
 export const setIsFetchingSeatInfo = id => ({
@@ -134,3 +135,8 @@ export const fetchAverages = (token: String, id: Number) => async (
     );
   }
 };
+
+export const toggleFavourite = id => ({
+  id,
+  type: STUDYSPACE_TOGGLE_FAVOURITE,
+});

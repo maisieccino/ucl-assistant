@@ -4,10 +4,13 @@ import { View } from "react-native";
 import PropTypes from "prop-types";
 import moment from "moment";
 import { Svg } from "expo";
-import { AreaChart, XAxis } from "react-native-svg-charts";
-import Styles from "../../../styles/Map";
+import { AreaChart } from "react-native-svg-charts";
+import MapStyles from "../../../styles/Map";
+import TextStyles from "../../../styles/Typography";
 import Colors from "../../../constants/Colors";
 import ChartLoading from "./ChartLoading";
+import { BodyText } from "../../../components/Typography";
+import { Horizontal } from "../../../components/Containers";
 
 const { Defs, G, Line, LinearGradient, Rect, Stop, Text } = Svg;
 
@@ -99,7 +102,7 @@ class CapacityChart extends Component {
     );
     const line = CapacityLine(capacity);
     return (
-      <View style={[Styles.wideMap, { height: undefined }]}>
+      <View style={[MapStyles.wideMap, { height: undefined }]}>
         {loading ? (
           <ChartLoading />
         ) : (
@@ -123,21 +126,15 @@ class CapacityChart extends Component {
             extras={[Gradient, line, highlightBar]}
           />
         )}
-        <XAxis
-          style={{ marginVertical: 5, height: 15 }}
-          data={graphData}
-          svg={{ fontFamily: "apercu" }}
-          min={0}
-          max={capacity}
-          formatLabel={value =>
-            value % 6 === 0
-              ? moment()
-                  .hour(value + 1)
-                  .minute(0)
-                  .format("h:mm a")
-              : ""
-          }
-        />
+        <Horizontal
+          style={{ justifyContent: "space-between", paddingHorizontal: 2 }}
+        >
+          <BodyText style={TextStyles.small}>12:00 am</BodyText>
+          <BodyText style={TextStyles.small}>6:00 am</BodyText>
+          <BodyText style={TextStyles.small}>12:00 pm</BodyText>
+          <BodyText style={TextStyles.small}>6:00 pm</BodyText>
+          <BodyText style={TextStyles.small}>11:00 pm</BodyText>
+        </Horizontal>
       </View>
     );
   }

@@ -7,6 +7,7 @@ import {
   WORKSPACES_IS_FETCHING_HISTORIC_DATA,
   WORKSPACES_FETCH_HISTORIC_DATA_FAILURE,
   WORKSPACES_FETCH_HISTORIC_DATA_SUCCESS,
+  STUDYSPACE_TOGGLE_FAVOURITE,
 } from "../constants/studyspacesConstants";
 
 export const initialState = {
@@ -25,6 +26,7 @@ export const initialState = {
     .sort((s1, s2) => s1.id - s2.id),
   lastStatusUpdate: null,
   isFetchingSpaces: false,
+  favourites: [],
 };
 
 const updateStudyspaces = (studyspaces, id, newSpace) => {
@@ -126,6 +128,18 @@ export default (state = initialState, action = null) => {
           ...state,
           studyspaces: newStudyspaces,
           lastStatusUpdate: moment(),
+        };
+      }
+      return state;
+    }
+
+    case STUDYSPACE_TOGGLE_FAVOURITE: {
+      if (id >= 0) {
+        return {
+          ...state,
+          favourites: state.favourites.includes(id)
+            ? state.favourites.filter(x => x !== id)
+            : [...state.favourites, id],
         };
       }
       return state;

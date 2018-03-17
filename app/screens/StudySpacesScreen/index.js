@@ -18,6 +18,7 @@ import { MainTabPage } from "../../components/Containers";
 import { TextInput } from "../../components/Input";
 import Colors from "../../constants/Colors";
 import StudySpaceSearchResult from "./StudySpaceResult";
+import FavouriteStudySpaces from "./FavouriteStudySpaces";
 
 class StudySpaceScreen extends Component {
   static navigationOptions = {
@@ -120,6 +121,8 @@ class StudySpaceScreen extends Component {
         <TitleText>Find Study Spaces</TitleText>
         <TextInput placeholder="Search for a building name..." />
         <CentredText>Start typing to get search results</CentredText>
+
+        <FavouriteStudySpaces navigation={navigation} />
 
         <SubtitleText>All Study Spaces</SubtitleText>
         {errorneousSpaces.length < 5 ? (

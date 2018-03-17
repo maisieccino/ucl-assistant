@@ -6,12 +6,13 @@ import { View } from "react-native";
 import moment from "moment";
 import { connect } from "react-redux";
 import { fetchAverages } from "../../actions/studyspacesActions";
+import Button from "../../components/Button";
 import { Page, Horizontal } from "../../components/Containers";
 import { BodyText, TitleText, SubtitleText } from "../../components/Typography";
 import CapacityChart from "./CapacityChart";
 import LiveIndicator from "./LiveIndicator";
-import OpeningHours from "./OpeningHours";
-import FloatingHeartButton from "../../components/Button/FloatingHeartButton";
+// import OpeningHours from "./OpeningHours";
+import FavouriteButton from "./FavouriteButton";
 
 const busyText = (
   time = 0,
@@ -59,7 +60,6 @@ class StudySpaceDetailScreen extends Component {
     super(props);
     const { id, name, occupied, capacity } = this.props.navigation.state.params;
     this.state = {
-      favourite: false,
       name,
       id,
       capacity,
@@ -93,7 +93,7 @@ class StudySpaceDetailScreen extends Component {
   }
 
   render() {
-    const { id, name, data, favourite, capacity, occupied } = this.state;
+    const { id, name, data, capacity, occupied } = this.state;
     const { isFetchingAverages } = this.state.space;
     const hour = parseInt(moment().format("HH"), 10);
     return (
@@ -125,18 +125,16 @@ class StudySpaceDetailScreen extends Component {
               {busyText(hour, data, occupied, capacity)}
             </BodyText>
           </Horizontal>
-          <SubtitleText>Opening Hours</SubtitleText>
-          <OpeningHours />
+          <Button>Live Seating Map</Button>
+          {/* <SubtitleText>Opening Hours</SubtitleText>
+          <OpeningHours /> */}
           <SubtitleText>Facilities</SubtitleText>
           <BodyText>
             See the libraries website for more information about what facilities
             are offered.
           </BodyText>
         </Page>
-        <FloatingHeartButton
-          active={favourite}
-          onPress={() => this.setState({ favourite: !favourite })}
-        />
+        <FavouriteButton id={id} />
       </View>
     );
   }
