@@ -30,7 +30,7 @@
   "name": "ucl-assistant",
   "version": "0.1.0",
   "description": "An app to manage your UCL life",
-  "author": "Matt Bell",
+  "author": "Matt Bell and UCL API",
   "license": "MIT",
   "dependencies": {}
 }
