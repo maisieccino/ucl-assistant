@@ -38,6 +38,14 @@ const jsonFormat = ctx =>
     error: ctx.error || "",
   });
 
+const stripSecrets = s =>
+  s
+    .replace(process.env.SECRET, "")
+    .replace(process.env.UCLAPI_TOKEN, "")
+    .replace(process.env.SENTRY_DSN, "")
+    .replace(process.env.REDIS_URL, "")
+    .replace(process.env.UCLAPI_CLIENT_SECRET, "");
+
 /**
  * Middleware that encapsulates reponse body in a JSON object
  * @param  {Koa.ctx}   ctx Koa context
@@ -49,13 +57,13 @@ const jsonify = async (ctx, next) => {
     await next();
   } catch (error) {
     if (typeof error.message === "string") {
-      console.error(`Error: ${error.message}\n${error.stack}`);
-      ctx.error = error.message;
+      const errorMessage = stripSecrets(error.message);
+      console.error(`Error: ${errorMessage}\n${error.stack}`);
+      ctx.error = errorMessage;
     } else {
-      console.error(
-        `Error: ${JSON.stringify(error.message, "\n", 2)}\n${error.stack}`,
-      );
-      ctx.error = JSON.stringify(error.message, "\n", 2);
+      const errorMessage = stripSecrets(JSON.stringify(error.message, "\n", 2));
+      console.error(`Error: ${errorMessage}\n${error.stack}`);
+      ctx.error = errorMessage;
     }
     ctx.status = error.status || 500;
   }
