@@ -29,6 +29,9 @@ export const searchClear = () => ({
 });
 
 export const search = (token = null, query) => async dispatch => {
+  if (query && query.length < 3) {
+    return {};
+  }
   dispatch(setIsSearching());
   try {
     const res = await fetch(

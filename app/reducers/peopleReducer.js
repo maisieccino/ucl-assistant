@@ -15,7 +15,7 @@ const deepCompare = (fst, snd) => {
   if (keys.length !== Object.keys(snd).length) {
     return false;
   }
-  return keys.reduce((res, key) => res || fst[key] !== snd[key], false);
+  return keys.reduce((res, key) => res && fst[key] === snd[key], true);
 };
 
 const addToRecents = (recents = [], person) => {

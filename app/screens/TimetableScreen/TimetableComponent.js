@@ -7,6 +7,7 @@ import { generate } from "shortid";
 import TimetableCard from "../../components/Card/TimetableCard";
 import { CentredText } from "../../components/Typography";
 import Styles from "../../styles/Containers";
+import { Spacer } from "../../components/Containers";
 
 const TimetableComponent = ({ timetable, date, isLoading, navigation }) => {
   const dateISO = date.format("YYYY-MM-DD");
@@ -43,6 +44,7 @@ const TimetableComponent = ({ timetable, date, isLoading, navigation }) => {
   }
   return (
     <View>
+      <View style={{ height: 50 }} />
       <CentredText>
         Nothing scheduled on {date.format("dddd")}. Take it easy!
       </CentredText>

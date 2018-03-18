@@ -1,6 +1,8 @@
-import { Platform, StyleSheet } from "react-native";
+import { Dimensions, Platform, StyleSheet } from "react-native";
 import Colors from "../constants/Colors";
 import { BORDER_RADIUS } from "../constants/styleConstants";
+
+const { height } = Dimensions.get("window");
 
 const cardShared = {
   padding: 10,
@@ -18,6 +20,7 @@ const cardShared = {
 export default StyleSheet.create({
   pageScrollContainer: {
     flex: 1,
+    minHeight: height,
     flexDirection: "column",
     backgroundColor: Colors.pageBackground,
   },
@@ -31,6 +34,7 @@ export default StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 10,
     flexGrow: 1,
+    flex: 1,
     backgroundColor: Colors.pageBackground,
   },
   mainTabPage: {
