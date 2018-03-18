@@ -33,7 +33,11 @@ module.exports = app => {
   });
 
   router.get("/search", jwt, async ctx => {
-    ctx.assert(ctx.query.query);
+    ctx.assert(
+      (ctx.query.query || "").length >= 3,
+      400,
+      "Query must be at least three characters long",
+    );
     ctx.body = await search(ctx.query.query);
   });
 
