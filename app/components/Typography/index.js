@@ -53,10 +53,10 @@ export const SmallButtonText = ({ children }) => (
 SmallButtonText.propTypes = propTypes;
 SmallButtonText.defaultTextProps = defaultProps;
 
-export const CardTitleText = ({ children }) => (
+export const CardTitleText = ({ children, style }) => (
   <View>
-    <Text style={Style.cardTitle}>{children}</Text>
-    <View style={Style.cardTitleRect} />
+    <Text style={[Style.cardTitle, style]}>{children}</Text>
+    <View style={[Style.cardTitleRect, style]} />
   </View>
 );
 CardTitleText.propTypes = propTypes;

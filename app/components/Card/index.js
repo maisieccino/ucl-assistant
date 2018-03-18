@@ -33,23 +33,25 @@ class Card extends Component {
     children: PropTypes.node,
     title: PropTypes.string,
     onPress: PropTypes.func,
+    old: PropTypes.bool,
   };
 
   static defaultProps = {
     children: "",
     title: "",
     onPress: () => {},
+    old: false,
   };
 
   render() {
     let { children } = this.props;
-    const { title } = this.props;
+    const { title, old } = this.props;
     if (typeof children === "string") {
       children = <BodyText>{children}</BodyText>;
     }
     return (
       <Wrapper onPress={this.props.onPress}>
-        <View style={Style.card}>
+        <View style={old ? Style.oldCard : Style.card}>
           {title && <CardTitleText>{title}</CardTitleText>}
           {children}
         </View>

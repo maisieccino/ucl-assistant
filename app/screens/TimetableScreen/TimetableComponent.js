@@ -1,13 +1,27 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Image, View } from "react-native";
 import PropTypes from "prop-types";
 import { momentObj } from "react-moment-proptypes";
 import moment from "moment";
 import { generate } from "shortid";
 import TimetableCard from "../../components/Card/TimetableCard";
-import { CentredText } from "../../components/Typography";
+import { CentredText, SubtitleText } from "../../components/Typography";
 import Styles from "../../styles/Containers";
-import { Spacer } from "../../components/Containers";
+
+const mapToCards = (timetableItems, date, navigation, past = false) =>
+  timetableItems.map(item => (
+    <TimetableCard
+      moduleName={item.module.name}
+      moduleCode={item.module.module_id}
+      startTime={`${date} ${item.start_time}`}
+      endTime={`${date} ${item.end_time}`}
+      location={item.location.name || "TBA"}
+      lecturer={item.contact ? item.contact : "Unknown Lecturer"}
+      pastEvent={past}
+      key={generate()}
+      navigation={navigation}
+    />
+  ));
 
 const TimetableComponent = ({ timetable, date, isLoading, navigation }) => {
   const dateISO = date.format("YYYY-MM-DD");
@@ -21,26 +35,38 @@ const TimetableComponent = ({ timetable, date, isLoading, navigation }) => {
     );
   }
 
-  const items = filteredTimetable
-    .sort(
-      (a, b) =>
-        Date.parse(`${dateISO}T${a.start_time}:00`) -
-        Date.parse(`${dateISO}T${b.start_time}:00`),
-    )
-    .map(item => (
-      <TimetableCard
-        moduleName={item.module.name}
-        moduleCode={item.module.module_id}
-        startTime={`${dateISO} ${item.start_time}`}
-        endTime={`${dateISO} ${item.end_time}`}
-        location={item.location.name || "TBA"}
-        lecturer={item.contact ? item.contact : "Unknown Lecturer"}
-        key={generate()}
-        navigation={navigation}
-      />
-    ));
+  const items = filteredTimetable.sort(
+    (a, b) =>
+      Date.parse(`${dateISO}T${a.start_time}:00`) -
+      Date.parse(`${dateISO}T${b.start_time}:00`),
+  );
+  const pastItems = mapToCards(
+    items.filter(
+      item => Date.parse(`${dateISO}T${item.end_time}`) - Date.now() < 0,
+    ),
+    dateISO,
+    navigation,
+    true,
+  );
+  const futureItems = mapToCards(
+    items.filter(
+      item => Date.parse(`${dateISO}T${item.end_time}`) - Date.now() > 0,
+    ),
+    dateISO,
+    navigation,
+  );
   if (filteredTimetable.length > 0) {
-    return <View>{items}</View>;
+    return (
+      <View>
+        {futureItems}
+        {pastItems.length > 0 && (
+          <Fragment>
+            <SubtitleText>Past Events</SubtitleText>
+            {pastItems}
+          </Fragment>
+        )}
+      </View>
+    );
   }
   return (
     <View>
