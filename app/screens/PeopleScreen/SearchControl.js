@@ -90,7 +90,10 @@ class SearchControl extends Component {
           )}
         </Horizontal>
 
-        {error.length > 0 && <CentredText>Error! {error} </CentredText>}
+        {error.length > 0 &&
+          this.state.query.length > 2 && (
+            <CentredText>Error! {error} </CentredText>
+          )}
 
         {isSearching && <ActivityIndicator />}
 
