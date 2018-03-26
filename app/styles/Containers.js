@@ -50,6 +50,13 @@ export default StyleSheet.create({
       flexDirection: "column",
     },
   ]),
+  oldCard: StyleSheet.flatten([
+    cardShared,
+    {
+      flexDirection: "column",
+      backgroundColor: Colors.oldCardBackground,
+    },
+  ]),
   resultCard: StyleSheet.flatten([
     cardShared,
     {
