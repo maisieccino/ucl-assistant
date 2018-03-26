@@ -48,7 +48,7 @@
     "react-test-renderer": "^16.2.0"
   },
   "name": "ucl-assistant-app",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "An app to manage your UCL life",
   "author": "Matt Bell",
   "config": {
