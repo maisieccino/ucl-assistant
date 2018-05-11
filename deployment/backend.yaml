@@ -1,9 +1,27 @@
-apiVersion: apps/v1beta1
+kind: Service
+apiVersion: v1
+metadata:
+  name: backend
+spec:
+  type: LoadBalancer
+  selector:
+    app: ucl-assistant
+    tier: backend
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: http
+---
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ucl-assistant-backend
+  name: backend
 spec:
   replicas: 2
+  selector:
+    matchLabels:
+      app: ucl-assistant
+      tier: backend
   template:
     metadata:
       labels:
@@ -12,7 +30,7 @@ spec:
         track: stable
     spec:
       containers:
-        - name: ucl-assistant-backend
+        - name: backend
           image: "mbellgb/ucl-assistant-server:latest"
           ports:
             - name: http
@@ -23,3 +41,5 @@ spec:
           env:
           - name: PORT
             value: "3000"
+          - name: REDIS_URL
+            value: redis://redis-cluster:6379
