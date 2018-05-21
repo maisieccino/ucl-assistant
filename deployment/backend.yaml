@@ -1,45 +1,48 @@
-kind: Service
-apiVersion: v1
-metadata:
-  name: backend
-spec:
-  type: LoadBalancer
-  selector:
-    app: ucl-assistant
-    tier: backend
-  ports:
-  - protocol: TCP
-    port: 80
-    targetPort: http
----
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: backend
 spec:
   replicas: 2
-  selector:
-    matchLabels:
-      app: ucl-assistant
-      tier: backend
   template:
+    spec:
+      containers:
+      - name: backend
+        image: "mbellgb/ucl-assistant-server:latest"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        envFrom:
+        - secretRef:
+            name: ucl-assistant-backend-secret
+        env:
+        - name: REDIS_URL
+          value: "redis://redis-master:6379"
+        - name: PORT
+          value: "3000"
+        ports:
+        - name: http
+          containerPort: 3000
     metadata:
       labels:
         app: ucl-assistant
         tier: backend
-        track: stable
-    spec:
-      containers:
-        - name: backend
-          image: "mbellgb/ucl-assistant-server:latest"
-          ports:
-            - name: http
-              containerPort: 3000
-          envFrom:
-          - secretRef:
-              name: ucl-assistant-backend-secret
-          env:
-          - name: PORT
-            value: "3000"
-          - name: REDIS_URL
-            value: redis://redis-cluster:6379
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  labels:
+    app: ucl-assistant
+    tier: backend
+spec:
+  # if your cluster supports it, uncomment the following to automatically create
+  # an external load-balanced IP for the frontend service.
+  type: NodePort
+  ports:
+  - port: 8080
+    targetPort: http
+  selector:
+    app: ucl-assistant
+    tier: backend
