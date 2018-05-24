@@ -8,7 +8,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: "mbellgb/ucl-assistant-server:latest"
+        image: "mbellgb/ucl-assistant-server:v0.4.3"
         resources:
           requests:
             cpu: 100m

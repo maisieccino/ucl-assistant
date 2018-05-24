@@ -35,6 +35,11 @@ module.exports = app => {
     ctx.body = "Authenticated!";
   });
 
+  router.get("/ping", async ctx => {
+    ctx.body = "pong!";
+    ctx.status = 200;
+  });
+
   // import and use the UCL API router.
   UCLApiRouter(app);
 
