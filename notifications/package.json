@@ -1,0 +1,20 @@
+{
+  "name": "ucl-assistant-notifications",
+  "version": "0.1.0",
+  "description": "Notifcations server for the UCL Assistant",
+  "main": "server.js",
+  "repository": "https://github.com/mbellgb/ucl-assistant",
+  "author": "Matthew Bell",
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "node": "8.x"
+  },
+  "dependencies": {
+    "dotenv": "^5.0.1",
+    "koa": "^2.5.1",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0",
+    "raven": "^2.6.2"
+  }
+}
