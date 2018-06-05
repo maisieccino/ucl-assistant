@@ -1,5 +1,7 @@
+/* eslint class-methods-use-this: 0 */
 import React, { Component } from "react";
 import { RefreshControl, View } from "react-native";
+import { Permissions, Notifications } from "expo";
 import { connect } from "react-redux";
 import { NavigationActions } from "react-navigation";
 import PropTypes from "prop-types";
@@ -59,6 +61,7 @@ class TimetableScreen extends Component {
     super(props);
     this.state = {
       date: moment().startOf("day"),
+      token: "",
     };
   }
 
@@ -66,6 +69,8 @@ class TimetableScreen extends Component {
     if (this.loginCheck(this.props) && this.props.user.token !== "") {
       this.props.fetchTimetable(this.props.user.token, this.state.date);
     }
+
+    this.registerForPushNotificationsAsync();
   }
 
   async onDateChanged(newDate, forceUpdate = false) {
@@ -90,6 +95,30 @@ class TimetableScreen extends Component {
     }
   }
 
+  async registerForPushNotificationsAsync() {
+    const { status: existingStatus } = await Permissions.getAsync(
+      Permissions.NOTIFICATIONS,
+    );
+    let finalStatus = existingStatus;
+
+    // only ask if permissions have not already been determined, because
+    // iOS won't necessarily prompt the user a second time.
+    if (existingStatus !== "granted") {
+      // Android remote notification permissions are granted during the app
+      // install, so this will only ask on iOS
+      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+      finalStatus = status;
+    }
+
+    // Stop here if the user did not grant permissions
+    if (finalStatus !== "granted") {
+      return;
+    }
+
+    // Get the token that uniquely identifies this device
+    this.setState({ token: await Notifications.getExpoPushTokenAsync() });
+  }
+
   loginCheck(props) {
     if (Object.keys(props.user).length > 0) {
       if (props.user.scopeNumber < 0) {
@@ -109,7 +138,7 @@ class TimetableScreen extends Component {
     const { navigate } = this.props.navigation;
     const { user, timetable, isFetchingTimetable } = this.props;
     const { scopeNumber } = user;
-    const { date } = this.state;
+    const { date, token } = this.state;
     const dateString = date.format("dddd, Do MMMM");
     return (
       <MainTabPage
@@ -139,6 +168,7 @@ class TimetableScreen extends Component {
             Jump To Today
           </Button>
         )}
+        <TextInput value={token} />
 
         {/* <SubtitleText>Find A Timetable</SubtitleText>
         <TextInput placeholder="Search for a course or module..." /> */}

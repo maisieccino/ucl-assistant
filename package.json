@@ -32,5 +32,7 @@
   "description": "An app to manage your UCL life",
   "author": "Matt Bell and UCL API",
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {
+    "node-fetch": "^2.1.2"
+  }
 }

@@ -20,6 +20,8 @@ module.exports = app => {
             date: "filter by date.",
           },
         },
+        "/ping": "returns a 200 OK message. good for testing liveness",
+        "/echo": "returns the HTTP message body as the content",
       },
       tips: {
         "pretty-print": "Add ?pretty=true to pretty print the json (as shown)",
@@ -37,6 +39,11 @@ module.exports = app => {
 
   router.get("/ping", async ctx => {
     ctx.body = "pong!";
+    ctx.status = 200;
+  });
+
+  router.get("/echo", async ctx => {
+    ctx.response.body = ctx.request.body;
     ctx.status = 200;
   });
 
