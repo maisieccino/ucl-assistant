@@ -10,6 +10,10 @@
   "engines": {
     "node": "8.x"
   },
+  "scripts": {
+    "start": "node server.js",
+    "db:migrate": "knex migrate:latest"
+  },
   "dependencies": {
     "dotenv": "^5.0.1",
     "expo-server-sdk": "^2.3.3",

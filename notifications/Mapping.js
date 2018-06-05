@@ -1,5 +1,5 @@
 const { Model, ValidationError } = require("objection");
-const { isExpoPushToken } = require("expo");
+const { isExpoPushToken } = require("expo-server-sdk");
 
 class Mapping extends Model {
   static get tableName() {
