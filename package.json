@@ -4,8 +4,7 @@
     "lint:force": "eslint . --ext .js --ext .jsx --ignore-path .eslintignore",
     "lint:staged": "lint-staged",
     "format": "prettier --write --trailing-comma all {app,server}/**/*.{js,jsx}",
-    "precommit": "yarn run lint:staged",
-    "postinstall": "(cd app && yarn install --pure-lockfile) && (cd server && yarn install --pure-lockfile)"
+    "precommit": "yarn run lint:staged"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.2",

@@ -2,7 +2,7 @@
 
 require("dotenv").config();
 
-const defaultObj = {
+module.exports = {
   client: "postgresql",
   connection: {
     database: process.env.POSTGRES_NAME || "notifications",
@@ -11,32 +11,11 @@ const defaultObj = {
     port: process.env.POSTGRES_PORT || 5432,
     host: process.env.POSTGRES_HOST || "localhost",
   },
-};
-
-module.exports = {
-  development: {
-    ...defaultObj,
+  pool: {
+    min: 2,
+    max: 10,
   },
-
-  staging: {
-    ...defaultObj,
-    pool: {
-      min: 2,
-      max: 10,
-    },
-    migrations: {
-      tableName: "knex_migrations",
-    },
-  },
-
-  production: {
-    ...defaultObj,
-    pool: {
-      min: 2,
-      max: 10,
-    },
-    migrations: {
-      tableName: "knex_migrations",
-    },
+  migrations: {
+    tableName: "knex_migrations",
   },
 };

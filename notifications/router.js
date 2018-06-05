@@ -15,14 +15,16 @@ router.post("/register", async ctx => {
   const mapping = await Mapping.query().findById(upi);
   try {
     if (mapping) {
-      await Mapping.query().insert({ upi, token: pushToken });
-    } else {
       await Mapping.query().updateAndFetchById(upi, { token: pushToken });
+    } else {
+      await Mapping.query().insert({ upi, token: pushToken });
     }
   } catch (error) {
     if (error instanceof ValidationError) {
       ctx.throw(
-        "Validation error. Make sure the UPI and Exponent push token are formatted properly.",
+        `Validation error. Make sure the UPI and Exponent push token are formatted properly.\n${JSON.stringify(
+          error.data,
+        )}`,
         400,
       );
     } else {
@@ -42,15 +44,14 @@ router.post("/upi/:upi", async ctx => {
     path = "/",
   } = ctx.request.body;
   ctx.assert(content, 400, "Notification must have content");
-  const mapping = Mapping.query().findById(upi);
+  const mapping = await Mapping.query().findById(upi);
   if (!mapping) {
     ctx.throw("Mapping with that UPI not found", 404);
   }
-  const { token } = mapping;
 
   try {
     await expo.sendPushNotificationAsync({
-      to: token,
+      to: mapping.token,
       sound: "default",
       title,
       body: content,

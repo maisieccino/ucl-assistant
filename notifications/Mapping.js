@@ -6,6 +6,10 @@ class Mapping extends Model {
     return "mappings";
   }
 
+  static get idColumn() {
+    return "upi";
+  }
+
   static get jsonSchema() {
     return {
       type: "object",
