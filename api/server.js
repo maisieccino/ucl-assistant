@@ -46,6 +46,12 @@ if (!process.env.SECRET) {
   );
 }
 
+if (!process.env.NOTIFICATION_API) {
+  console.warn(
+    "Warning: You have not set the NOTIFICATION_URL environment variable. This means that notification actions will be disabled.",
+  );
+}
+
 app.keys = [process.env.SECRET || "secret"];
 
 if (connectionString.startsWith("rediss://")) {

@@ -1,5 +1,5 @@
 const { USER_TOKEN_URL, USER_DATA_URL } = require("./constants");
-const JSONRequest = require("./JSONRequest");
+const JSONRequest = require("../JSONRequest");
 
 const getToken = async code => {
   const url = `${USER_TOKEN_URL}?client_id=${

@@ -1,6 +1,6 @@
 {
   "name": "ucl-assistant-server",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "Server to support the UCL Assistant app",
   "main": "server.js",
   "scripts": {
@@ -20,6 +20,7 @@
     "koa": "^2.4.1",
     "koa-bodyparser": "^4.2.0",
     "koa-jwt": "^3.3.0",
+    "koa-mount": "^3.0.0",
     "koa-router": "^7.3.0",
     "koa-session": "^5.5.1",
     "moment": "^2.20.1",

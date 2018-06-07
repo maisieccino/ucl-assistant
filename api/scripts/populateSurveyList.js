@@ -1,5 +1,5 @@
 const { WORKSPACE_SURVEYS_URL } = require("../uclapi/constants");
-const JSONRequest = require("../uclapi/JSONRequest");
+const JSONRequest = require("../JSONRequest");
 
 if (!process.env.API_KEY) {
   console.error(

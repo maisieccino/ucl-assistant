@@ -1,6 +1,6 @@
 const moment = require("moment");
 const { MODULE_TIMETABLE_URL, PERSONAL_TIMETABLE_URL } = require("./constants");
-const JSONRequest = require("./JSONRequest");
+const JSONRequest = require("../JSONRequest");
 
 const getPersonalTimetable = async (token, date = null) => {
   const datePart = date

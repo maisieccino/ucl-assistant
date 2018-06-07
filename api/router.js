@@ -1,7 +1,9 @@
 const Router = require("koa-router");
+const mount = require("koa-mount");
 const oauth = require("./oauth");
 const { jwt } = require("./middleware/auth");
-const UCLApiRouter = require("./uclapi/router");
+const { router: UCLApiRouter } = require("./uclapi");
+const { app: notifications } = require("./notifications");
 
 module.exports = app => {
   const router = new Router();
@@ -49,6 +51,7 @@ module.exports = app => {
 
   // import and use the UCL API router.
   UCLApiRouter(app);
+  app.use(mount("/notifications", notifications));
 
   // route not found.
   router.get(/.*/, async ctx => {
