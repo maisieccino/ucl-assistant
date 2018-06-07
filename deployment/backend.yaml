@@ -19,6 +19,8 @@ spec:
         env:
         - name: REDIS_URL
           value: "redis://redis-master:6379"
+        - name: NOTIFICATION_API
+          value: "http://notifications:8080"
         - name: PORT
           value: "3000"
         ports:
