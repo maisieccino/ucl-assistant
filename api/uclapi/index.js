@@ -1,7 +1,7 @@
 const constants = require("./constants");
-const router = require("./router");
+const app = require("./app");
 
 module.exports = {
   constants,
-  router,
+  app,
 };

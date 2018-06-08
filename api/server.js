@@ -2,12 +2,15 @@ const fs = require("fs");
 const Koa = require("koa");
 const bodyparser = require("koa-bodyparser");
 const session = require("koa-session");
+const mount = require("koa-mount");
 const { jsonify, logger, timer } = require("./middleware");
 const URL = require("url");
 const redis = require("redis");
 const { promisify } = require("util");
 const Raven = require("raven");
 const router = require("./router");
+const { app: UCLAPI } = require("./uclapi");
+const { app: notifications } = require("./notifications");
 
 require("dotenv").config();
 
@@ -78,7 +81,10 @@ app.use(bodyparser());
 app.use(timer);
 app.use(logger);
 app.use(jsonify);
-router(app);
+// import and use the UCL API router.
+app.use(mount("/notifications", notifications));
+app.use(mount(UCLAPI));
+app.use(mount(router));
 
 Raven.context(() => {
   app.listen(process.env.PORT || 3000);

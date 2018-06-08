@@ -1,6 +1,6 @@
 {
   "name": "ucl-assistant-notifications",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Notifcations server for the UCL Assistant",
   "main": "server.js",
   "repository": "https://github.com/mbellgb/ucl-assistant",
@@ -20,6 +20,7 @@
     "knex": "^0.14.6",
     "koa": "^2.5.1",
     "koa-bodyparser": "^4.2.1",
+    "koa-logger": "^3.2.0",
     "koa-router": "^7.4.0",
     "node-fetch": "^2.1.2",
     "objection": "^1.1.10",

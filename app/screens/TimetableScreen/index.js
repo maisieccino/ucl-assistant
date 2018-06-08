@@ -1,21 +1,21 @@
 /* eslint class-methods-use-this: 0 */
+import { Feather } from "@expo/vector-icons";
+import { Notifications, Permissions } from "expo";
+import moment from "moment";
+import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { RefreshControl, View } from "react-native";
-import { Permissions, Notifications } from "expo";
-import { connect } from "react-redux";
 import { NavigationActions } from "react-navigation";
-import PropTypes from "prop-types";
-import { Feather } from "@expo/vector-icons";
-import moment from "moment";
+import { connect } from "react-redux";
 import { fetchTimetable } from "../../actions/timetableActions";
-import { TIMETABLE_CACHE_TIME_HOURS } from "../../constants/timetableConstants";
-import { TitleText, BodyText, SubtitleText } from "../../components/Typography";
-import { MainTabPage } from "../../components/Containers";
 import Button from "../../components/Button";
-import { TextInput } from "../../components/Input";
+import { MainTabPage } from "../../components/Containers";
+import { BodyText, TitleText } from "../../components/Typography";
 import Colors from "../../constants/Colors";
-import TimetableComponent from "./TimetableComponent";
+import { TIMETABLE_CACHE_TIME_HOURS } from "../../constants/timetableConstants";
 import DateControls from "./DateControls";
+import TimetableComponent from "./TimetableComponent";
+import { API_URL } from "../../constants/API";
 
 class TimetableScreen extends Component {
   static navigationOptions = {
@@ -61,7 +61,6 @@ class TimetableScreen extends Component {
     super(props);
     this.state = {
       date: moment().startOf("day"),
-      token: "",
     };
   }
 
@@ -116,7 +115,23 @@ class TimetableScreen extends Component {
     }
 
     // Get the token that uniquely identifies this device
-    this.setState({ token: await Notifications.getExpoPushTokenAsync() });
+    const pushToken = await Notifications.getExpoPushTokenAsync();
+    const { token } = this.props.user;
+    try {
+      const res = await fetch(`${API_URL}/notifications/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+        body: JSON.stringify({ token: pushToken }),
+      });
+      console.log(await res.text());
+    } catch (error) {
+      console.log(error.message);
+      this.setState({ error: error.message });
+    }
   }
 
   loginCheck(props) {
@@ -138,7 +153,7 @@ class TimetableScreen extends Component {
     const { navigate } = this.props.navigation;
     const { user, timetable, isFetchingTimetable } = this.props;
     const { scopeNumber } = user;
-    const { date, token } = this.state;
+    const { date } = this.state;
     const dateString = date.format("dddd, Do MMMM");
     return (
       <MainTabPage
@@ -168,7 +183,6 @@ class TimetableScreen extends Component {
             Jump To Today
           </Button>
         )}
-        <TextInput value={token} />
 
         {/* <SubtitleText>Find A Timetable</SubtitleText>
         <TextInput placeholder="Search for a course or module..." /> */}
