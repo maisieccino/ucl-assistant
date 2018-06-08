@@ -19,6 +19,10 @@ router.post("/register", jwt, async ctx => {
   ctx.assert(token, 400, "No token provided.");
   try {
     await api.register(ctx.state.user.upi);
+    await api.sendNotification(ctx.state.user.upi, {
+      title: "Test Notification",
+      content: "Congratulations! Notifications are successfully working.",
+    });
   } catch (err) {
     ctx.throw(400, err.message);
   }

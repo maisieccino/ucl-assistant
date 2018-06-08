@@ -1,6 +1,6 @@
 {
   "name": "ucl-assistant-server",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "description": "Server to support the UCL Assistant app",
   "main": "server.js",
   "scripts": {
