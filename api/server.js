@@ -46,7 +46,7 @@ if (!process.env.SECRET) {
   );
 }
 
-if (!process.env.NOTIFICATION_API) {
+if (!process.env.NOTIFICATIONS_URL) {
   console.warn(
     "Warning: You have not set the NOTIFICATION_URL environment variable. This means that notification actions will be disabled.",
   );

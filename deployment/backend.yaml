@@ -8,7 +8,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: "mbellgb/ucl-assistant-server:v0.4.6"
+        image: "mbellgb/ucl-assistant-server:v0.4.7"
         resources:
           requests:
             cpu: 100m
@@ -19,7 +19,7 @@ spec:
         env:
         - name: REDIS_URL
           value: "redis://redis-master:6379"
-        - name: NOTIFICATION_URL
+        - name: NOTIFICATIONS_URL
           value: "http://notifications:8080"
         - name: PORT
           value: "3000"

@@ -6,7 +6,7 @@ const { jwt } = require("../middleware/auth");
 const app = new Koa();
 
 app.use(async (ctx, next) => {
-  if (!process.env.NOTIFICATION_API) {
+  if (!process.env.NOTIFICATIONS_API) {
     ctx.throw(500, "Notifications are not supported");
   }
   await next;
