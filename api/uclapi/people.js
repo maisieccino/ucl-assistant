@@ -1,5 +1,5 @@
 const { PEOPLE_SEARCH_URL } = require("./constants");
-const JSONRequest = require("./JSONRequest");
+const JSONRequest = require("../JSONRequest");
 
 const search = async query => {
   if (!query || query.length <= 3) {

@@ -1,26 +1,24 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: backend
+  name: notifications
 spec:
-  replicas: 2
+  replicas: 1
   template:
     spec:
       containers:
-      - name: backend
-        image: "mbellgb/ucl-assistant-server:v0.4.7"
+      - name: notifications
+        image: "mbellgb/ucl-assistant-notifications:v0.1.1"
         resources:
           requests:
             cpu: 100m
             memory: 100Mi
         envFrom:
-        - secretRef:
-            name: ucl-assistant-backend-secret
+        - configMapRef:
+            name: ucl-assistant-notifications-config
         env:
         - name: REDIS_URL
           value: "redis://redis-master:6379"
-        - name: NOTIFICATIONS_URL
-          value: "http://notifications:8080"
         - name: PORT
           value: "3000"
         ports:
@@ -29,22 +27,22 @@ spec:
     metadata:
       labels:
         app: ucl-assistant
-        tier: backend
+        tier: notifications
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend
+  name: notifications
   labels:
     app: ucl-assistant
-    tier: backend
+    tier: notifications
 spec:
   # if your cluster supports it, uncomment the following to automatically create
   # an external load-balanced IP for the frontend service.
-  type: NodePort
+  type: ClusterIP
   ports:
   - port: 8080
     targetPort: http
   selector:
     app: ucl-assistant
-    tier: backend
+    tier: notifications

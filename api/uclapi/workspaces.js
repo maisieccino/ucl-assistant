@@ -5,7 +5,7 @@ const {
   WORKSPACE_SUMMARY_URL,
   WORKSPACE_HISTORIC_URL,
 } = require("./constants");
-const JSONRequest = require("./JSONRequest");
+const JSONRequest = require("../JSONRequest");
 const surveyList = require("./surveysList");
 
 const getWorkspaces = () =>
