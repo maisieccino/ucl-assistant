@@ -69,7 +69,7 @@ class TimetableScreen extends Component {
       this.props.fetchTimetable(this.props.user.token, this.state.date);
     }
 
-    this.registerForPushNotificationsAsync();
+    // this.registerForPushNotificationsAsync();
   }
 
   async onDateChanged(newDate, forceUpdate = false) {

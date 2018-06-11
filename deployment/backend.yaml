@@ -9,7 +9,6 @@ spec:
       containers:
       - name: backend
         image: "mbellgb/ucl-assistant-server:v0.4.7"
-        imagePullPolicy: Always
         resources:
           requests:
             cpu: 100m
@@ -24,8 +23,6 @@ spec:
           value: "http://notifications:8080"
         - name: PORT
           value: "3000"
-        - name: FORCE_REDEPLOY_FLIP
-          value: "false"
         ports:
         - name: http
           containerPort: 3000

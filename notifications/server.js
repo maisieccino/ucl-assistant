@@ -19,6 +19,15 @@ objection.Model.knex(knex);
 
 app.use(bodyParser());
 
+app.use(async (ctx, next) => {
+  try {
+    await next();
+    ctx.body = { content: ctx.response.body, error: "" };
+  } catch (error) {
+    ctx.body = { error: error.message || "An error occured" };
+  }
+});
+
 app.use(router.routes());
 app.use(router.allowedMethods());
 

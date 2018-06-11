@@ -19,8 +19,13 @@ module.exports = async (url, { headers = {}, ...options } = {}) => {
     }
     return text;
   }
+  const text = await res.text();
   let json = {};
-  json = await res.json();
+  try {
+    json = JSON.parse(text);
+  } catch (err) {
+    throw new Error(`Couldn't parse JSON response:\n${text}`);
+  }
   if (!res.ok) {
     throw new Error(JSON.stringify(json), "\n", 2);
   }

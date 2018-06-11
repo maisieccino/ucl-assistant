@@ -9,7 +9,6 @@ spec:
       containers:
       - name: notifications
         image: "mbellgb/ucl-assistant-notifications:v0.1.1"
-        imagePullPolicy: Always
         resources:
           requests:
             cpu: 100m
@@ -22,8 +21,6 @@ spec:
           value: "redis://redis-master:6379"
         - name: PORT
           value: "3000"
-        - name: FORCE_PULL
-          value: "false"
         ports:
         - name: http
           containerPort: 3000
