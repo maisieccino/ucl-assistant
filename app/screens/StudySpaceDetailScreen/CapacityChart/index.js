@@ -82,8 +82,8 @@ class CapacityChart extends Component {
     showData: false,
   };
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.loading && !nextProps.loading) {
+  componentDidUpdate(prevProps) {
+    if (prevProps.loading && !this.props.loading) {
       setTimeout(() => this.setState({ showData: true }), 600);
     }
   }

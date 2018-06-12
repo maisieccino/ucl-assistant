@@ -6,8 +6,8 @@ import PropTypes from "prop-types";
 import { NavigationActions } from "react-navigation";
 import { Feather } from "@expo/vector-icons";
 import { signIn } from "../actions/userActions";
-import { TitleText, BodyText } from "../components/Typography";
-import { Spacer } from "../components/Containers";
+import { TitleText, BodyText, ButtonText } from "../components/Typography";
+import { Spacer, Horizontal } from "../components/Containers";
 import CustomButton from "../components/Button";
 import Colors from "../constants/Colors";
 import Styles from "../styles/Containers";
@@ -61,26 +61,24 @@ class SplashScreen extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.token !== "") {
-      console.log(
-        `Component about to receive new props. Going to home. reason? next token = ${
-          nextProps.token
-        }`,
-      );
+  componentDidUpdate(prevProps) {
+    if (this.props.token !== "") {
       this.goHome();
     }
 
-    if (this.props.isSigningIn === true && nextProps.isSigningIn === false) {
+    if (prevProps.isSigningIn === true && this.props.isSigningIn === false) {
       // did we just sign in?
-      if (nextProps.token !== null) {
+      if (this.props.token !== null) {
         // yes, replace screen with home screen.
         this.goHome();
-      } else if (nextProps.error.length < 1) {
+      } else if (this.props.error.length < 1) {
         // cancelled
       } else {
         // error
-        setTimeout(() => Alert.alert("Error Signing In", nextProps.error), 500);
+        setTimeout(
+          () => Alert.alert("Error Signing In", this.props.error),
+          500,
+        );
       }
     }
   }
@@ -117,7 +115,17 @@ class SplashScreen extends Component {
           loading={this.props.isSigningIn}
           style={SplashStyle.button}
         >
-          Sign In With UCL
+          <Horizontal>
+            <Image
+              source={require("../assets/images/uclapi.png")}
+              resizeMethod="scale"
+              resizeMode="contain"
+              style={[Styles.image, SplashStyle.uclapiImage]}
+            />
+            <ButtonText style={SplashStyle.buttonText}>
+              Sign In With UCL API
+            </ButtonText>
+          </Horizontal>
         </CustomButton>
       </LinearGradient>
     );

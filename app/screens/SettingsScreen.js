@@ -1,5 +1,7 @@
+/* eslint-disable react/no-unused-state */
 import React, { Component } from "react";
 import { Platform, ToastAndroid, View } from "react-native"; // eslint-disable-line react-native/split-platform-components
+import { NavigationActions } from "react-navigation";
 import PropTypes from "prop-types";
 import { Constants } from "expo";
 import { connect } from "react-redux";
@@ -45,16 +47,19 @@ class TimetableScreen extends Component {
     isSigningOut: false,
   };
 
-  componentWillReceiveProps(nextProps) {
-    if (this.state.isSigningOut && nextProps.state.user.token === "") {
+  componentDidUpdate(_, prevState) {
+    if (prevState.isSigningOut && this.props.state.user.token === "") {
       if (Platform.OS === "android") {
         ToastAndroid.show(
           "You have successfully signed out",
           ToastAndroid.SHORT,
         );
       }
-      this.setState({ isSigningOut: false });
-      this.props.navigation.navigate("Splash");
+      const action = NavigationActions.reset({
+        index: 0,
+        actions: [NavigationActions.navigate({ routeName: "Splash" })],
+      });
+      this.props.navigation.dispatch(action);
     }
   }
 

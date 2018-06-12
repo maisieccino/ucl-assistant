@@ -37,7 +37,9 @@ class StudySpaceDetailScreen extends Component {
 
   static propTypes = {
     navigation: PropTypes.shape().isRequired,
+    /* eslint-disable react/no-unused-prop-types */
     studyspaces: PropTypes.arrayOf(PropTypes.shape()),
+    /* eslint-enable react/no-unused-prop-types */
     fetchAverages: PropTypes.func.isRequired,
     token: PropTypes.string,
   };
@@ -46,6 +48,14 @@ class StudySpaceDetailScreen extends Component {
     studyspaces: [],
     token: "",
   };
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.studyspaces && props.studyspaces.length > 0) {
+      const space = props.studyspaces.filter(s => s.id === state.id)[0];
+      return { data: space.dailyAverages, space };
+    }
+    return null;
+  }
 
   static mapStateToProps = state => ({
     studyspaces: state.studyspaces.studyspaces,
@@ -76,19 +86,6 @@ class StudySpaceDetailScreen extends Component {
     if (!this.state.fetchingData && this.props.token.length > 0) {
       this.props.fetchAverages(this.props.token, this.state.id);
       setTimeout(() => this.setState({ fetchingData: true }), 100);
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (!this.state.fetchingData && nextProps.token.length > 0) {
-      this.props.fetchAverages(nextProps.token, this.state.id);
-      this.setState({ fetchingData: true });
-    }
-    if (nextProps.studyspaces.length > 0) {
-      const space = nextProps.studyspaces.filter(
-        s => s.id === this.state.id,
-      )[0];
-      this.setState({ data: space.dailyAverages, space });
     }
   }
 

@@ -41,8 +41,8 @@ export const CentredText = ({ children, style }) => (
 CentredText.propTypes = propTypes;
 CentredText.defaultProps = defaultProps;
 
-export const ButtonText = ({ children }) => (
-  <Text style={Style.buttonText}>{children}</Text>
+export const ButtonText = ({ children, style }) => (
+  <Text style={[Style.buttonText, style]}>{children}</Text>
 );
 ButtonText.propTypes = propTypes;
 ButtonText.defaultProps = defaultProps;

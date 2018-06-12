@@ -13,4 +13,13 @@ module.exports = StyleSheet.create({
     borderColor: Colors.pageBackground,
     borderWidth: 2,
   },
+  buttonText: {},
+  uclapiImage: {
+    marginRight: 5,
+    alignSelf: "center",
+    marginTop: 0,
+    height: 20,
+    flexGrow: 0,
+    flexBasis: 20,
+  },
 });
