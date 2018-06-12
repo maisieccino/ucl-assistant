@@ -2,10 +2,10 @@ import { createStore, applyMiddleware } from "redux";
 import { persistStore, persistCombineReducers } from "redux-persist";
 import storage from "redux-persist/es/storage";
 import thunk from "redux-thunk";
-import createDebounce from "redux-debounced";
+import debounce from "../lib/debounce";
 import app, { initialState } from "./reducers";
 
-const middleware = [createDebounce(), thunk];
+const middleware = [debounce.middleware(), thunk];
 
 const config = {
   key: "root",
