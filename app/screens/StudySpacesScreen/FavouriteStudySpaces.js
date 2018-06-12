@@ -13,7 +13,7 @@ const FavouriteStudySpaces = ({ favourites, studyspaces, navigation }) => {
       {spaces.length > 0 ? (
         <FlatList
           data={spaces}
-          keyExtractor={item => item.id}
+          keyExtractor={item => `${item.id}`}
           renderItem={({ item }) => (
             <StudySpaceResult
               {...item}

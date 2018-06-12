@@ -141,7 +141,7 @@ class StudySpaceScreen extends Component {
 
         <FlatList
           data={studyspaces.sort((s1, s2) => s1.name.localeCompare(s2.name))}
-          keyExtractor={item => item.id}
+          keyExtractor={item => `${item.id}`}
           initialNumToRender={30}
           renderItem={({ item }) => (
             <StudySpaceSearchResult
