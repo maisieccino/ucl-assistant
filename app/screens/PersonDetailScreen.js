@@ -22,12 +22,14 @@ class PersonDetailScreen extends Component {
     navigation: PropTypes.shape().isRequired,
     token: PropTypes.string,
     fetchPerson: PropTypes.func,
+    /* eslint-disable react/no-unused-prop-types */
     name: PropTypes.string,
     department: PropTypes.string,
     email: PropTypes.string,
     status: PropTypes.string,
     isFetching: PropTypes.bool,
     error: PropTypes.string,
+    /* eslint-enable react/no-unused-prop-types */
   };
 
   static defaultProps = {
@@ -40,6 +42,19 @@ class PersonDetailScreen extends Component {
     isFetching: false,
     error: "",
   };
+
+  static getDerivedStateFromProps(props, state) {
+    if (state.isFetching && !props.isFetching) {
+      return {
+        name: props.name,
+        email: props.email,
+        department: props.department,
+        status: props.status,
+        isFetching: false,
+      };
+    }
+    return null;
+  }
 
   static mapStateToProps = state => ({
     name: state.people.person.name,
@@ -58,30 +73,19 @@ class PersonDetailScreen extends Component {
   constructor(props) {
     super(props);
     const { params } = props.navigation.state;
-    this.state = { ...params };
+    this.state = { ...params, isFetching: true };
   }
 
   componentDidMount() {
     this.props.fetchPerson(this.props.token, this.state.email);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.isFetching && !nextProps.isFetching) {
-      this.setState({
-        name: nextProps.name,
-        email: nextProps.email,
-        department: nextProps.department,
-        status: nextProps.status,
-      });
-    }
   }
   sendEmail() {
     Linking.openURL(`mailto:${this.state.email}`);
   }
 
   render() {
-    const { name, status, department, email } = this.state;
-    const { isFetching, error } = this.props;
+    const { name, status, department, email, isFetching } = this.state;
+    const { error } = this.props;
     return (
       <PageNoScroll>
         <TitleText>{name}</TitleText>

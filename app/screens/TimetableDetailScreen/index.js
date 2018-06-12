@@ -36,21 +36,18 @@ class TimetableDetailScreen extends Component {
   }
 
   componentDidMount() {
+    this.timetableLoadedTest();
+  }
+
+  timetableLoadedTest() {
     if (Object.keys(this.props.timetable).length > 0) {
-      this.findEvent(this.props);
+      this.findEvent();
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (Object.keys(nextProps.timetable).length > 0) {
-      this.findEvent(nextProps);
-    }
-  }
-
-  async findEvent(props) {
-    const { timetable } = props;
+  async findEvent() {
     const { date, time, code } = this.state;
-    const timetableDay = (timetable[date] || {}).timetable || [];
+    const timetableDay = (this.props.timetable[date] || {}).timetable || [];
     const event = timetableDay.filter(
       ev => ev.module.module_id === code && ev.start_time === time,
     )[0];

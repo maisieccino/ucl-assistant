@@ -37,16 +37,20 @@ const updateStudyspaces = (studyspaces, id, newSpace) => {
 };
 
 export default (state = initialState, action = null) => {
-  const { type, id, data, error, dailyAverages } = action;
+  const { type, id, ids, data, error, dailyAverages } = action;
   const space = id ? state.studyspaces.filter(s => s.id === id)[0] : null;
 
   switch (type) {
     case WORKSPACES_IS_FETCHING_SEATINFO: {
-      const newStudyspaces = updateStudyspaces(state.studyspaces, id, {
-        ...space,
-        isFetchingSeatInfo: true,
-        fetchSeatInfoError: "",
-      });
+      const newStudyspaces = ids.reduce(
+        (spaces, s) =>
+          updateStudyspaces(spaces, s, {
+            ...state.studyspaces.filter(x => x.id === s),
+            isFetchingSeatInfo: true,
+            fetchSeatInfoError: "",
+          }),
+        state.studyspaces,
+      );
       if (space) {
         return { ...state, studyspaces: newStudyspaces };
       }

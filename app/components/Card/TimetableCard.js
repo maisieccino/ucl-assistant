@@ -21,14 +21,15 @@ const TimetableCard = ({
     <Card
       old={pastEvent}
       title={moduleCode}
-      onPress={() =>
+      onPress={() => {
+        console.log("Attempting to navigate...");
         navigation.navigate("TimetableDetail", {
           date: moment(startTime).format("YYYY-MM-DD"),
           time: moment(startTime).format("HH:mm"),
           module: moduleName,
           code: moduleCode,
-        })
-      }
+        });
+      }}
     >
       <BodyText>{moduleName}</BodyText>
       <BodyText>
