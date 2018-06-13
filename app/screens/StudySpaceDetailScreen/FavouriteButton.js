@@ -27,13 +27,13 @@ class FavouriteButton extends Component {
     toggleFavourite: id => dispatch(toggleFavourite(id)),
   });
 
-  componentWillReceiveProps = nextProps => {
-    const currentlyFavourite = this.props.favourites.includes(this.props.id);
-    const willBeFavourite = nextProps.favourites.includes(this.props.id);
-    if (!currentlyFavourite && willBeFavourite && Platform.OS === "android") {
+  componentDidUpdate(prevProps) {
+    const wasFavourite = prevProps.favourites.includes(this.props.id);
+    const isFavourite = this.props.favourites.includes(this.props.id);
+    if (!wasFavourite && isFavourite && Platform.OS === "android") {
       ToastAndroid.show("Added to favourites", ToastAndroid.SHORT);
     }
-  };
+  }
 
   render() {
     const isFavourite = this.props.favourites.includes(this.props.id);

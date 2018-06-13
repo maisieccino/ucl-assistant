@@ -14,9 +14,11 @@
     "@expo/vector-icons": "^6.2.0",
     "d3-scale": "^2.0.0",
     "d3-shape": "^1.2.0",
+    "deep-diff": "^1.0.1",
     "emoji-cli": "^1.0.0",
     "expo": "^27.0.0",
     "gulp": "^3.9.1",
+    "memoize-one": "^3.1.1",
     "moment": "^2.19.3",
     "nodemon": "^1.12.1",
     "now": "^8.5.4",
@@ -48,7 +50,7 @@
     "react-test-renderer": "^16.2.0"
   },
   "name": "ucl-assistant-app",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "An app to manage your UCL life",
   "author": "Matt Bell",
   "config": {

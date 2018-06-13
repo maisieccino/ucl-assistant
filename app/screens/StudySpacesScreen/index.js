@@ -1,24 +1,26 @@
-import React, { Component } from "react";
-import { FlatList, RefreshControl } from "react-native";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import moment from "moment";
-import { momentObj } from "react-moment-proptypes";
 import { Feather } from "@expo/vector-icons";
+import moment from "moment";
+import memoize from "memoize-one";
+import PropTypes from "prop-types";
+import React, { Component } from "react";
+import { momentObj } from "react-moment-proptypes";
+import { FlatList, RefreshControl } from "react-native";
+import { connect } from "react-redux";
 import { generate } from "shortid";
+// import diff from "deep-diff";
 import { fetchSeatInfos } from "../../actions/studyspacesActions";
-import {
-  TitleText,
-  SubtitleText,
-  CentredText,
-  ErrorText,
-  BodyText,
-} from "../../components/Typography";
 import { MainTabPage } from "../../components/Containers";
 import { TextInput } from "../../components/Input";
+import {
+  BodyText,
+  CentredText,
+  ErrorText,
+  SubtitleText,
+  TitleText,
+} from "../../components/Typography";
 import Colors from "../../constants/Colors";
-import StudySpaceSearchResult from "./StudySpaceResult";
 import FavouriteStudySpaces from "./FavouriteStudySpaces";
+import StudySpaceSearchResult from "./StudySpaceResult";
 
 class StudySpaceScreen extends Component {
   static navigationOptions = {
@@ -47,6 +49,9 @@ class StudySpaceScreen extends Component {
     fetchInfo: () => {},
     lastUpdated: null,
   };
+
+  static findErrorneousSpaces = spaces =>
+    spaces.filter(space => space.fetchSeatInfoError !== "");
 
   static mapStateToProps = state => ({
     studyspaces: state.studyspaces.studyspaces,
@@ -78,12 +83,15 @@ class StudySpaceScreen extends Component {
     );
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (!this.state.loadedSeatInfo && nextProps.token) {
-      this.fetchSeatInfo();
-    }
-    this.updateLastUpdatedText();
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   console.log("component just updated");
+  //   console.log("Prop diffs:");
+  //   console.log(JSON.stringify(diff(prevProps, this.props), "\n", 2));
+  //   console.log("State diffs:");
+  //   console.log(JSON.stringify(diff(prevState, this.state), "\n", 2));
+  // }
+
+  memoizeErrorneousSpaces = memoize(StudySpaceScreen.findErrorneousSpaces);
 
   updateLastUpdatedText() {
     const { lastUpdated } = this.props;
@@ -95,14 +103,12 @@ class StudySpaceScreen extends Component {
   async fetchSeatInfo() {
     await this.setState({ loadedSeatInfo: true });
     const ids = this.props.studyspaces.map(space => space.id);
-    this.props.fetchInfo(ids, this.props.token);
+    setTimeout(() => this.props.fetchInfo(ids, this.props.token), 500);
   }
 
   render() {
     const { navigation, studyspaces } = this.props;
-    const errorneousSpaces = studyspaces.filter(
-      space => space.fetchSeatInfoError !== "",
-    );
+    const errorneousSpaces = this.memoizeErrorneousSpaces(studyspaces);
     const isLoading =
       !this.state.loadedSeatInfo ||
       this.props.studyspaces.reduce(

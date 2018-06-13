@@ -10,8 +10,8 @@ import {
   STUDYSPACE_TOGGLE_FAVOURITE,
 } from "../constants/studyspacesConstants";
 
-export const setIsFetchingSeatInfo = id => ({
-  id,
+export const setIsFetchingSeatInfo = ids => ({
+  ids,
   type: WORKSPACES_IS_FETCHING_SEATINFO,
 });
 
@@ -28,7 +28,7 @@ export const fetchSeatInfoFailure = (id, error) => ({
 });
 
 export const fetchSeatInfo = (token, id) => async dispatch => {
-  await dispatch(setIsFetchingSeatInfo(id));
+  await dispatch(setIsFetchingSeatInfo([id]));
   try {
     const res = await fetch(`${WORKSPACES_URL}/${id}/seatinfo`, {
       headers: {
@@ -58,7 +58,7 @@ export const fetchSeatInfo = (token, id) => async dispatch => {
 export const fetchSeatInfos = (token: String, ids: Array) => async (
   dispatch: Function,
 ) => {
-  await Promise.all(ids.map(id => dispatch(setIsFetchingSeatInfo(id))));
+  await dispatch(setIsFetchingSeatInfo(ids));
   try {
     const res = await fetch(`${WORKSPACES_URL}/summary`, {
       headers: {
