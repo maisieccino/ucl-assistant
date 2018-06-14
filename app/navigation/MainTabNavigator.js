@@ -1,7 +1,7 @@
 /* eslint react/prop-types: 0 */
 import React from "react";
 import { Feather } from "@expo/vector-icons";
-import { TabNavigator, TabBarBottom } from "react-navigation";
+import { createBottomTabNavigator } from "react-navigation";
 import Colors from "../constants/Colors";
 
 import TimetableScreen from "../screens/TimetableScreen";
@@ -28,7 +28,7 @@ const screens = {
   },
 };
 
-export default TabNavigator(screens, {
+export default createBottomTabNavigator(screens, {
   navigationOptions: ({ navigation }) => ({
     tabBarIcon: ({ focused }) => {
       const { routeName } = navigation.state;
@@ -61,7 +61,6 @@ export default TabNavigator(screens, {
       );
     },
   }),
-  tabBarComponent: TabBarBottom,
   // initialRouteName: __DEV__ ? "Storybook" : "Timetable",
   initialRouteName: "Timetable",
   tabBarPosition: "bottom",
