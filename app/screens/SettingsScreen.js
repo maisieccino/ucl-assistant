@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unused-state */
 import React, { Component } from "react";
 import { Platform, ToastAndroid, View } from "react-native"; // eslint-disable-line react-native/split-platform-components
-import { NavigationActions } from "react-navigation";
+import { NavigationActions, StackActions } from "react-navigation";
 import PropTypes from "prop-types";
 import { Constants } from "expo";
 import { connect } from "react-redux";
@@ -55,7 +55,7 @@ class TimetableScreen extends Component {
           ToastAndroid.SHORT,
         );
       }
-      const action = NavigationActions.reset({
+      const action = StackActions.reset({
         index: 0,
         actions: [NavigationActions.navigate({ routeName: "Splash" })],
       });

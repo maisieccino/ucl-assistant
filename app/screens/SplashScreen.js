@@ -3,7 +3,7 @@ import { Alert, Image } from "react-native";
 import { LinearGradient } from "expo";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { NavigationActions } from "react-navigation";
+import { NavigationActions, StackActions } from "react-navigation";
 import { Feather } from "@expo/vector-icons";
 import { signIn } from "../actions/userActions";
 import { TitleText, BodyText, ButtonText } from "../components/Typography";
@@ -84,7 +84,7 @@ class SplashScreen extends Component {
   }
 
   goHome() {
-    const resetAction = NavigationActions.reset({
+    const resetAction = StackActions.reset({
       index: 0,
       actions: [NavigationActions.navigate({ routeName: "Main" })],
     });
