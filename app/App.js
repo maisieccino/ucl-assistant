@@ -33,6 +33,8 @@ class App extends Component {
     };
   }
 
+  componentDidMount() {}
+
   loadResourcesAsync = async () =>
     Promise.all([
       Asset.loadAsync([

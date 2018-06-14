@@ -88,7 +88,7 @@ class TimetableScreen extends Component {
         <BodyText>{version}</BodyText>
         <BodyText>
           Release channel:{" "}
-          {__DEV__ ? "Developer mode" : Constants.manifest.releaseChannel}
+          {__DEV__ ? "Developer Mode" : Constants.manifest.releaseChannel}
         </BodyText>
         <SubtitleText>Author</SubtitleText>
         <BodyText>Created by Matt Bell, using the UCL API.</BodyText>

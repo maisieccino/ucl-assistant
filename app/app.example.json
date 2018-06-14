@@ -1,11 +1,15 @@
 {
   "expo": {
     "name": "UCL Assistant",
+    "packagerOpts": {
+      "config": "rn-cli.config.js",
+      "projectRoots": ""
+    },
     "description": "No description",
     "slug": "ucl-assistant",
     "privacy": "public",
-    "sdkVersion": "24.0.0",
-    "version": "0.5.4",
+    "sdkVersion": "28.0.0",
+    "version": "0.6.5",
     "orientation": "portrait",
     "primaryColor": "#1B998B",
     "icon": "./assets/images/icon.png",
@@ -20,9 +24,13 @@
     },
     "android": {
       "package": "me.mbell.uclassistant",
+      "adaptiveIcon": {
+        "backgroundImage": "./assets/images/icon-bg.png",
+        "foregroundImage": "./assets/images/icon-fg.png"
+      },
       "config": {
         "googleMaps": {
-          "apiKey": "<replace-me>"
+          "apiKey": "<change-me>"
         }
       }
     },
