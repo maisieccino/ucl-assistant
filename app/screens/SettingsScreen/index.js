@@ -49,6 +49,9 @@ class SettingsScreen extends Component {
     if (Platform.OS === "android") {
       IntentLauncherAndroid.startActivityAsync(
         IntentLauncherAndroid.ACTION_APP_NOTIFICATION_SETTINGS,
+        {
+          "android.provider.extra.APP_PACKAGE": "me.mbell.uclassistant",
+        },
       );
     }
   }

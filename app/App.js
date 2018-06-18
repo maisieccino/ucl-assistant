@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/es/integration/react";
-import { StatusBar, View } from "react-native";
-import { AppLoading, Asset, Font } from "expo";
+import { Platform, StatusBar, View } from "react-native";
+import { AppLoading, Asset, Font, Notifications } from "expo";
 import { Feather } from "@expo/vector-icons";
 import Sentry from "sentry-expo";
+import { NotificationChannels } from "./constants/notificationsConstants";
 import configureStore from "./configureStore";
 import RootNavigation from "./navigation/RootNavigation";
 import Styles from "./styles/Containers";
@@ -31,6 +32,15 @@ class App extends Component {
       isLoadingComplete: false,
       store: configureStore(),
     };
+  }
+
+  componentDidMount() {
+    if (Platform.OS === "android") {
+      Object.keys(NotificationChannels).forEach(key => {
+        const channel = NotificationChannels[key];
+        Notifications.createChannelAndroidAsync(channel.id, channel.options);
+      });
+    }
   }
 
   loadResourcesAsync = async () =>
