@@ -1,32 +1,26 @@
 /* eslint-disable react/no-unused-state */
 import React, { Component } from "react";
-import {
-  Alert,
-  Platform,
-  ToastAndroid,
-  View,
-  Clipboard,
-  Switch,
-} from "react-native"; // eslint-disable-line react-native/split-platform-components
+import { Alert, Platform, ToastAndroid, View, Clipboard } from "react-native"; // eslint-disable-line react-native/split-platform-components
 import { NavigationActions, StackActions } from "react-navigation";
 import PropTypes from "prop-types";
-import { Constants } from "expo";
+import { Constants, IntentLauncherAndroid } from "expo";
 import { connect } from "react-redux";
 import {
   TitleText,
   BodyText,
   SubtitleText,
   ButtonText,
-} from "../components/Typography";
-import { Page, Horizontal, PaddedIcon } from "../components/Containers";
-import { signOut } from "../actions/userActions";
-import Button, { SmallButton } from "../components/Button";
-import Colors from "../constants/Colors";
-import TextInput from "../components/Input/TextInput";
+} from "../../components/Typography";
+import { Page, Horizontal, PaddedIcon } from "../../components/Containers";
+import { signOut } from "../../actions/userActions";
+import Button, { SmallButton } from "../../components/Button";
+import Colors from "../../constants/Colors";
+import TextInput from "../../components/Input/TextInput";
+import NotificationSwitch from "./NotificationSwitch";
 
-const { version } = require("../package.json");
+const { version } = require("../../package.json");
 
-class TimetableScreen extends Component {
+class SettingsScreen extends Component {
   static navigationOptions = {
     header: null,
   };
@@ -50,6 +44,14 @@ class TimetableScreen extends Component {
   static mapDispatchToProps = dispatch => ({
     signOut: () => dispatch(signOut()),
   });
+
+  static launchNotificationSettings() {
+    if (Platform.OS === "android") {
+      IntentLauncherAndroid.startActivityAsync(
+        IntentLauncherAndroid.ACTION_APP_NOTIFICATION_SETTINGS,
+      );
+    }
+  }
 
   state = {
     isSigningOut: false,
@@ -91,10 +93,13 @@ class TimetableScreen extends Component {
       <Page mainTabPage>
         <TitleText>Settings</TitleText>
         <SubtitleText>Notifications</SubtitleText>
-        <Horizontal>
-          <BodyText style={{ flex: 1 }}>Register for notifications</BodyText>
-          <Switch value={false} />
-        </Horizontal>
+        <NotificationSwitch />
+        <Button onPress={() => SettingsScreen.launchNotificationSettings()}>
+          Manage Notification Settings
+        </Button>
+        <SubtitleText>User</SubtitleText>
+        <BodyText>Logged in as {state.user.fullName}</BodyText>
+        <BodyText>Unique Person Identifier (UPI): {state.user.upi}</BodyText>
         <Button onPress={() => this.signOut()}>
           <Horizontal>
             <PaddedIcon
@@ -138,6 +143,6 @@ class TimetableScreen extends Component {
 }
 
 export default connect(
-  TimetableScreen.mapStateToProps,
-  TimetableScreen.mapDispatchToProps,
-)(TimetableScreen);
+  SettingsScreen.mapStateToProps,
+  SettingsScreen.mapDispatchToProps,
+)(SettingsScreen);

@@ -61,17 +61,13 @@ export const Page = ({
 }) => (
   <Fragment>
     <KeyboardAvoidingView
-      style={[Styles.pageScrollContainer, mainTabPage ? Styles.mainTab : null]}
+      style={[Styles.pageContainer, mainTabPage ? Styles.mainTab : null]}
       {...props}
       behavior="padding"
     >
       <ScrollView
-        style={[style, Styles.page, Styles.scrollPage]}
-        contentContainerStyle={{
-          paddingLeft: 20,
-          paddingRight: 20,
-          paddingTop: 10,
-        }}
+        contentContainerStyle={Styles.pageScrollContent}
+        style={[style, Styles.page, Styles.pageScrollView]}
         refreshControl={
           <RefreshControl
             enabled={refreshEnabled}
@@ -87,16 +83,7 @@ export const Page = ({
         <BlurView
           tint="light"
           intensity={85}
-          style={[
-            StyleSheet.absoluteFill,
-            {
-              left: 0,
-              right: 0,
-              bottom: 0,
-              top: undefined,
-              height: 60,
-            },
-          ]}
+          style={[StyleSheet.absoluteFill, Styles.mainTabBlur]}
         />
       )}
     </KeyboardAvoidingView>
@@ -107,7 +94,7 @@ Page.defaultProps = defaultProps;
 
 export const PageNoScroll = ({ children, style, ...props }) => (
   <KeyboardAvoidingView
-    style={[Styles.pageScrollContainer, Styles.pageNoScrollContainer]}
+    style={[Styles.pageContainer, Styles.pageNoScrollContainer]}
     {...props}
     behavior="padding"
   >

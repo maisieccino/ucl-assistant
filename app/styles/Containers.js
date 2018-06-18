@@ -20,7 +20,7 @@ const cardShared = {
 };
 
 export default StyleSheet.create({
-  pageScrollContainer: {
+  pageContainer: {
     flex: 1,
     flexDirection: "column",
     backgroundColor: Colors.pageBackground,
@@ -43,9 +43,14 @@ export default StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
   },
-  scrollPage: {
+  pageScrollView: {
     paddingLeft: 0,
     paddingRight: 0,
+  },
+  pageScrollContent: {
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingTop: 10,
   },
   spacer: {
     flex: 1,
@@ -108,5 +113,12 @@ export default StyleSheet.create({
     paddingHorizontal: 5,
     marginRight: 5,
     borderRadius: 5,
+  },
+  mainTabBlur: {
+    left: 0,
+    right: 0,
+    bottom: 0,
+    top: undefined,
+    height: 60,
   },
 });
