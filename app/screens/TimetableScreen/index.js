@@ -4,12 +4,12 @@ import { Notifications, Permissions } from "expo";
 import moment from "moment";
 import PropTypes from "prop-types";
 import React, { Component } from "react";
-import { RefreshControl, View } from "react-native";
+import { View } from "react-native";
 import { NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
 import { fetchTimetable } from "../../actions/timetableActions";
 import Button from "../../components/Button";
-import { MainTabPage } from "../../components/Containers";
+import { Page } from "../../components/Containers";
 import { BodyText, TitleText } from "../../components/Typography";
 import Colors from "../../constants/Colors";
 import { TIMETABLE_CACHE_TIME_HOURS } from "../../constants/timetableConstants";
@@ -156,13 +156,11 @@ class TimetableScreen extends Component {
     const { date } = this.state;
     const dateString = date.format("dddd, Do MMMM");
     return (
-      <MainTabPage
-        refreshControl={
-          <RefreshControl
-            refreshing={isFetchingTimetable}
-            onRefresh={() => this.onDateChanged(date, true)}
-          />
-        }
+      <Page
+        refreshing={isFetchingTimetable}
+        onRefresh={() => this.onDateChanged(date, true)}
+        refreshEnabled
+        mainTabPage
       >
         {scopeNumber < 0 && (
           <View>
@@ -186,7 +184,7 @@ class TimetableScreen extends Component {
 
         {/* <SubtitleText>Find A Timetable</SubtitleText>
         <TextInput placeholder="Search for a course or module..." /> */}
-      </MainTabPage>
+      </Page>
     );
   }
 }

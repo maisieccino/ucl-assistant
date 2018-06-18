@@ -12,7 +12,7 @@ class Button extends Component {
 
   render() {
     const { icon } = this.props;
-    const buttonSize = Platform.OS === "android" ? 24 : 1;
+    const buttonSize = Platform.OS === "android" ? 24 : 16;
     let child = (
       <Feather size={buttonSize} name={icon} color={Colors.pageBackground} />
     );

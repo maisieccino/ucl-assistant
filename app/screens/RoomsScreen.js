@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Feather } from "@expo/vector-icons";
 import { TitleText, SubtitleText, CentredText } from "../components/Typography";
-import { MainTabPage } from "../components/Containers";
+import { Page } from "../components/Containers";
 import { TextInput } from "../components/Input";
 import Colors from "../constants/Colors";
 
@@ -19,13 +19,13 @@ class TimetableScreen extends Component {
 
   render() {
     return (
-      <MainTabPage>
+      <Page mainTabPage>
         <TitleText>Rooms</TitleText>
         <TextInput placeholder="Search for a room or building name..." />
         <CentredText>Start typing to get search results</CentredText>
         <SubtitleText>Your Favourites</SubtitleText>
         <SubtitleText>In Roberts Building</SubtitleText>
-      </MainTabPage>
+      </Page>
     );
   }
 }

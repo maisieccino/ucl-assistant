@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import Colors from "../constants/Colors";
 
 const buttonStyle = {
@@ -12,6 +12,10 @@ const buttonStyle = {
   alignItems: "center",
   justifyContent: "center",
   flexDirection: "row",
+  shadowColor: Colors.accentColor,
+  shadowOffset: { width: 0, height: 2 },
+  shadowRadius: 3,
+  shadowOpacity: 0.75,
 };
 
 export default StyleSheet.create({

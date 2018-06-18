@@ -1,48 +1,118 @@
 /* eslint react/require-default-props: 0 */
-import React from "react";
+import React, { Fragment } from "react";
+import { BlurView } from "expo";
 import PropTypes from "prop-types";
 import { Feather } from "@expo/vector-icons";
 import {
+  Dimensions,
   KeyboardAvoidingView,
+  RefreshControl,
   ScrollView,
+  StyleSheet,
   View,
   ViewPropTypes,
 } from "react-native";
 import Styles from "../styles/Containers";
 
+const { height, width } = Dimensions.get("window");
+
 const propTypes = {
   children: PropTypes.node,
   style: ViewPropTypes.style,
+  refreshEnabled: PropTypes.bool,
+  onRefresh: PropTypes.func,
+  refreshing: PropTypes.bool,
+  mainTabPage: PropTypes.bool,
 };
 const defaultProps = {
   children: "",
   style: {},
+  refreshEnabled: false,
+  onRefresh: () => {},
+  refreshing: false,
+  mainTabPage: false,
 };
 
-export const Page = ({ children, style }) => (
-  <ScrollView style={Styles.pageScrollContainer}>
-    <View style={[style, Styles.page]}>{children}</View>
-  </ScrollView>
+// export const Page = ({ children, style, ...props }) => (
+//   // <ScrollView style={Styles.pageScrollContainer}>
+//   //   <View style={[style, Styles.page]}>{children}</View>
+//   // </ScrollView>
+//   <KeyboardAvoidingView
+//     style={[Styles.pageScrollContainer]}
+//     {...props}
+//     behavior="padding"
+//   >
+//     <ScrollView style={[style, Styles.page, Styles.scrollPage]}>
+//       {children}
+//     </ScrollView>
+//   </KeyboardAvoidingView>
+// );
+// Page.propTypes = propTypes;
+// Page.defaultProps = defaultProps;
+
+export const Page = ({
+  children,
+  style,
+  refreshEnabled,
+  onRefresh,
+  refreshing,
+  mainTabPage,
+  ...props
+}) => (
+  <Fragment>
+    <KeyboardAvoidingView
+      style={[Styles.pageScrollContainer, mainTabPage ? Styles.mainTab : null]}
+      {...props}
+      behavior="padding"
+    >
+      <ScrollView
+        style={[style, Styles.page, Styles.scrollPage]}
+        contentContainerStyle={{
+          paddingLeft: 20,
+          paddingRight: 20,
+          paddingTop: 10,
+        }}
+        refreshControl={
+          <RefreshControl
+            enabled={refreshEnabled}
+            onRefresh={onRefresh}
+            refreshing={refreshing}
+          />
+        }
+      >
+        <View style={{ height: 10 }} />
+        {children}
+      </ScrollView>
+      {mainTabPage && (
+        <BlurView
+          tint="light"
+          intensity={85}
+          style={[
+            StyleSheet.absoluteFill,
+            {
+              left: 0,
+              right: 0,
+              bottom: 0,
+              top: undefined,
+              height: 60,
+            },
+          ]}
+        />
+      )}
+    </KeyboardAvoidingView>
+  </Fragment>
 );
 Page.propTypes = propTypes;
 Page.defaultProps = defaultProps;
 
-export const MainTabPage = ({ children, style, ...props }) => (
-  <ScrollView style={Styles.pageScrollContainer} {...props}>
-    <KeyboardAvoidingView
-      keyboardVerticalOffset={20}
-      behavior="position"
-      style={[style, Styles.page, Styles.mainTabPage]}
-    >
-      {children}
-    </KeyboardAvoidingView>
-  </ScrollView>
-);
-MainTabPage.propTypes = propTypes;
-MainTabPage.defaultProps = defaultProps;
-
-export const PageNoScroll = ({ children, style }) => (
-  <View style={[Styles.page, style]}>{children}</View>
+export const PageNoScroll = ({ children, style, ...props }) => (
+  <KeyboardAvoidingView
+    style={[Styles.pageScrollContainer, Styles.pageNoScrollContainer]}
+    {...props}
+    behavior="padding"
+  >
+    <View style={[Styles.page, style]}>{children}</View>
+  </KeyboardAvoidingView>
 );
 PageNoScroll.propTypes = propTypes;
 PageNoScroll.defaultProps = defaultProps;

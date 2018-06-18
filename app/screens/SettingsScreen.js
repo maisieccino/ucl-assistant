@@ -1,6 +1,13 @@
 /* eslint-disable react/no-unused-state */
 import React, { Component } from "react";
-import { Platform, ToastAndroid, View } from "react-native"; // eslint-disable-line react-native/split-platform-components
+import {
+  Alert,
+  Platform,
+  ToastAndroid,
+  View,
+  Clipboard,
+  Switch,
+} from "react-native"; // eslint-disable-line react-native/split-platform-components
 import { NavigationActions, StackActions } from "react-navigation";
 import PropTypes from "prop-types";
 import { Constants } from "expo";
@@ -11,10 +18,11 @@ import {
   SubtitleText,
   ButtonText,
 } from "../components/Typography";
-import { MainTabPage, Horizontal, PaddedIcon } from "../components/Containers";
+import { Page, Horizontal, PaddedIcon } from "../components/Containers";
 import { signOut } from "../actions/userActions";
-import Button from "../components/Button";
+import Button, { SmallButton } from "../components/Button";
 import Colors from "../constants/Colors";
+import TextInput from "../components/Input/TextInput";
 
 const { version } = require("../package.json");
 
@@ -68,11 +76,25 @@ class TimetableScreen extends Component {
     this.setState({ isSigningOut: true });
   }
 
+  async copyTokenToClipboard() {
+    await Clipboard.setString(this.props.state.user.token);
+    if (Platform.OS === "android") {
+      ToastAndroid.show("Token copied!", ToastAndroid.SHORT);
+    } else {
+      Alert.alert("Copied", "Token copied to clipboard.");
+    }
+  }
+
   render() {
     const { state } = this.props;
     return (
-      <MainTabPage>
+      <Page mainTabPage>
         <TitleText>Settings</TitleText>
+        <SubtitleText>Notifications</SubtitleText>
+        <Horizontal>
+          <BodyText style={{ flex: 1 }}>Register for notifications</BodyText>
+          <Switch value={false} />
+        </Horizontal>
         <Button onPress={() => this.signOut()}>
           <Horizontal>
             <PaddedIcon
@@ -99,11 +121,18 @@ class TimetableScreen extends Component {
         {__DEV__ && (
           <View>
             <TitleText>Dev Stuff</TitleText>
+            <SubtitleText>UCL API Token</SubtitleText>
+            <Horizontal>
+              <TextInput style={{ flex: 1 }} value={state.user.token} />
+              <SmallButton onPress={() => this.copyTokenToClipboard()}>
+                Copy
+              </SmallButton>
+            </Horizontal>
             <SubtitleText>State</SubtitleText>
             <BodyText>{JSON.stringify(state, "\n", 2)}</BodyText>
           </View>
         )}
-      </MainTabPage>
+      </Page>
     );
   }
 }

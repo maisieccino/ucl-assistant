@@ -1,8 +1,8 @@
-import { Dimensions, Platform, StyleSheet } from "react-native";
+import { Dimensions, Platform, StyleSheet, StatusBar } from "react-native";
 import Colors from "../constants/Colors";
 import { BORDER_RADIUS } from "../constants/styleConstants";
 
-const { height } = Dimensions.get("window");
+const { height, width } = Dimensions.get("window");
 
 const cardShared = {
   padding: 10,
@@ -12,34 +12,40 @@ const cardShared = {
   marginTop: 5,
   borderRadius: BORDER_RADIUS,
   shadowColor: Colors.textColor,
-  shadowOffset: { width: 0, height: 5 },
+  shadowOffset: { width: 0, height: 3 },
   shadowRadius: 3,
-  shadowOpacity: 0.75,
+  shadowOpacity: 0.5,
+  marginLeft: Platform.OS === "ios" ? 1 : 0,
+  marginRight: Platform.OS === "ios" ? 1 : 0,
 };
 
 export default StyleSheet.create({
   pageScrollContainer: {
     flex: 1,
-    minHeight: height,
     flexDirection: "column",
     backgroundColor: Colors.pageBackground,
+    height,
+    width,
+  },
+  pageNoScrollContainer: {
+    paddingTop: 10,
+  },
+  mainTab: {
+    paddingTop: StatusBar.currentHeight,
   },
   app: {
     flex: 1,
     backgroundColor: Colors.pageBackground,
   },
   page: {
-    paddingLeft: 20,
-    paddingRight: 20,
-    paddingTop: 20,
-    paddingBottom: 10,
-    flexGrow: 1,
     flex: 1,
     backgroundColor: Colors.pageBackground,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
-  mainTabPage: {
-    marginTop: Platform.OS === "android" ? 20 : 0,
-    marginBottom: 60,
+  scrollPage: {
+    paddingLeft: 0,
+    paddingRight: 0,
   },
   spacer: {
     flex: 1,

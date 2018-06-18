@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import { generate } from "shortid";
 // import diff from "deep-diff";
 import { fetchSeatInfos } from "../../actions/studyspacesActions";
-import { MainTabPage } from "../../components/Containers";
+import { Page } from "../../components/Containers";
 import { TextInput } from "../../components/Input";
 import {
   BodyText,
@@ -83,13 +83,15 @@ class StudySpaceScreen extends Component {
     );
   }
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   console.log("component just updated");
-  //   console.log("Prop diffs:");
-  //   console.log(JSON.stringify(diff(prevProps, this.props), "\n", 2));
-  //   console.log("State diffs:");
-  //   console.log(JSON.stringify(diff(prevState, this.state), "\n", 2));
-  // }
+  componentDidUpdate(prevProps) {
+    if (this.props.lastUpdated !== prevProps.lastUpdated) {
+      this.updateLastUpdatedText();
+    }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.updateTextInterval);
+  }
 
   memoizeErrorneousSpaces = memoize(StudySpaceScreen.findErrorneousSpaces);
 
@@ -101,12 +103,15 @@ class StudySpaceScreen extends Component {
   }
 
   async fetchSeatInfo() {
+    console.log("fetch seat info...");
     await this.setState({ loadedSeatInfo: true });
     const ids = this.props.studyspaces.map(space => space.id);
     setTimeout(() => this.props.fetchInfo(ids, this.props.token), 500);
+    console.log("action dispatched.");
   }
 
   render() {
+    console.log("begin render calcs");
     const { navigation, studyspaces } = this.props;
     const errorneousSpaces = this.memoizeErrorneousSpaces(studyspaces);
     const isLoading =
@@ -115,14 +120,13 @@ class StudySpaceScreen extends Component {
         (res, space) => res || space.isFetchingSeatInfo,
         false,
       );
+    console.log("begin drawing");
     return (
-      <MainTabPage
-        refreshControl={
-          <RefreshControl
-            refreshing={isLoading}
-            onRefresh={() => this.fetchSeatInfo()}
-          />
-        }
+      <Page
+        mainTabPage
+        refreshEnabled
+        onRefresh={() => this.fetchSeatInfo()}
+        refreshing={isLoading}
       >
         <TitleText>Find Study Spaces</TitleText>
         <TextInput placeholder="Search for a building name..." />
@@ -163,7 +167,7 @@ class StudySpaceScreen extends Component {
             />
           )}
         />
-      </MainTabPage>
+      </Page>
     );
   }
 }

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Feather } from "@expo/vector-icons";
 import { TitleText } from "../../components/Typography";
-import { MainTabPage } from "../../components/Containers";
+import { Page } from "../../components/Containers";
 import Colors from "../../constants/Colors";
 
 import SearchControl from "./SearchControl";
@@ -32,11 +32,11 @@ class TimetableScreen extends Component {
   render() {
     const { navigation } = this.props;
     return (
-      <MainTabPage>
+      <Page mainTabPage>
         <TitleText>People</TitleText>
         <SearchControl navigation={navigation} />
         <RecentResults navigation={navigation} />
-      </MainTabPage>
+      </Page>
     );
   }
 }
