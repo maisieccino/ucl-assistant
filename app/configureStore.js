@@ -1,23 +1,42 @@
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, combineReducers } from "redux";
 import { persistStore, persistCombineReducers } from "redux-persist";
-import storage from "redux-persist/es/storage";
+import AsyncStorage from "redux-persist/es/storage";
+import createSecureStore from "redux-persist-expo-securestore";
 import thunk from "redux-thunk";
+import persistReducer from "redux-persist/lib/persistReducer";
 import debounce from "../lib/debounce";
-import app, { initialState } from "./reducers";
+import reducer, { initialState } from "./reducers";
+
+const { user, ...otherReducers } = reducer;
+
+const secureStorage = createSecureStore();
 
 const middleware = [debounce.middleware(), thunk];
 
 const config = {
   key: "root",
-  storage,
+  storage: AsyncStorage,
   debug: __DEV__,
+  blacklist: ["user"],
 };
 
-const reducer = persistCombineReducers(config, app);
+const userPersistConfig = {
+  key: "user",
+  storage: secureStorage,
+};
+
+// const rootReducer = persistCombineReducers(config, reducer);
+
+const rootReducer = combineReducers({
+  user: persistReducer(userPersistConfig, user),
+  ...otherReducers,
+});
+
+const persistRootReducer = persistReducer(config, rootReducer);
 
 export default () => {
   const store = createStore(
-    reducer,
+    persistRootReducer,
     initialState,
     applyMiddleware(...middleware),
   );

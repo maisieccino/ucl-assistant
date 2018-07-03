@@ -80,11 +80,14 @@ export const Page = ({
         {children}
       </ScrollView>
       {mainTabPage && (
-        <BlurView
-          tint="light"
-          intensity={85}
-          style={[StyleSheet.absoluteFill, Styles.mainTabBlur]}
-        />
+        <Fragment>
+          <BlurView
+            tint="light"
+            intensity={85}
+            style={[StyleSheet.absoluteFill, Styles.mainTabBlur]}
+          />
+          <View height={60} />
+        </Fragment>
       )}
     </KeyboardAvoidingView>
   </Fragment>

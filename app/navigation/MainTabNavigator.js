@@ -69,7 +69,7 @@ export default createBottomTabNavigator(screens, {
   swipeEnabled: false,
   tabBarOptions: {
     activeTintColor: Colors.pageBackground,
-    activeBackgroundColor: "rgba(27,153,139,0.6)",
+    activeBackgroundColor: "rgba(27,153,139,0.7)",
     inactiveBackgroundColor: `rgba(206,208,217,${
       Platform.OS === "ios" ? "0.1" : "0.4"
     })`,
