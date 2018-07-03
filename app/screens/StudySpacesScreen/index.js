@@ -4,16 +4,16 @@ import memoize from "memoize-one";
 import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { momentObj } from "react-moment-proptypes";
-import { FlatList, RefreshControl } from "react-native";
+import { FlatList } from "react-native";
 import { connect } from "react-redux";
 import { generate } from "shortid";
 // import diff from "deep-diff";
+import { surveys } from "../../constants/studyspaces";
 import { fetchSeatInfos } from "../../actions/studyspacesActions";
+import Button from "../../components/Button";
 import { Page } from "../../components/Containers";
-import { TextInput } from "../../components/Input";
 import {
   BodyText,
-  CentredText,
   ErrorText,
   SubtitleText,
   TitleText,
@@ -129,8 +129,6 @@ class StudySpaceScreen extends Component {
         refreshing={isLoading}
       >
         <TitleText>Find Study Spaces</TitleText>
-        <TextInput placeholder="Search for a building name..." />
-        <CentredText>Start typing to get search results</CentredText>
 
         <FavouriteStudySpaces navigation={navigation} />
 
@@ -150,23 +148,21 @@ class StudySpaceScreen extends Component {
         <BodyText>Last updated: {this.state.lastUpdated}</BodyText>
 
         <FlatList
-          data={studyspaces.sort((s1, s2) => s1.name.localeCompare(s2.name))}
+          data={surveys.sort((s1, s2) => s1.name.localeCompare(s2.name))}
           keyExtractor={item => `${item.id}`}
           initialNumToRender={30}
           renderItem={({ item }) => (
-            <StudySpaceSearchResult
-              {...item}
-              onPress={() =>
-                navigation.navigate("StudySpaceDetail", {
-                  id: item.id,
-                  name: item.name,
-                  capacity: item.capacity,
-                  occupied: item.occupied,
-                })
-              }
-            />
+            <StudySpaceSearchResult navigation={navigation} id={item.id} />
           )}
         />
+
+        <Button
+          onPress={() => {
+            navigation.navigate("StudySpaceAbout");
+          }}
+        >
+          How Does This Work?
+        </Button>
       </Page>
     );
   }

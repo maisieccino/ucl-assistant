@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import { generate } from "shortid";
 import SearchResult from "../../components/SearchResult";
 import Colors from "../../constants/Colors";
@@ -68,4 +69,37 @@ StudySpaceResult.defaultProps = {
   fetchingSeatInfo: false,
 };
 
-export default StudySpaceResult;
+const ConnectedStudySpaceResult = ({ id, studyspaces, navigation }) => {
+  const space = studyspaces.filter(x => x.id === id)[0];
+  return (
+    <StudySpaceResult
+      {...space}
+      onPress={() =>
+        navigation.navigate("StudySpaceDetail", {
+          id: space.id,
+          name: space.name,
+          occupied: space.occupied,
+          capacity: space.capacity,
+        })
+      }
+    />
+  );
+};
+
+ConnectedStudySpaceResult.propTypes = {
+  id: PropTypes.number.isRequired,
+  studyspaces: PropTypes.arrayOf(PropTypes.shape()),
+  navigation: PropTypes.shape().isRequired,
+};
+
+ConnectedStudySpaceResult.defaultProps = {
+  studyspaces: [],
+};
+
+ConnectedStudySpaceResult.mapStateToProps = state => ({
+  studyspaces: state.studyspaces.studyspaces,
+});
+
+export default connect(ConnectedStudySpaceResult.mapStateToProps)(
+  ConnectedStudySpaceResult,
+);

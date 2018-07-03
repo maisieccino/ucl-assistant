@@ -5,6 +5,7 @@ import SplashScreen from "../screens/SplashScreen";
 import TimetableDetailScreen from "../screens/TimetableDetailScreen";
 import PersonDetailScreen from "../screens/PersonDetailScreen";
 import StudySpaceDetailScreen from "../screens/StudySpaceDetailScreen";
+import StudySpaceAboutScreen from "../screens/StudySpaceAboutScreen";
 
 const RootStackNavigator = createStackNavigator(
   {
@@ -25,6 +26,9 @@ const RootStackNavigator = createStackNavigator(
     },
     StudySpaceDetail: {
       screen: StudySpaceDetailScreen,
+    },
+    StudySpaceAbout: {
+      screen: StudySpaceAboutScreen,
     },
   },
   {
