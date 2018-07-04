@@ -8,6 +8,7 @@ module.exports = StyleSheet.create({
   },
   text: {
     color: Colors.pageBackground,
+    textAlign: "center",
   },
   button: {
     borderColor: Colors.pageBackground,

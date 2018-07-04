@@ -1,9 +1,11 @@
 import React, { Component } from "react";
+import { Image } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { TitleText, SubtitleText, CentredText } from "../components/Typography";
-import { Page } from "../components/Containers";
+import { Page, Horizontal } from "../components/Containers";
 import { TextInput } from "../components/Input";
 import Colors from "../constants/Colors";
+import Styles from "../styles/Containers";
 
 class TimetableScreen extends Component {
   static navigationOptions = {
@@ -18,6 +20,26 @@ class TimetableScreen extends Component {
   };
 
   render() {
+    if (!__DEV__) {
+      return (
+        <Page mainTabPage>
+          <TitleText>Rooms</TitleText>
+          <CentredText>
+            This feature is not quite ready yet. Come back soon!
+          </CentredText>
+          <Horizontal>
+            <Image
+              source={require("../assets/images/undraw_building_blocks.png")}
+              resizeMethod="scale"
+              style={[Styles.image]}
+              width={150}
+              height={150}
+              resizeMode="contain"
+            />
+          </Horizontal>
+        </Page>
+      );
+    }
     return (
       <Page mainTabPage>
         <TitleText>Rooms</TitleText>

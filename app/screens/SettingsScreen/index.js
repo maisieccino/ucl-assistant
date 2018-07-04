@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unused-state */
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Alert, Platform, ToastAndroid, View, Clipboard } from "react-native"; // eslint-disable-line react-native/split-platform-components
 import { NavigationActions, StackActions } from "react-navigation";
 import PropTypes from "prop-types";
@@ -17,6 +17,7 @@ import Button, { SmallButton } from "../../components/Button";
 import Colors from "../../constants/Colors";
 import TextInput from "../../components/Input/TextInput";
 import NotificationSwitch from "./NotificationSwitch";
+import LiveIndicator from "../StudySpaceDetailScreen/LiveIndicator";
 
 const { version } = require("../../package.json");
 
@@ -55,6 +56,12 @@ class SettingsScreen extends Component {
       );
     }
   }
+
+  static releaseChannelStyle = {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+  };
 
   state = {
     isSigningOut: false,
@@ -113,13 +120,20 @@ class SettingsScreen extends Component {
             <ButtonText>Sign Out</ButtonText>
           </Horizontal>
         </Button>
-        <TitleText>About</TitleText>
-        <SubtitleText>Version</SubtitleText>
-        <BodyText>{version}</BodyText>
-        <BodyText>
-          Release channel:{" "}
-          {__DEV__ ? "Developer Mode" : Constants.manifest.releaseChannel}
-        </BodyText>
+        <TitleText>About This App</TitleText>
+        <SubtitleText>Version {version}</SubtitleText>
+        <Horizontal style={SettingsScreen.releaseChannelStyle}>
+          {__DEV__ ? (
+            <LiveIndicator>Developer Mode</LiveIndicator>
+          ) : (
+            <Fragment>
+              <BodyText>Release Channel: </BodyText>
+              <LiveIndicator>
+                {Constants.manifest.releaseChannel || "dev"}
+              </LiveIndicator>
+            </Fragment>
+          )}
+        </Horizontal>
         <SubtitleText>Author</SubtitleText>
         <BodyText>Created by Matt Bell, using the UCL API.</BodyText>
         <BodyText>

@@ -49,6 +49,7 @@ class App extends Component {
         require("./assets/images/undraw_calendar.png"),
         require("./assets/images/undraw_relaxation.png"),
         require("./assets/images/undraw_graduation.png"),
+        require("./assets/images/undraw_building_blocks.png"),
       ]),
       Font.loadAsync({
         // This is the font that we are using for our tab bar

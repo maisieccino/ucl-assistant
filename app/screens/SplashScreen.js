@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import { NavigationActions, StackActions } from "react-navigation";
 import { Feather } from "@expo/vector-icons";
 import { signIn } from "../actions/userActions";
-import { TitleText, BodyText, ButtonText } from "../components/Typography";
+import { ButtonText, SubtitleText } from "../components/Typography";
 import { Spacer, Horizontal } from "../components/Containers";
 import CustomButton from "../components/Button";
 import Colors from "../constants/Colors";
@@ -99,16 +99,15 @@ class SplashScreen extends Component {
         start={[0, 1]}
         end={[1, 0]}
       >
-        <TitleText style={SplashStyle.text}>UCL Assistant</TitleText>
-        <BodyText style={SplashStyle.text}>
-          One app to manage your life at UCL.
-        </BodyText>
         <Image
-          source={require("../assets/images/undraw_calendar.png")}
+          source={require("../assets/images/icon-fg.png")}
           resizeMethod="scale"
           style={Styles.image}
           resizeMode="contain"
         />
+        <SubtitleText style={SplashStyle.text}>
+          One app to manage your life at UCL.
+        </SubtitleText>
         <Spacer />
         <CustomButton
           onPress={() => this.props.signIn()}
@@ -123,7 +122,7 @@ class SplashScreen extends Component {
               style={[Styles.image, SplashStyle.uclapiImage]}
             />
             <ButtonText style={SplashStyle.buttonText}>
-              Sign In With UCL API
+              Sign In With UCL
             </ButtonText>
           </Horizontal>
         </CustomButton>
