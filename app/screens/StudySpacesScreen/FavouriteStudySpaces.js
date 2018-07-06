@@ -15,17 +15,7 @@ const FavouriteStudySpaces = ({ favourites, studyspaces, navigation }) => {
           data={spaces}
           keyExtractor={item => `${item.id}`}
           renderItem={({ item }) => (
-            <StudySpaceResult
-              {...item}
-              onPress={() =>
-                navigation.navigate("StudySpaceDetail", {
-                  id: item.id,
-                  name: item.name,
-                  capacity: item.capacity,
-                  occupied: item.occupied,
-                })
-              }
-            />
+            <StudySpaceResult navigation={navigation} id={item.id} />
           )}
         />
       ) : (
