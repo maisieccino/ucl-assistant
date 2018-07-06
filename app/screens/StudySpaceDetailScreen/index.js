@@ -66,6 +66,11 @@ class StudySpaceDetailScreen extends Component {
     fetchAverages: (token, id) => dispatch(fetchAverages(token, id)),
   });
 
+  static capacityTextStyle = {
+    marginBottom: 0,
+    marginTop: 5,
+  };
+
   constructor(props) {
     super(props);
     const { id, name, occupied, capacity } = this.props.navigation.state.params;
@@ -99,11 +104,15 @@ class StudySpaceDetailScreen extends Component {
           <TitleText>{name}</TitleText>
           <Horizontal>
             <View style={{ flex: 1 }}>
-              <TitleText>{capacity - occupied}</TitleText>
+              <TitleText style={StudySpaceDetailScreen.capacityTextStyle}>
+                {capacity - occupied}
+              </TitleText>
               <BodyText>Seats Available</BodyText>
             </View>
             <View style={{ flex: 1 }}>
-              <TitleText>{occupied}</TitleText>
+              <TitleText style={StudySpaceDetailScreen.capacityTextStyle}>
+                {occupied}
+              </TitleText>
               <BodyText>Seats Occupied</BodyText>
             </View>
           </Horizontal>
