@@ -7,6 +7,7 @@ const {
 } = require("./constants");
 const JSONRequest = require("../JSONRequest");
 const surveyList = require("./surveysList");
+const details = require("./studyspaceDetails");
 
 const getWorkspaces = () =>
   surveyList.surveys.map(survey => ({ name: survey.name, id: survey.id }));
@@ -95,6 +96,14 @@ const getAllSeatInfo = async () => {
   }));
 };
 
+const getDetail = surveyId => {
+  const data = {
+    maps: surveyList.filter(survey => survey.id === surveyId)[0].maps,
+    ...(details[surveyId]: {}),
+  };
+  return data;
+};
+
 module.exports = {
   reduceAverageData,
   getWorkspaces,
@@ -102,4 +111,5 @@ module.exports = {
   getSeatingInfo,
   getAllSeatInfo,
   getHistoricSeatInfo,
+  getDetail,
 };

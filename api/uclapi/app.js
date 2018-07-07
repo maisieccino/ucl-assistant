@@ -11,6 +11,7 @@ const {
   getSeatingInfo,
   getAllSeatInfo,
   getHistoricSeatInfo,
+  getDetail,
 } = require("./workspaces");
 const {
   WORKSPACE_SUMMARY_PATH,
@@ -74,6 +75,11 @@ router.get("/workspaces/historic", jwt, async ctx => {
 router.get("/workspaces/:id/seatinfo", jwt, async ctx => {
   ctx.assert(ctx.params.id, 400);
   ctx.body = await getSeatingInfo(ctx.params.id);
+});
+
+router.get("/workspaces/:id/", jwt, async ctx => {
+  ctx.assert(ctx.params.id, 400);
+  ctx.body = getDetail(ctx.params.id);
 });
 
 router.get("/workspaces", jwt, async ctx => {
