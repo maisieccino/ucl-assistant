@@ -99,7 +99,7 @@ const getAllSeatInfo = async () => {
 const getDetail = surveyId => {
   const data = {
     maps: surveyList.filter(survey => survey.id === surveyId)[0].maps,
-    ...(details[surveyId]: {}),
+    ...(details[surveyId] || {}),
   };
   return data;
 };
