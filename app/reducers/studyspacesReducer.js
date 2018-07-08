@@ -70,34 +70,38 @@ export default (state = initialState, action = null) => {
       return state;
     }
 
-    case WORKSPACES_FETCH_SEATINFO_SUCCESS: {
-      if (space) {
-        const newStudyspaces = updateStudyspaces(state.studyspaces, id, {
-          ...space,
-          ...data,
-          isFetchingSeatInfo: false,
-        });
-        return {
-          ...state,
-          studyspaces: newStudyspaces,
-          lastStatusUpdate: moment(),
-        };
-      }
-      return state;
-    }
-
     // case WORKSPACES_FETCH_SEATINFO_SUCCESS: {
-    //   const newStudyspaces = ids.reduce(
-    //     (spaces, s) =>
-    //       updateStudyspaces(spaces, s, {
-    //         ...state.studyspaces.filter(x => x.id === s)[0],
-    //         ...data.filter(x => x.id === s)[0],
-    //         isFetchingSeatInfo: false,
-    //       }),
-    //     state.studyspaces,
-    //   );
-    //   return { ...state, studyspaces: newStudyspaces };
+    //   if (space) {
+    //     const newStudyspaces = updateStudyspaces(state.studyspaces, id, {
+    //       ...space,
+    //       ...data,
+    //       isFetchingSeatInfo: false,
+    //     });
+    //     return {
+    //       ...state,
+    //       studyspaces: newStudyspaces,
+    //       lastStatusUpdate: moment(),
+    //     };
+    //   }
+    //   return state;
     // }
+
+    case WORKSPACES_FETCH_SEATINFO_SUCCESS: {
+      const newStudyspaces = ids.reduce(
+        (spaces, s) =>
+          updateStudyspaces(spaces, s, {
+            ...state.studyspaces.filter(x => x.id === s)[0],
+            ...data.filter(x => x.id === s)[0],
+            isFetchingSeatInfo: false,
+          }),
+        state.studyspaces,
+      );
+      return {
+        ...state,
+        studyspaces: newStudyspaces,
+        lastStatusUpdate: moment(),
+      };
+    }
 
     case WORKSPACES_IS_FETCHING_HISTORIC_DATA: {
       if (space) {

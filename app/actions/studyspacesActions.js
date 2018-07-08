@@ -15,8 +15,14 @@ export const setIsFetchingSeatInfo = ids => ({
   type: WORKSPACES_IS_FETCHING_SEATINFO,
 });
 
-export const fetchSeatInfoSuccess = (id, data) => ({
-  id,
+// export const fetchSeatInfoSuccess = (id, data) => ({
+//   id,
+//   data,
+//   type: WORKSPACES_FETCH_SEATINFO_SUCCESS,
+// });
+
+export const fetchSeatInfoSuccess = (ids, data) => ({
+  ids,
   data,
   type: WORKSPACES_FETCH_SEATINFO_SUCCESS,
 });
@@ -72,19 +78,20 @@ export const fetchSeatInfos = (token: String, ids: Array) => async (
       throw new Error(json.error || "There was a problem");
     }
     console.log("data received");
-    return Promise.all(
-      ids.map(id => {
-        const info = json.content.filter(obj => `${obj.id}` === `${id}`)[0];
-        return dispatch(
-          fetchSeatInfoSuccess(id, {
-            occupied: info.occupied,
-            capacity: info.total,
-          }),
-        );
-      }),
-    ).then(() => {
-      console.log("done");
-    });
+    return dispatch(fetchSeatInfoSuccess(ids, json.content));
+    // return Promise.all(
+    //   ids.map(id => {
+    //     const info = json.content.filter(obj => `${obj.id}` === `${id}`)[0];
+    //     return dispatch(
+    //       fetchSeatInfoSuccess(id, {
+    //         occupied: info.occupied,
+    //         capacity: info.total,
+    //       }),
+    //     );
+    //   }),
+    // ).then(() => {
+    //   console.log("done");
+    // });
   } catch (error) {
     return Promise.all(
       ids.map(id =>
