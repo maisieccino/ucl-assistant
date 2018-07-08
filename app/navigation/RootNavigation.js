@@ -6,6 +6,7 @@ import TimetableDetailScreen from "../screens/TimetableDetailScreen";
 import PersonDetailScreen from "../screens/PersonDetailScreen";
 import StudySpaceDetailScreen from "../screens/StudySpaceDetailScreen";
 import StudySpaceAboutScreen from "../screens/StudySpaceAboutScreen";
+import Colors from "../constants/Colors";
 
 const RootStackNavigator = createStackNavigator(
   {
@@ -35,7 +36,8 @@ const RootStackNavigator = createStackNavigator(
     navigationOptions: () => ({
       headerTitleStyle: {
         fontWeight: "normal",
-        fontFamily: "apercu",
+        fontFamily: "renner-medium",
+        color: Colors.textColor,
       },
     }),
   },

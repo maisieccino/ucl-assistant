@@ -3,14 +3,14 @@ import Color from "../constants/Colors";
 
 export const style = StyleSheet.create({
   baseStyle: {
-    fontFamily: "apercu",
+    fontFamily: "renner-medium",
     color: Color.textColor,
     fontSize: 16,
     marginTop: 1,
     marginBottom: 1,
   },
   title: {
-    fontFamily: "apercu-bold",
+    fontFamily: "renner-semi",
     fontSize: 35,
     marginBottom: 10,
   },
@@ -40,12 +40,12 @@ export const style = StyleSheet.create({
     marginBottom: 5,
   },
   searchResultTopText: {
-    fontFamily: "apercu-bold",
+    fontFamily: "renner-semi",
     marginBottom: 0,
   },
   searchResultBottomText: {
     marginTop: 0,
-    fontStyle: "italic",
+    fontFamily: "renner-medium-italic",
     color: Color.lightTextColor,
   },
   infoTextContainer: {
@@ -120,7 +120,7 @@ export default StyleSheet.create({
   ]),
   infoTextContainer: StyleSheet.flatten([style.infoTextContainer]),
   bold: {
-    fontWeight: "bold",
+    fontFamily: "renner-semi",
   },
   small: {
     fontSize: 12,

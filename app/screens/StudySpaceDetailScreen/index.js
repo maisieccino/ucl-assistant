@@ -13,6 +13,7 @@ import CapacityChart from "./CapacityChart";
 import LiveIndicator from "./LiveIndicator";
 // import OpeningHours from "./OpeningHours";
 import FavouriteButton from "./FavouriteButton";
+import Map from "./Map";
 
 const busyText = (
   time = 0,
@@ -102,6 +103,7 @@ class StudySpaceDetailScreen extends Component {
       <View style={{ flex: 1 }}>
         <Page style={{ flex: 1.8 }}>
           <TitleText>{name}</TitleText>
+          <Map />
           <Horizontal>
             <View style={{ flex: 1 }}>
               <TitleText style={StudySpaceDetailScreen.capacityTextStyle}>

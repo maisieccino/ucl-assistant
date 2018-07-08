@@ -79,7 +79,7 @@ export default createBottomTabNavigator(screens, {
       paddingBottom: 5,
     },
     labelStyle: {
-      fontFamily: "apercu",
+      fontFamily: "renner-medium",
     },
     style: {
       height: 60,
