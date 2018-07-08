@@ -8,6 +8,9 @@ import {
   WORKSPACES_FETCH_HISTORIC_DATA_SUCCESS,
   WORKSPACES_IS_FETCHING_HISTORIC_DATA,
   STUDYSPACE_TOGGLE_FAVOURITE,
+  STUDYSPACE_IS_FETCHING_DETAIL,
+  STUDYSPACE_FETCHING_DETAIL_SUCCESS,
+  STUDYSPACE_FETCHING_DETAIL_FAILURE,
 } from "../constants/studyspacesConstants";
 
 export const setIsFetchingSeatInfo = ids => ({
@@ -139,3 +142,42 @@ export const toggleFavourite = id => ({
   id,
   type: STUDYSPACE_TOGGLE_FAVOURITE,
 });
+
+export const setIsFetchingDetail = id => ({
+  id,
+  type: STUDYSPACE_IS_FETCHING_DETAIL,
+});
+
+export const fetchDetailSuccess = (id, data) => ({
+  id,
+  data,
+  type: STUDYSPACE_FETCHING_DETAIL_SUCCESS,
+});
+
+export const fetchDetailFailure = (id, error) => ({
+  id,
+  error,
+  type: STUDYSPACE_FETCHING_DETAIL_FAILURE,
+});
+
+export const fetchDetail = (token: String, id: Number) => async (
+  dispatch: () => Promise,
+) => {
+  await dispatch(setIsFetchingDetail(id));
+  try {
+    const res = await fetch(`${WORKSPACES_URL}/${id}/`, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
+    const json = await res.json();
+    if (!res.ok) {
+      throw new Error(json.error || "There was a problem");
+    }
+    return dispatch(fetchDetailSuccess(id, json.content));
+  } catch (error) {
+    return dispatch(
+      fetchDetailFailure(id, typeof error === "string" ? error : error.message),
+    );
+  }
+};

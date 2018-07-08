@@ -2,7 +2,7 @@
 // @flow
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { View } from "react-native";
+import { Linking, View } from "react-native";
 import moment from "moment";
 import { connect } from "react-redux";
 import { fetchAverages } from "../../actions/studyspacesActions";
@@ -152,6 +152,11 @@ class StudySpaceDetailScreen extends Component {
             See the libraries website for more information about what facilities
             are offered.
           </BodyText>
+          <Button
+            onPress={() => Linking.openURL("https://ucl.ac.uk/libraries")}
+          >
+            Website
+          </Button>
         </Page>
         <FavouriteButton id={id} />
       </View>

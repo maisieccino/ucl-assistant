@@ -70,7 +70,9 @@ class StudySpaceScreen extends Component {
 
   state = {
     loadedSeatInfo: false,
-    lastUpdated: "never",
+    lastUpdated: this.props.lastUpdated
+      ? moment(this.props.lastUpdated).fromNow()
+      : "never",
   };
 
   componentDidMount() {
