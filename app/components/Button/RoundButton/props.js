@@ -4,7 +4,8 @@ import { ViewPropTypes } from "react-native";
 export const propTypes = {
   onPress: PropTypes.func,
   loading: PropTypes.bool,
-  styles: ViewPropTypes.style,
+  style: ViewPropTypes.style,
+  wrapperStyle: ViewPropTypes.style,
   children: PropTypes.node,
   disabled: PropTypes.bool,
   icon: PropTypes.string,
@@ -13,7 +14,8 @@ export const propTypes = {
 export const defaultProps = {
   onPress: () => {},
   loading: false,
-  styles: {},
+  style: {},
+  wrapperStyle: {},
   children: "",
   disabled: false,
   icon: "bell",

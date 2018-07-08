@@ -116,7 +116,7 @@ class StudySpaceScreen extends Component {
     const errorneousSpaces = this.memoizeErrorneousSpaces(studyspaces);
     const isLoading =
       !this.state.loadedSeatInfo ||
-      this.props.studyspaces.reduce(
+      studyspaces.reduce(
         (res, space) => res || space.isFetchingSeatInfo,
         false,
       );

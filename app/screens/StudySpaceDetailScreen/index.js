@@ -2,18 +2,24 @@
 // @flow
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import moment from "moment";
 import { connect } from "react-redux";
 import { fetchAverages } from "../../actions/studyspacesActions";
 import Button from "../../components/Button";
-import { Page, Horizontal } from "../../components/Containers";
-import { BodyText, TitleText, SubtitleText } from "../../components/Typography";
+import { Page, Horizontal, PaddedIcon } from "../../components/Containers";
+import {
+  BodyText,
+  TitleText,
+  SubtitleText,
+  ButtonText,
+} from "../../components/Typography";
 import CapacityChart from "./CapacityChart";
 import LiveIndicator from "./LiveIndicator";
-// import OpeningHours from "./OpeningHours";
+import OpeningHours from "./OpeningHours";
 import FavouriteButton from "./FavouriteButton";
 import Map from "./Map";
+import Colors from "../../constants/Colors";
 
 const busyText = (
   time = 0,
@@ -103,7 +109,7 @@ class StudySpaceDetailScreen extends Component {
       <View style={{ flex: 1 }}>
         <Page style={{ flex: 1.8 }}>
           <TitleText>{name}</TitleText>
-          <Map />
+          <Map address="University College London" />
           <Horizontal>
             <View style={{ flex: 1 }}>
               <TitleText style={StudySpaceDetailScreen.capacityTextStyle}>
@@ -133,9 +139,14 @@ class StudySpaceDetailScreen extends Component {
               {busyText(hour, data, occupied, capacity)}
             </BodyText>
           </Horizontal>
-          <Button>Live Seating Map</Button>
-          {/* <SubtitleText>Opening Hours</SubtitleText>
-          <OpeningHours /> */}
+          <Button onPress={() => {}}>
+            <Horizontal>
+              <PaddedIcon name="zap" size={24} color={Colors.pageBackground} />
+              <ButtonText>Live Seating Map</ButtonText>
+            </Horizontal>
+          </Button>
+          <SubtitleText>Opening Hours</SubtitleText>
+          <OpeningHours />
           <SubtitleText>Facilities</SubtitleText>
           <BodyText>
             See the libraries website for more information about what facilities

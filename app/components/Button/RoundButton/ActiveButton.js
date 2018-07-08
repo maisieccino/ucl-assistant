@@ -10,9 +10,9 @@ import Colors from "../../../constants/Colors";
 import Styles from "../../../styles/Button";
 import { propTypes, defaultProps } from "../props";
 
-const Wrapper = ({ children, onPress, disabled }) =>
+const Wrapper = ({ children, onPress, disabled, style }) =>
   Platform.OS === "android" ? (
-    <View style={Styles.roundButtonWrapper}>
+    <View style={[Styles.roundButtonWrapper, style]}>
       <TouchableNativeFeedback
         background={TouchableNativeFeedback.Ripple(
           Colors.accentColorLight,
@@ -38,11 +38,11 @@ const Wrapper = ({ children, onPress, disabled }) =>
 Wrapper.propTypes = propTypes;
 Wrapper.defaultProps = defaultProps;
 
-const Button = ({ onPress, styles, children, disabled }) => (
-  <Wrapper onPress={onPress} disabled={disabled}>
+const Button = ({ onPress, style, children, disabled, wrapperStyle }) => (
+  <Wrapper onPress={onPress} disabled={disabled} style={wrapperStyle}>
     <LinearGradient
       colors={[Colors.accentColor, Colors.buttonBackground]}
-      style={[Styles.roundButton, styles]}
+      style={[Styles.roundButton, style]}
       start={[0, 1]}
       end={[1, 0]}
     >
