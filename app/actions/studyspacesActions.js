@@ -79,19 +79,6 @@ export const fetchSeatInfos = (token: String, ids: Array) => async (
     }
     console.log("data received");
     return dispatch(fetchSeatInfoSuccess(ids, json.content));
-    // return Promise.all(
-    //   ids.map(id => {
-    //     const info = json.content.filter(obj => `${obj.id}` === `${id}`)[0];
-    //     return dispatch(
-    //       fetchSeatInfoSuccess(id, {
-    //         occupied: info.occupied,
-    //         capacity: info.total,
-    //       }),
-    //     );
-    //   }),
-    // ).then(() => {
-    //   console.log("done");
-    // });
   } catch (error) {
     return Promise.all(
       ids.map(id =>

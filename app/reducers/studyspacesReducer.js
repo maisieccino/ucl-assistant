@@ -70,22 +70,6 @@ export default (state = initialState, action = null) => {
       return state;
     }
 
-    // case WORKSPACES_FETCH_SEATINFO_SUCCESS: {
-    //   if (space) {
-    //     const newStudyspaces = updateStudyspaces(state.studyspaces, id, {
-    //       ...space,
-    //       ...data,
-    //       isFetchingSeatInfo: false,
-    //     });
-    //     return {
-    //       ...state,
-    //       studyspaces: newStudyspaces,
-    //       lastStatusUpdate: moment(),
-    //     };
-    //   }
-    //   return state;
-    // }
-
     case WORKSPACES_FETCH_SEATINFO_SUCCESS: {
       const newStudyspaces = ids.reduce(
         (spaces, s) =>

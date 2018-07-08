@@ -2,7 +2,7 @@
 // @flow
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Alert, View } from "react-native";
+import { View } from "react-native";
 import moment from "moment";
 import { connect } from "react-redux";
 import { fetchAverages } from "../../actions/studyspacesActions";

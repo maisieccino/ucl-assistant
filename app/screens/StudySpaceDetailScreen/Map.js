@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { MapView, Permissions } from "expo";
-import { Linking, View } from "react-native";
+import { Alert, Linking, View } from "react-native";
 import Button, { RoundButton } from "../../components/Button";
 import MapStyle from "../../styles/Map";
 import { BodyText } from "../../components/Typography";
@@ -46,6 +46,37 @@ class Map extends Component {
     }
   }
 
+  async requestLocation() {
+    const { status } = await Permissions.askAsync(Permissions.LOCATION);
+    return this.setState({ showLocation: status === "granted" });
+  }
+
+  locationAlert(mapsUrl) {
+    Alert.alert(
+      "Permission Required",
+      "We need permission to access your location to show the map.",
+      [
+        {
+          text: "Open in Maps",
+          onPress: () => {
+            Linking.openURL(mapsUrl);
+          },
+        },
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Enable",
+          style: "destructive",
+          onPress: () => {
+            this.requestLocation();
+          },
+        },
+      ],
+    );
+  }
+
   render() {
     const { lat, lng, address } = this.props;
     const { showLocation } = this.state;
@@ -70,13 +101,13 @@ class Map extends Component {
           ]}
         >
           <BodyText style={{ position: "relative" }}>
-            Location permission is required to view the map.
+            Location permission is required to view the map in-app.
           </BodyText>
           <Button
-            onPress={() => Linking.openURL(mapsUrl)}
+            onPress={() => this.locationAlert(mapsUrl)}
             style={{ justifyContent: "space-around" }}
           >
-            Open In Maps
+            Show Map
           </Button>
         </View>
       );
