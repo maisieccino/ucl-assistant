@@ -150,8 +150,6 @@ class SettingsScreen extends Component {
                 Copy
               </SmallButton>
             </Horizontal>
-            <SubtitleText>State</SubtitleText>
-            <BodyText>{JSON.stringify(state, "\n", 2)}</BodyText>
           </View>
         )}
       </Page>

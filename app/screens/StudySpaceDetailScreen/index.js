@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { Linking, View } from "react-native";
 import moment from "moment";
 import { connect } from "react-redux";
-import { fetchAverages } from "../../actions/studyspacesActions";
+import { fetchAverages, fetchSeatInfo } from "../../actions/studyspacesActions";
 import Button from "../../components/Button";
 import { Page, Horizontal, PaddedIcon } from "../../components/Containers";
 import {
@@ -13,6 +13,7 @@ import {
   TitleText,
   SubtitleText,
   ButtonText,
+  ErrorText,
 } from "../../components/Typography";
 import CapacityChart from "./CapacityChart";
 import LiveIndicator from "./LiveIndicator";
@@ -48,6 +49,7 @@ class StudySpaceDetailScreen extends Component {
     studyspaces: PropTypes.arrayOf(PropTypes.shape()),
     /* eslint-enable react/no-unused-prop-types */
     fetchAverages: PropTypes.func.isRequired,
+    fetchSeatInfo: PropTypes.func.isRequired,
     token: PropTypes.string,
   };
 
@@ -59,7 +61,11 @@ class StudySpaceDetailScreen extends Component {
   static getDerivedStateFromProps(props, state) {
     if (props.studyspaces && props.studyspaces.length > 0) {
       const space = props.studyspaces.filter(s => s.id === state.id)[0];
-      return { data: space.dailyAverages, space };
+      return {
+        data: space.dailyAverages,
+        space,
+        fetchingData: space.isFetchingAverages || space.isFetchingSeatInfo,
+      };
     }
     return null;
   }
@@ -71,6 +77,7 @@ class StudySpaceDetailScreen extends Component {
 
   static mapDispatchToProps = dispatch => ({
     fetchAverages: (token, id) => dispatch(fetchAverages(token, id)),
+    fetchSeatInfo: (token, id) => dispatch(fetchSeatInfo(token, id)),
   });
 
   static capacityTextStyle = {
@@ -91,25 +98,84 @@ class StudySpaceDetailScreen extends Component {
       space: {
         isFetchingAverages: false,
       },
+      showLiveIndicator: false,
     };
   }
 
   componentDidMount() {
     if (!this.state.fetchingData && this.props.token.length > 0) {
-      this.props.fetchAverages(this.props.token, this.state.id);
-      setTimeout(() => this.setState({ fetchingData: true }), 100);
+      this.getData(true);
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      !this.state.space.isFetchingAverages &&
+      prevState.space.isFetchingAverages
+    ) {
+      if (this.liveIndicatorTimeout) {
+        clearTimeout(this.liveIndicatorTimeout);
+      }
+      this.liveIndicatorTimeout = setTimeout(
+        () => this.props.fetchSeatInfo(this.props.token, this.state.id),
+        60000 * 5,
+      );
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.liveIndicatorTimeout) {
+      clearTimeout(this.liveIndicatorTimeout);
+    }
+  }
+
+  getData(isFirstFetch: false) {
+    if (isFirstFetch) {
+      this.props.fetchAverages(this.props.token, this.state.id);
+    }
+    this.props.fetchSeatInfo(this.props.token, this.state.id);
+    setTimeout(() => this.setState({ fetchingData: true }), 100);
+    this.setState({ showLiveIndicator: true });
+  }
+
+  liveIndicatorTimeout = null;
   render() {
-    const { id, name, data, capacity, occupied } = this.state;
-    const { isFetchingAverages } = this.state.space;
+    const {
+      id,
+      name,
+      data,
+      capacity,
+      occupied,
+      fetchingData,
+      showLiveIndicator,
+    } = this.state;
+    const {
+      isFetchingAverages,
+      fetchSeatInfoError,
+      dailyAveragesError,
+      lastUpdatedSeatInfo,
+    } = this.state.space;
     const hour = parseInt(moment().format("HH"), 10);
     return (
       <View style={{ flex: 1 }}>
-        <Page style={{ flex: 1.8 }}>
+        <Page
+          style={{ flex: 1.8 }}
+          refreshEnabled
+          refreshing={fetchingData}
+          onRefresh={() => this.getData()}
+        >
           <TitleText>{name}</TitleText>
+          {dailyAveragesError.length > 0 && (
+            <ErrorText>{dailyAveragesError}</ErrorText>
+          )}
+          {fetchSeatInfoError.length > 0 && (
+            <ErrorText>{fetchSeatInfoError}</ErrorText>
+          )}
           <Map address="University College London" />
+          <BodyText>
+            The Main Library is located on the 1st floor of the Wilkins
+            Building.
+          </BodyText>
           <Horizontal>
             <View style={{ flex: 1 }}>
               <TitleText style={StudySpaceDetailScreen.capacityTextStyle}>
@@ -133,13 +199,13 @@ class StudySpaceDetailScreen extends Component {
             loading={isFetchingAverages}
           />
           <Horizontal style={{ justifyContent: "flex-start" }}>
-            <LiveIndicator />
+            <LiveIndicator active={showLiveIndicator} />
             <BodyText>
-              {moment().format("HH:mm")} -{" "}
+              {moment(lastUpdatedSeatInfo).format("HH:mm")} -{" "}
               {busyText(hour, data, occupied, capacity)}
             </BodyText>
           </Horizontal>
-          <Button onPress={() => {}}>
+          <Button disabled onPress={() => {}}>
             <Horizontal>
               <PaddedIcon name="zap" size={24} color={Colors.pageBackground} />
               <ButtonText>Live Seating Map</ButtonText>
@@ -155,7 +221,14 @@ class StudySpaceDetailScreen extends Component {
           <Button
             onPress={() => Linking.openURL("https://ucl.ac.uk/libraries")}
           >
-            Website
+            <Horizontal>
+              <PaddedIcon
+                name="external-link"
+                size={24}
+                color={Colors.pageBackground}
+              />
+              <ButtonText>Website</ButtonText>
+            </Horizontal>
           </Button>
         </Page>
         <FavouriteButton id={id} />

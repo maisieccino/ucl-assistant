@@ -5,9 +5,13 @@ import { BodyText } from "../../components/Typography";
 import Colors from "../../constants/Colors";
 import Style from "../../styles/Containers";
 
-const LiveIndicator = ({ children }) => (
+const LiveIndicator = ({ children, active }) => (
   <LinearGradient
-    colors={[Colors.errorColor, Colors.indicatorOrange]}
+    colors={
+      active
+        ? [Colors.errorColor, Colors.indicatorOrange]
+        : [Colors.textColor, Colors.lightTextColor]
+    }
     start={[0, 1]}
     end={[1, 0]}
     style={Style.liveIndicator}
@@ -18,10 +22,12 @@ const LiveIndicator = ({ children }) => (
 
 LiveIndicator.propTypes = {
   children: PropTypes.string,
+  active: PropTypes.bool,
 };
 
 LiveIndicator.defaultProps = {
   children: "LIVE",
+  active: true,
 };
 
 export default LiveIndicator;

@@ -119,6 +119,8 @@ class Map extends Component {
             MapStyle.wideMap,
             {
               marginTop: 0,
+              marginLeft: 0,
+              marginRight: 0,
             },
           ]}
           showUserLocation

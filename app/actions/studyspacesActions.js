@@ -12,6 +12,7 @@ import {
   STUDYSPACE_FETCHING_DETAIL_SUCCESS,
   STUDYSPACE_FETCHING_DETAIL_FAILURE,
 } from "../constants/studyspacesConstants";
+import moment from "moment";
 
 export const setIsFetchingSeatInfo = ids => ({
   ids,
@@ -49,10 +50,16 @@ export const fetchSeatInfo = (token, id) => async dispatch => {
       throw new Error(json.error || "There was a problem");
     }
     return dispatch(
-      fetchSeatInfoSuccess(id, {
-        occupied: json.content.occupied,
-        capacity: json.content.total,
-      }),
+      fetchSeatInfoSuccess(
+        [id],
+        [
+          {
+            id,
+            occupied: json.content.occupied,
+            capacity: json.content.total,
+          },
+        ],
+      ),
     );
   } catch (error) {
     return dispatch(
@@ -160,9 +167,19 @@ export const fetchDetailFailure = (id, error) => ({
   type: STUDYSPACE_FETCHING_DETAIL_FAILURE,
 });
 
-export const fetchDetail = (token: String, id: Number) => async (
-  dispatch: () => Promise,
-) => {
+export const fetchDetail = (
+  token: String,
+  id: Number,
+  lastUpdated: moment,
+) => async (dispatch: () => Promise) => {
+  if (
+    moment
+      .duration()
+      .subtract(lastUpdated)
+      .asHours() < 24
+  ) {
+    return null;
+  }
   await dispatch(setIsFetchingDetail(id));
   try {
     const res = await fetch(`${WORKSPACES_URL}/${id}/`, {

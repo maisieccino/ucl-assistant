@@ -8,6 +8,9 @@ import {
   WORKSPACES_FETCH_HISTORIC_DATA_FAILURE,
   WORKSPACES_FETCH_HISTORIC_DATA_SUCCESS,
   STUDYSPACE_TOGGLE_FAVOURITE,
+  STUDYSPACE_IS_FETCHING_DETAIL,
+  STUDYSPACE_FETCHING_DETAIL_SUCCESS,
+  STUDYSPACE_FETCHING_DETAIL_FAILURE,
 } from "../constants/studyspacesConstants";
 
 export const initialState = {
@@ -18,10 +21,14 @@ export const initialState = {
       capacity: 0,
       fetchSeatInfoError: "",
       isFetchingSeatInfo: false,
+      lastUpdatedSeatInfo: null,
       dailyAverages: Array.from(Array(24)).map(() => 0),
       isFetchingAverages: false,
       dailyAveragesError: "",
       lastUpdatedAverages: null,
+      isFetchingDetail: false,
+      detailError: "",
+      lastUpdatedDetails: null,
     }))
     .sort((s1, s2) => s1.id - s2.id),
   lastStatusUpdate: null,
@@ -71,19 +78,21 @@ export default (state = initialState, action = null) => {
     }
 
     case WORKSPACES_FETCH_SEATINFO_SUCCESS: {
+      const now = moment();
       const newStudyspaces = ids.reduce(
         (spaces, s) =>
           updateStudyspaces(spaces, s, {
             ...state.studyspaces.filter(x => x.id === s)[0],
             ...data.filter(x => x.id === s)[0],
             isFetchingSeatInfo: false,
+            lastUpdatedSeatInfo: now,
           }),
         state.studyspaces,
       );
       return {
         ...state,
         studyspaces: newStudyspaces,
-        lastStatusUpdate: moment(),
+        lastStatusUpdate: now,
       };
     }
 
@@ -142,6 +151,52 @@ export default (state = initialState, action = null) => {
           favourites: state.favourites.includes(id)
             ? state.favourites.filter(x => x !== id)
             : [...state.favourites, id],
+        };
+      }
+      return state;
+    }
+
+    case STUDYSPACE_IS_FETCHING_DETAIL: {
+      if (space) {
+        const newStudyspaces = updateStudyspaces(state.studyspaces, id, {
+          ...space,
+          isFetchingDetail: true,
+          detailError: "",
+        });
+        return {
+          ...state,
+          studyspaces: newStudyspaces,
+        };
+      }
+      return state;
+    }
+
+    case STUDYSPACE_FETCHING_DETAIL_FAILURE: {
+      if (space) {
+        const newStudyspaces = updateStudyspaces(state.studyspaces, id, {
+          ...space,
+          isFetchingDetail: false,
+          detailError: error,
+          lastUpdatedDetails: moment(),
+        });
+        return {
+          ...state,
+          studyspaces: newStudyspaces,
+        };
+      }
+      return state;
+    }
+    case STUDYSPACE_FETCHING_DETAIL_SUCCESS: {
+      if (space) {
+        const newStudyspaces = updateStudyspaces(state.studyspaces, id, {
+          ...space,
+          ...data,
+          isFetchingDetail: false,
+          lastUpdatedDetails: moment(),
+        });
+        return {
+          ...state,
+          studyspaces: newStudyspaces,
         };
       }
       return state;
