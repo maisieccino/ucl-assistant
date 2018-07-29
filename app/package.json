@@ -7,7 +7,11 @@
     "prestorybook": "rnstl"
   },
   "jest": {
-    "preset": "jest-expo"
+    "preset": "jest-expo",
+    "testPathIgnorePatterns": ["<rootDir>/node_modules/"],
+    "transformIgnorePatterns": [
+      "node_modules/(?!((jest-)?react-native|react-clone-referenced-element|expo(nent)?|@expo(nent)?/.*|react-navigation|sentry-expo|react-native-action-button|redux-persist.*))"
+    ]
   },
   "dependencies": {
     "@expo/samples": "2.1.1",
