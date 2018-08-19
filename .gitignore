@@ -7,3 +7,4 @@ node_modules
 **/*.env
 **/*.eslintcache
 **/yarn-error.log
+**/__snapshots__
