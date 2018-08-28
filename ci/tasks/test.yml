@@ -5,10 +5,9 @@ image_resource:
   source: { repository: node:carbon-alpine }
 
 run:
-  path: ./scripts/test.sh
+  path: repo/scripts/test.sh
 
 inputs:
-  - name: scripts
   - name: repo
 
 params:
