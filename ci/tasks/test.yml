@@ -2,10 +2,10 @@ platform: linux
 
 image_resource:
   type: docker-image
-  source: { repository: node:carbon-alpine }
+  source: { repository: node, tag: carbon-alpine }
 
 run:
-  path: repo/scripts/test.sh
+  path: repo/ci/scripts/test.sh
 
 inputs:
   - name: repo

@@ -4,19 +4,23 @@ groups:
       - job-app-test
       - full-test
 resources:
+  - name: repo
+    type: git
+    source:
+      uri: https://github.com/mbellgb/ucl-assistant
+      branch: master
   - name: repo-app
     type: git
     source:
       uri: https://github.com/mbellgb/ucl-assistant
       branch: master
+      paths: ["app/**/*"]
 jobs:
   - name: job-app-test
     public: true
     plan:
       - get: repo-app
         trigger: true
-        params:
-          paths: ["app/**/*"]
       - task: test
         file: repo-app/ci/tasks/test.yml
         params:
@@ -25,7 +29,8 @@ jobs:
   - name: full-test
     public: true
     plan:
-      - get: repo-app
+      - get: repo
         trigger: true
       - task: test
-        file: repo-app/ci/tasks/test-all.yml
+        file: repo/ci/tasks/test-all.yml
+        input_mapping: { repo: repo }
