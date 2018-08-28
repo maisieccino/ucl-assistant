@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import { fetchTimetable } from "../../actions/timetableActions";
 import Button from "../../components/Button";
 import { Page } from "../../components/Containers";
-import { BodyText, TitleText } from "../../components/Typography";
+import { BodyText, TitleText, ErrorText } from "../../components/Typography";
 import Colors from "../../constants/Colors";
 import { TIMETABLE_CACHE_TIME_HOURS } from "../../constants/timetableConstants";
 import DateControls from "./DateControls";
@@ -33,7 +33,9 @@ class TimetableScreen extends Component {
     navigation: PropTypes.shape().isRequired,
     user: PropTypes.shape(),
     timetable: PropTypes.shape(),
+    /* eslint-disable react/no-unused-prop-types */
     error: PropTypes.string,
+    /* eslint-enable react/no-unused-prop-types */
     fetchTimetable: PropTypes.func,
     isFetchingTimetable: PropTypes.bool,
   };
@@ -153,7 +155,7 @@ class TimetableScreen extends Component {
     const { navigate } = this.props.navigation;
     const { user, timetable, isFetchingTimetable } = this.props;
     const { scopeNumber } = user;
-    const { date } = this.state;
+    const { date, error } = this.state;
     const dateString = date.format("dddd, Do MMMM");
     return (
       <Page
@@ -166,6 +168,11 @@ class TimetableScreen extends Component {
           <View>
             <BodyText>You are not signed in.</BodyText>
             <Button onPress={() => navigate("Splash")}>Sign In</Button>
+          </View>
+        )}
+        {error !== "" && (
+          <View>
+            <ErrorText>{error}</ErrorText>
           </View>
         )}
         <TitleText>{dateString}</TitleText>

@@ -18,6 +18,7 @@ import Colors from "../../constants/Colors";
 import TextInput from "../../components/Input/TextInput";
 import NotificationSwitch from "./NotificationSwitch";
 import LiveIndicator from "../StudySpaceDetailScreen/LiveIndicator";
+import common from "../../styles/common";
 
 const { version } = require("../../package.json");
 
@@ -145,7 +146,7 @@ class SettingsScreen extends Component {
             <TitleText>Dev Stuff</TitleText>
             <SubtitleText>UCL API Token</SubtitleText>
             <Horizontal>
-              <TextInput style={{ flex: 1 }} value={state.user.token} />
+              <TextInput style={common.flex} value={state.user.token} />
               <SmallButton onPress={() => this.copyTokenToClipboard()}>
                 Copy
               </SmallButton>

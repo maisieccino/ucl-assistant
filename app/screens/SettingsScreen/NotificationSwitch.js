@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { registerForNotifications } from "../../actions/notificationsActions";
 import { Horizontal } from "../../components/Containers";
 import { BodyText, ErrorText } from "../../components/Typography";
+import common from "../../styles/common";
 
 class NotificationSwitch extends Component {
   static mapStateToProps = state => ({
@@ -76,7 +77,7 @@ class NotificationSwitch extends Component {
       <Fragment>
         {error.length > 0 && <ErrorText>Error: {error}</ErrorText>}
         <Horizontal>
-          <BodyText style={{ flex: 1 }}>Enable notifications</BodyText>
+          <BodyText style={common.flex}>Enable notifications</BodyText>
           {changing || spin ? (
             <ActivityIndicator />
           ) : (

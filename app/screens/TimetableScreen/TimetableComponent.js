@@ -23,6 +23,9 @@ const mapToCards = (timetableItems, date, navigation, past = false) =>
     />
   ));
 
+const timetableImageStyle = { marginTop: 5, height: 200 };
+const topPadding = { height: 50 };
+
 const TimetableComponent = ({ timetable, date, isLoading, navigation }) => {
   const dateISO = date.format("YYYY-MM-DD");
   const filteredTimetable = (timetable[dateISO] || {}).timetable || [];
@@ -70,14 +73,14 @@ const TimetableComponent = ({ timetable, date, isLoading, navigation }) => {
   }
   return (
     <View>
-      <View style={{ height: 50 }} />
+      <View style={topPadding} />
       <CentredText>
         Nothing scheduled on {date.format("dddd")}. Take it easy!
       </CentredText>
       <Image
         source={require("../../assets/images/undraw_relaxation.png")}
         resizeMethod="scale"
-        style={[Styles.image, { marginTop: 5, height: 200 }]}
+        style={[Styles.image, timetableImageStyle]}
         resizeMode="contain"
       />
     </View>

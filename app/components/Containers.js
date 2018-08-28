@@ -50,7 +50,7 @@ const defaultProps = {
 // );
 // Page.propTypes = propTypes;
 // Page.defaultProps = defaultProps;
-
+const pageTopPadding = { height: 10 };
 export const Page = ({
   children,
   style,
@@ -77,7 +77,7 @@ export const Page = ({
           />
         }
       >
-        <View style={{ height: 10 }} />
+        <View style={pageTopPadding} />
         {children}
       </ScrollView>
       {mainTabPage && (
