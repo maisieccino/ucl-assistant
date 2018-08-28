@@ -7,7 +7,7 @@
       "prettier --write --trailing-comma all {app,server}/**/*.{js,jsx}",
     "precommit": "yarn run lint:staged",
     "test":
-      "jest --ci --projects api app lib notifications && yarn run lint:force"
+      "yarn jest --ci --projects api app lib notifications && yarn run lint:force"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.2",
@@ -35,6 +35,8 @@
   "description": "An app to manage your UCL life",
   "author": "Matt Bell and UCL API",
   "license": "MIT",
+  "private": true,
+
   "dependencies": {
     "node-fetch": "^2.1.2"
   }

@@ -1,0 +1,22 @@
+groups:
+  - name: app
+    jobs:
+      - job-app-test
+resources:
+  - name: repo-app
+    type: git
+    source:
+      uri: https://github.com/mbellgb/ucl-assistant
+      branch: master
+      paths: ["app/**/*"]
+jobs:
+  - name: job-app-test
+    public: true
+    plan:
+      - get: repo-app
+        trigger: true
+      - task: test
+        file: ./tasks/test.yml
+        params:
+          APP_NAME: app
+        input_mapping: { repo: repo-app }

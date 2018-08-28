@@ -7,9 +7,6 @@
   "author": "Matthew Bell",
   "license": "MIT",
   "private": true,
-  "engines": {
-    "node": "8.x"
-  },
   "scripts": {
     "start": "node server.js",
     "db:migrate": "knex migrate:latest"
