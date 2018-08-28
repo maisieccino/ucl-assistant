@@ -10,6 +10,10 @@ import Colors from "../../../constants/Colors";
 import Styles from "../../../styles/Button";
 import { propTypes, defaultProps } from "../props";
 
+const transparent = {
+  backgroundColor: "transparent",
+};
+
 const Wrapper = ({ children, onPress, disabled }) =>
   Platform.OS === "android" ? (
     <View style={Styles.roundButtonWrapper}>
@@ -26,11 +30,7 @@ const Wrapper = ({ children, onPress, disabled }) =>
       </TouchableNativeFeedback>
     </View>
   ) : (
-    <TouchableOpacity
-      style={{ backgroundColor: "transparent" }}
-      onPress={onPress}
-      disabled={disabled}
-    >
+    <TouchableOpacity style={transparent} onPress={onPress} disabled={disabled}>
       {children}
     </TouchableOpacity>
   );

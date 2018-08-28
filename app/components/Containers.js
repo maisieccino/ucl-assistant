@@ -4,7 +4,6 @@ import { BlurView } from "expo";
 import PropTypes from "prop-types";
 import { Feather } from "@expo/vector-icons";
 import {
-  Dimensions,
   KeyboardAvoidingView,
   RefreshControl,
   ScrollView,
@@ -14,8 +13,9 @@ import {
 } from "react-native";
 import Styles from "../styles/Containers";
 
-const { height, width } = Dimensions.get("window");
+// const { height, width } = Dimensions.get("window");
 
+/* eslint-disable react/no-unused-prop-types */
 const propTypes = {
   children: PropTypes.node,
   style: ViewPropTypes.style,
@@ -24,6 +24,7 @@ const propTypes = {
   refreshing: PropTypes.bool,
   mainTabPage: PropTypes.bool,
 };
+/* eslint-enable react/no-unused-prop-types */
 const defaultProps = {
   children: "",
   style: {},
