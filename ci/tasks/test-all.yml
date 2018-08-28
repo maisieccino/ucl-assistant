@@ -5,7 +5,7 @@ image_resource:
   source: { repository: node, tag: carbon-alpine }
 
 run:
-  path: repo/scripts/test-all.sh
+  path: repo/ci/scripts/test-all.sh
 
 inputs:
   - name: repo
