@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "dockerfileLines": [
+    "FROM node:carbon-alpine",
+    "WORKDIR /usr/src/server",
+    "COPY ./src/api/package.json ./",
+    "COPY ./src/api/yarn.lock ./",
+    "RUN yarn install --pure-lockfile",
+    "COPY ./src/api/ .",
+    "RUN apk add --no-cache tini",
+    "ENTRYPOINT [\"/sbin/tini\", \"--\"]",
+    "EXPOSE ${PORT}",
+    "USER node",
+    "CMD [ \"/usr/local/bin/yarn\", \"start\" ]"
+  ]
+}
