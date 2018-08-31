@@ -1,7 +1,8 @@
 #!/bin/sh
 set -e
-NODE_ENV=test
-cd repo
+NODE_ENV=${NODE_ENV:-test}
+REPO=${REPO:-repo}
+cd $REPO
 yarn install --pure-lockfile
 (cd lib && yarn install --pure-lockfile)
 (cd $APP_NAME && yarn install --pure-lockfile)
