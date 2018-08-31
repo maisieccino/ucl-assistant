@@ -1,6 +1,5 @@
 app/node_modules
 app/.expo
-app/assets/fonts/Apercu*
 app/app.json
 node_modules
 **/node_modules

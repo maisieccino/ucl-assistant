@@ -57,9 +57,9 @@ class App extends Component {
         // We include SpaceMono because we use it in HomeScreen.js. Feel free
         // to remove this if you are not using it in your app
         "space-mono": require("./assets/fonts/SpaceMono-Regular.ttf"),
-        apercu: require("./assets/fonts/Apercu.otf"),
-        "apercu-bold": require("./assets/fonts/Apercu-Bold.otf"),
-        "apercu-light": require("./assets/fonts/Apercu-Light.otf"),
+        apercu: require("./assets/fonts/somerandomfont.otf"),
+        "apercu-bold": require("./assets/fonts/somerandomfont-Bold.otf"),
+        "apercu-light": require("./assets/fonts/somerandomfont-Light.otf"),
       }),
     ]);
 
