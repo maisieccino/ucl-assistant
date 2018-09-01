@@ -3,10 +3,10 @@
   "dockerfileLines": [
     "FROM node:carbon-alpine",
     "WORKDIR /usr/src/server",
-    "COPY api/package.json ./",
-    "COPY api/yarn.lock ./",
+    "COPY ./src/api/package.json ./",
+    "COPY ./src/api/yarn.lock ./",
     "RUN yarn install --pure-lockfile",
-    "COPY api/ .",
+    "COPY ./src/api/ .",
     "RUN apk add --no-cache tini",
     "ENTRYPOINT [\"/sbin/tini\", \"--\"]",
     "EXPOSE ${PORT}",
