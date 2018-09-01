@@ -1,8 +1,11 @@
 groups:
   - name: app
     jobs:
-      - job-app-test
-      - full-test
+      - test-app
+      - build-app-dev
+  - name: all
+    jobs:
+      - test-all
 resources:
   - name: repo
     type: git
@@ -16,7 +19,7 @@ resources:
       branch: master
       paths: ["app/**/*"]
 jobs:
-  - name: job-app-test
+  - name: test-app
     public: true
     plan:
       - get: repo-app
@@ -26,7 +29,7 @@ jobs:
         params:
           APP_NAME: app
         input_mapping: { repo: repo-app }
-  - name: full-test
+  - name: test-all
     public: true
     plan:
       - get: repo
@@ -34,3 +37,43 @@ jobs:
       - task: test
         file: repo/ci/tasks/test-all.yml
         input_mapping: { repo: repo }
+jobs:
+  - name: build-app-dev
+    public: false
+    plan:
+    - get: repo-app
+      passed: [test-app]
+      trigger: true
+    - task: copy-app-json
+      config:
+        image_resource:
+          type: docker-iamge
+          source: {repository: busybox}
+        params:
+          APP_JSON: ((app-json))
+        inputs:
+          - name: repo-app
+        outputs:
+          - name: repo-app
+        run:
+          dir: repo-app/app
+          path: sh
+          args: [
+            "-c"
+            "app.json <<< $APP_JSON"
+          ]
+    - task: exp-build-android
+      image_resource:
+        type: docker-image
+        source: {repository: "mbellgb/expo"}
+      params:
+        EXP_USERNAME: ((exp-username))
+        EXP_PASSWORD: ((exp-password))
+      inputs:
+        - name: repo-app
+      run:
+        dir: repo-app/app
+        args: [
+          "build:android",
+
+        ]
